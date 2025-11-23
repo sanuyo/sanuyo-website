@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanuyo Enterprises - Business Communication Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a365d;
+            color: white;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #63b3ed;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 120px 2rem 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #63b3ed;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #4299e1;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 2rem;
+            background: #f7fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1a365d;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: #1a365d;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 2rem;
+            background: white;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1a365d;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #63b3ed;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a365d;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #1a365d;
+                padding: 1rem;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        .success-message {
+            display: none;
+            background: #48bb78;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* Ad Spaces */
+        .ad-space {
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            padding: 1rem;
+            margin: 2rem auto;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .ad-space-header {
+            max-width: 728px;
+            height: 90px;
+            margin: 1rem auto;
+        }
+
+        .ad-space-sidebar {
+            max-width: 300px;
+            height: 250px;
+            margin: 2rem auto;
+        }
+
+        .ad-space-footer {
+            max-width: 728px;
+            height: 90px;
+            margin: 2rem auto;
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: #718096;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 80px 2rem;
+            background: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 2rem 1rem 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        .gallery-caption h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+
+        /* Modal for full-size view */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-content img,
+        .modal-content video {
+            width: 100%;
+            height: auto;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .upload-section {
+            background: #f7fafc;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .upload-info {
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">Sanuyo Enterprises</div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul id="menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <!-- HEADER AD SPACE - Paste your AdSense code below -->
+            <div class="ad-space ad-space-header">
+                <div class="ad-label">Advertisement</div>
+                <!-- Replace this comment with your Google AdSense code -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- Your ad code here -->
+            </div>
+
+            <h1>Business Communication Made Simple</h1>
+            <p>Connect with your team and clients through our professional chat platform</p>
+            <a href="#contact" class="btn">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Our Features</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Real-Time Chat</h3>
+                    <p>Instant messaging with your team members and clients for seamless communication and collaboration.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Private</h3>
+                    <p>Enterprise-grade security ensures your conversations and data remain protected at all times.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Team Collaboration</h3>
+                    <p>Create channels, share files, and work together efficiently with integrated team tools.</p>
+                </div>
+            </div>
+
+            <!-- SIDEBAR/MEDIUM AD SPACE - Paste your AdSense code below -->
+            <div class="ad-space ad-space-sidebar">
+                <div class="ad-label">Advertisement</div>
+                <!-- Replace this comment with your Google AdSense code -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- Your ad code here -->
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Cross-Platform</h3>
+                    <p>Access your conversations from any device - desktop, tablet, or mobile seamlessly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Analytics</h3>
+                    <p>Track engagement and communication patterns with comprehensive analytics and insights.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast Performance</h3>
+                    <p>Lightning-fast messaging with minimal latency for efficient business communication.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 class="section-title">Our Team & Workspace</h2>
+            
+            <div class="upload-section">
+                <p class="upload-info">📸 To add your photos and videos, replace the placeholder image URLs below with your own image/video URLs</p>
+                <p class="upload-info">You can upload your media to services like Imgur, Google Drive (public links), or your own web hosting</p>
+            </div>
+
+            <div class="gallery-grid">
+                <!-- Photo 1 -->
+                <div class="gallery-item" onclick="openModal('media1')">
+                    <img id="media1" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800" alt="Team Meeting">
+                    <div class="gallery-caption">
+                        <h3>Team Collaboration</h3>
+                        <p>Our team working together on innovative solutions</p>
+                    </div>
+                </div>
+
+                <!-- Photo 2 -->
+                <div class="gallery-item" onclick="openModal('media2')">
+                    <img id="media2" src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800" alt="Office Space">
+                    <div class="gallery-caption">
+                        <h3>Modern Workspace</h3>
+                        <p>State-of-the-art office environment</p>
+                    </div>
+                </div>
+
+                <!-- Video Example -->
+                <div class="gallery-item" onclick="openModal('media3')">
+                    <span class="video-badge">▶ VIDEO</span>
+                    <video id="media3" src="https://www.w3schools.com/html/mov_bbb.mp4" poster="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800"></video>
+                    <div class="gallery-caption">
+                        <h3>Company Overview</h3>
+                        <p>Watch our company introduction video</p>
+                    </div>
+                </div>
+
+                <!-- Photo 3 -->
+                <div class="gallery-item" onclick="openModal('media4')">
+                    <img id="media4" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800" alt="Business Meeting">
+                    <div class="gallery-caption">
+                        <h3>Client Meetings</h3>
+                        <p>Professional client consultations</p>
+                    </div>
+                </div>
+
+                <!-- Photo 4 -->
+                <div class="gallery-item" onclick="openModal('media5')">
+                    <img id="media5" src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800" alt="Team Success">
+                    <div class="gallery-caption">
+                        <h3>Success Stories</h3>
+                        <p>Celebrating our achievements together</p>
+                    </div>
+                </div>
+
+                <!-- Photo 5 -->
+                <div class="gallery-item" onclick="openModal('media6')">
+                    <img id="media6" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800" alt="Innovation">
+                    <div class="gallery-caption">
+                        <h3>Innovation Hub</h3>
+                        <p>Where great ideas come to life</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for full-size view -->
+    <div id="mediaModal" class="modal" onclick="closeModal()">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-form">
+                <div id="successMessage" class="success-message">
+                    Thank you! Your message has been sent successfully.
+                </div>
+                <form id="contactForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <!-- FOOTER AD SPACE - Paste your AdSense code below -->
+            <div class="ad-space ad-space-footer">
+                <div class="ad-label">Advertisement</div>
+                <!-- Replace this comment with your Google AdSense code -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- Your ad code here -->
+            </div>
+            
+            <p>&copy; 2024 Sanuyo Enterprises. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            successMsg.style.display = 'block';
+            
+            // Reset form
+            document.getElementById('contactForm').reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 5000);
+            
+            // Scroll to top of contact section
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Gallery modal functions
+        function openModal(mediaId) {
+            event.stopPropagation();
+            const modal = document.getElementById('mediaModal');
+            const modalContent = document.getElementById('modalContent');
+            const media = document.getElementById(mediaId);
+            
+            modalContent.innerHTML = '';
+            
+            if (media.tagName === 'VIDEO') {
+                const video = document.createElement('video');
+                video.src = media.src;
+                video.controls = true;
+                video.autoplay = true;
+                modalContent.appendChild(video);
+            } else {
+                const img = document.createElement('img');
+                img.src = media.src;
+                img.alt = media.alt;
+                modalContent.appendChild(img);
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('mediaModal');
+            const modalContent = document.getElementById('modalContent');
+            modal.classList.remove('active');
+            
+            // Stop any playing videos
+            const video = modalContent.querySelector('video');
+            if (video) {
+                video.pause();
+            }
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    // Close mobile menu if open
+                    document.getElementById('menu').classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
