@@ -395,6 +395,101 @@
             color: #4a5568;
             margin-bottom: 1rem;
         }
+
+        /* Donate Section */
+        .donate {
+            padding: 80px 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .donate .section-title {
+            color: white;
+        }
+
+        .donate-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .donate-text {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .donate-options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .donate-amount {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .donate-amount:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .paypal-button {
+            display: inline-block;
+            background: #0070ba;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .paypal-button:hover {
+            background: #005ea6;
+        }
+
+        .paypal-logo {
+            font-size: 1.3rem;
+            margin-right: 8px;
+        }
+
+        .custom-amount {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .custom-amount input {
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid white;
+            border-radius: 5px;
+            width: 200px;
+            margin-right: 1rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .custom-amount input {
+                width: 100%;
+                margin-bottom: 1rem;
+                margin-right: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -407,6 +502,7 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#features">Features</a></li>
                 <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#donate">Donate</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -418,9 +514,18 @@
             <!-- HEADER AD SPACE - Paste your AdSense code below -->
             <div class="ad-space ad-space-header">
                 <div class="ad-label">Advertisement</div>
-                <!-- Replace this comment with your Google AdSense code -->
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <!-- Your ad code here -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3612246982575729"
+                     crossorigin="anonymous"></script>
+                <!-- Responsive Display Ad -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-3612246982575729"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
 
             <h1>Business Communication Made Simple</h1>
@@ -455,9 +560,18 @@
             <!-- SIDEBAR/MEDIUM AD SPACE - Paste your AdSense code below -->
             <div class="ad-space ad-space-sidebar">
                 <div class="ad-label">Advertisement</div>
-                <!-- Replace this comment with your Google AdSense code -->
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <!-- Your ad code here -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3612246982575729"
+                     crossorigin="anonymous"></script>
+                <!-- Responsive Display Ad -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-3612246982575729"
+                     data-ad-slot="1234567891"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
 
             <div class="features-grid">
@@ -555,6 +669,43 @@
         <div class="modal-content" id="modalContent"></div>
     </div>
 
+    <!-- Donate Section -->
+    <section id="donate" class="donate">
+        <div class="container">
+            <h2 class="section-title">Support Our Mission</h2>
+            <div class="donate-content">
+                <p class="donate-text">
+                    Your generous donations help us continue providing exceptional business communication services 
+                    and support our ongoing development. Every contribution makes a difference!
+                </p>
+
+                <div class="donate-options">
+                    <button class="donate-amount" onclick="donateAmount(10)">$10</button>
+                    <button class="donate-amount" onclick="donateAmount(25)">$25</button>
+                    <button class="donate-amount" onclick="donateAmount(50)">$50</button>
+                    <button class="donate-amount" onclick="donateAmount(100)">$100</button>
+                </div>
+
+                <a href="https://www.paypal.com/paypalme/sanusiemmanuel876" target="_blank" class="paypal-button">
+                    <span class="paypal-logo">💳</span> Donate via PayPal
+                </a>
+
+                <div class="custom-amount">
+                    <p style="margin-bottom: 1rem; font-size: 1.1rem;">Or enter a custom amount:</p>
+                    <input type="number" id="customAmount" placeholder="Enter amount" min="1">
+                    <button class="paypal-button" onclick="donateCustomAmount()">
+                        <span class="paypal-logo">💳</span> Donate
+                    </button>
+                </div>
+
+                <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.9;">
+                    PayPal Account: sanusiemmanuel876@gmail.com<br>
+                    Thank you for your support! 🙏
+                </p>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
@@ -592,9 +743,18 @@
             <!-- FOOTER AD SPACE - Paste your AdSense code below -->
             <div class="ad-space ad-space-footer">
                 <div class="ad-label">Advertisement</div>
-                <!-- Replace this comment with your Google AdSense code -->
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <!-- Your ad code here -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3612246982575729"
+                     crossorigin="anonymous"></script>
+                <!-- Responsive Display Ad -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-3612246982575729"
+                     data-ad-slot="1234567892"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
             
             <p>&copy; 2024 Sanuyo Enterprises. All rights reserved.</p>
@@ -669,6 +829,20 @@
                 closeModal();
             }
         });
+
+        // Donation functions
+        function donateAmount(amount) {
+            window.open(`https://www.paypal.com/paypalme/sanusiemmanuel876/${amount}`, '_blank');
+        }
+
+        function donateCustomAmount() {
+            const amount = document.getElementById('customAmount').value;
+            if (amount && amount > 0) {
+                window.open(`https://www.paypal.com/paypalme/sanusiemmanuel876/${amount}`, '_blank');
+            } else {
+                alert('Please enter a valid amount');
+            }
+        }
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
