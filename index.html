@@ -3,95 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sanuyo Enterprises - Business Communication Platform</title>
+<title>Sanuyo Enterprises - Mobile Layout</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:Arial,sans-serif;color:#333;line-height:1.6;}
-nav{background:#1a365d;color:white;padding:1rem 2rem;position:fixed;width:100%;top:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;}
-nav .logo{font-size:1.4rem;font-weight:bold;}
-nav ul{list-style:none;display:flex;gap:1.5rem;}
-nav a{color:white;text-decoration:none;}
-.menu-toggle{display:none;font-size:1.8rem;background:none;border:none;color:white;}
-@media(max-width:768px){nav ul{position:absolute;top:60px;right:0;background:#1a365d;width:100%;flex-direction:column;display:none;padding:1rem;}nav ul.active{display:block;}.menu-toggle{display:block;}}
-.hero{background:linear-gradient(135deg,#1a365d,#2c5282);padding:140px 20px 80px;color:white;text-align:center;}
-.btn{padding:12px 25px;background:#63b3ed;color:white;border-radius:5px;text-decoration:none;display:inline-block;margin-top:10px;}
-.features,.gallery,.donate,.contact,.sell,.saved,.profile{padding:80px 20px;}
-.section-title{text-align:center;color:#1a365d;margin-bottom:40px;font-size:2.2rem;}
-.features-grid,.gallery-grid,.saved-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;}
-.feature-card,.saved-card,.profile-card,.sell-box{background:white;padding:1.5rem;border-radius:8px;box-shadow:0 3px 6px rgba(0,0,0,0.1);text-align:center;}
-.gallery-item img,.gallery-item video{width:100%;height:230px;object-fit:cover;border-radius:8px;}
-.donate{background:linear-gradient(135deg,#667eea,#764ba2);color:white;text-align:center;}
-.donate-box{background:rgba(255,255,255,0.2);border-radius:8px;padding:20px;max-width:450px;margin:auto;}
-.donate-btn{background:white;color:#333;padding:12px 30px;border-radius:5px;text-decoration:none;display:inline-block;margin-top:10px;font-weight:bold;}
-.contact-form{max-width:500px;margin:auto;}
-.contact-form input,.contact-form textarea{width:100%;padding:12px;border:2px solid #ccc;border-radius:6px;margin-bottom:15px;}
-footer{text-align:center;background:#1a365d;color:white;padding:20px;}
+body{font-family:Arial,sans-serif;color:#333;background:#f7f7f7;line-height:1.5;}
+section{display:none;padding:80px 20px 120px;}
+section.active{display:block;}
+h2{margin-bottom:20px;color:#1a365d;text-align:center;}
+button, .btn, .donate-btn{cursor:pointer;}
+.btn, .donate-btn{display:inline-block;padding:10px 20px;border:none;border-radius:5px;text-decoration:none;}
+input, textarea{width:100%;padding:10px;margin-bottom:10px;border-radius:5px;border:1px solid #ccc;}
+textarea{resize:vertical;}
+/* Bottom Nav */
+.bottom-nav{position:fixed;bottom:0;width:100%;display:flex;background:#1a365d;justify-content:space-around;padding:5px 0;z-index:1000;}
+.bottom-nav button{background:none;color:white;border:none;font-size:14px;display:flex;flex-direction:column;align-items:center;}
+/* Features grid */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:20px;}
+.feature-card{background:white;padding:10px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);text-align:center;}
+/* Gallery horizontal scroll */
+.gallery-scroll{display:flex;overflow-x:auto;gap:10px;padding-bottom:10px;scroll-behavior:smooth;}
+.gallery-scroll::-webkit-scrollbar{height:6px;}
+.gallery-scroll::-webkit-scrollbar-thumb{background:#63b3ed;border-radius:3px;}
+.gallery-scroll .gallery-item{min-width:150px;flex:0 0 auto;background:white;padding:5px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+.gallery-item img,.gallery-item video{width:100%;height:100px;object-fit:cover;border-radius:5px;cursor:pointer;}
+/* Modal */
+.modal{display:none;position:fixed;z-index:2000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.9);align-items:center;justify-content:center;}
+.modal.active{display:flex;}
+.modal-content img,.modal-content video{width:90%;max-height:90%;object-fit:contain;}
+.modal-close{position:absolute;top:20px;right:20px;color:white;font-size:30px;background:none;border:none;cursor:pointer;}
+/* Sell & Saved Cards */
+.sell-box, .saved-card, .profile-card{background:white;padding:15px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-bottom:10px;text-align:center;}
+.saved-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:20px;}
 </style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
-<nav>
-<div class="logo">Sanuyo Enterprises</div>
-<button class="menu-toggle" onclick="toggleMenu()">☰</button>
-<ul id="menu">
-<li><a href="#home">Home</a></li>
-<li><a href="#features">Features</a></li>
-<li><a href="#gallery">Gallery</a></li>
-<li><a href="#sell">Sell</a></li>
-<li><a href="#saved">Saved</a></li>
-<li><a href="#profile">Profile</a></li>
-<li><a href="#donate">Donate</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-</nav>
-
-<!-- HERO -->
-<section id="home" class="hero">
-<h1>Business Communication Made Simple</h1>
-<p>Fast, secure, and smart communication for your business.</p>
-<a href="#contact" class="btn">Get Started</a>
-</section>
-
-<!-- FEATURES -->
-<section id="features" class="features">
-<h2 class="section-title">Our Features</h2>
+<!-- HOME TAB -->
+<section id="home" class="active">
+<h2>Business Communication</h2>
+<p style="text-align:center;">Fast, secure, and smart communication for your business.</p>
 <div class="features-grid">
-<div class="feature-card">💬 <h3>Real-Time Chat</h3></div>
-<div class="feature-card">🔒 <h3>Secure Private Messaging</h3></div>
-<div class="feature-card">👥 <h3>Team Collaboration</h3></div>
-<div class="feature-card">📱 <h3>Cross-Platform</h3></div>
-<div class="feature-card">📊 <h3>Analytics & Insights</h3></div>
-<div class="feature-card">⚡ <h3>Fast Performance</h3></div>
+<div class="feature-card">💬<p>Real-Time Chat</p></div>
+<div class="feature-card">🔒<p>Secure Messaging</p></div>
+<div class="feature-card">👥<p>Team Collaboration</p></div>
+<div class="feature-card">📱<p>Cross-Platform</p></div>
+<div class="feature-card">📊<p>Analytics & Insights</p></div>
+<div class="feature-card">⚡<p>Fast Performance</p></div>
+</div>
+
+<h2>Gallery</h2>
+<div class="gallery-scroll">
+<div class="gallery-item" onclick="openModal(this)"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400" alt="Team"></div>
+<div class="gallery-item" onclick="openModal(this)"><img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400" alt="Office"></div>
+<div class="gallery-item" onclick="openModal(this)"><video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video></div>
+<div class="gallery-item" onclick="openModal(this)"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400" alt="Meeting"></div>
+<div class="gallery-item" onclick="openModal(this)"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400" alt="Innovation"></div>
 </div>
 </section>
 
-<!-- GALLERY -->
-<section id="gallery" class="gallery">
-<h2 class="section-title">Our Team & Workspace</h2>
-<div class="gallery-grid">
-<div class="gallery-item"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800"></div>
-<div class="gallery-item"><img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800"></div>
-<div class="gallery-item"><video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video></div>
-</div>
-</section>
-
-<!-- SELL -->
-<section id="sell" class="sell">
-<h2 class="section-title">Sell / Upload</h2>
+<!-- SELL TAB -->
+<section id="sell">
+<h2>Sell / Upload</h2>
 <div class="sell-box">
-<p>Upload your products or files (demo section)</p>
+<p>Upload your products or files (demo)</p>
 <form>
-<input type="text" placeholder="Product / File Name" required>
-<input type="file" placeholder="Choose File">
+<input type="text" placeholder="Product/File Name" required>
+<input type="file">
 <button class="btn" type="submit">Upload</button>
 </form>
 </div>
 </section>
 
-<!-- SAVED -->
-<section id="saved" class="saved">
-<h2 class="section-title">Saved Items</h2>
+<!-- SAVED TAB -->
+<section id="saved">
+<h2>Saved Items</h2>
 <div class="saved-grid">
 <div class="saved-card">Item 1</div>
 <div class="saved-card">Item 2</div>
@@ -100,35 +85,37 @@ footer{text-align:center;background:#1a365d;color:white;padding:20px;}
 </div>
 </section>
 
-<!-- PROFILE -->
-<section id="profile" class="profile">
-<h2 class="section-title">Profile (Demo)</h2>
+<!-- PROFILE TAB -->
+<section id="profile">
+<h2>Profile & Donate</h2>
 <div class="profile-card">
 <p><strong>Name:</strong> Sanusi Olubusayo</p>
 <p><strong>Email:</strong> sanusiemmanuel876@gmail.com</p>
 <p><strong>PalmPay:</strong> 7042850583</p>
 <p><strong>PayPal:</strong> sanusiemmanuel876</p>
 </div>
-</section>
 
-<!-- DONATE -->
-<section id="donate" class="donate">
-<h2 class="section-title" style="color:white;">Support Us</h2>
-<div class="donate-box">
-<h3>💗 Support Our Work</h3>
-<p>Your donation helps us grow and improve our platform.</p>
-<a href="https://www.paypal.com/paypalme/sanusiemmanuel876" class="donate-btn">Donate with PayPal</a>
-<p style="margin-top:20px; font-size:1.1rem;">📱 Donate via PalmPay</p>
-<a href="https://www.palmpay.com/7042850583" target="_blank" class="donate-btn">Sanusi Olubusayo PalmPay 7042850583</a>
+<h3 style="text-align:center;margin-top:20px;">Donate</h3>
+<div style="text-align:center;margin-bottom:20px;">
+<a href="https://www.paypal.com/paypalme/sanusiemmanuel876" class="donate-btn">PayPal</a><br><br>
+<a href="https://www.palmpay.com/7042850583" target="_blank" class="donate-btn">PalmPay 7042850583</a>
 </div>
-</section>
 
-<!-- CONTACT -->
-<section id="contact" class="contact">
-<h2 class="section-title">Contact Us</h2>
-<form class="contact-form"
-action="https://formsubmit.co/sanusiemmanuel876@gmail.com"
-method="POST">
+<h3 style="text-align:center;margin-top:30px;">My Naira Wallet</h3>
+<div class="profile-card">
+<p><strong>Balance:</strong> <span id="walletBalance">₦0</span></p>
+<form id="topupForm">
+<input type="text" id="cardNumber" placeholder="Card Number (Demo)" required>
+<input type="number" id="topupAmount" placeholder="Amount (₦)" min="1" required>
+<button class="btn" type="submit">Top Up</button>
+</form>
+<p style="font-size:0.8rem; margin-top:5px; color:#555;">
+*This is a demo wallet. No real payments are processed.
+</p>
+</div>
+
+<h3 style="text-align:center;margin-top:30px;">Contact</h3>
+<form action="https://formsubmit.co/sanusiemmanuel876@gmail.com" method="POST">
 <input type="hidden" name="_captcha" value="false">
 <input type="hidden" name="_template" value="table">
 <input type="hidden" name="_next" value="https://yourwebsite.com/success.html">
@@ -136,17 +123,88 @@ method="POST">
 <input type="email" name="email" placeholder="Email" required>
 <input type="text" name="company" placeholder="Company (optional)">
 <textarea name="message" placeholder="Your message..." required></textarea>
-<button class="btn" type="submit">Send Message</button>
+<button class="btn" type="submit">Send</button>
 </form>
 </section>
 
-<!-- FOOTER -->
-<footer>
-<p>&copy; 2024 Sanuyo Enterprises. All rights reserved.</p>
-</footer>
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+<button onclick="showTab('home')">🏠<span>Home</span></button>
+<button onclick="showTab('sell')">💼<span>Sell</span></button>
+<button onclick="showTab('saved')">💾<span>Saved</span></button>
+<button onclick="showTab('profile')">👤<span>Profile</span></button>
+</nav>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<button class="modal-close" onclick="closeModal()">×</button>
+<div class="modal-content" id="modalContent"></div>
+</div>
 
 <script>
-function toggleMenu(){document.getElementById("menu").classList.toggle("active");}
+// Bottom Tab Navigation
+function showTab(tabId){
+document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+document.getElementById(tabId).classList.add('active');
+}
+
+// Gallery Modal
+function openModal(element){
+const modal=document.getElementById('modal');
+const content=document.getElementById('modalContent');
+content.innerHTML='';
+if(element.querySelector('img')){
+let img=document.createElement('img');
+img.src=element.querySelector('img').src;
+content.appendChild(img);
+}else if(element.querySelector('video')){
+let video=document.createElement('video');
+video.src=element.querySelector('video').src;
+video.controls=true;
+video.autoplay=true;
+content.appendChild(video);
+}
+modal.classList.add('active');
+}
+function closeModal(){
+const modal=document.getElementById('modal');
+modal.classList.remove('active');
+const vid=modal.querySelector('video');
+if(vid) vid.pause();
+}
+
+// Gallery horizontal drag for desktop
+const scrollContainer=document.querySelector('.gallery-scroll');
+let isDown=false,startX,scrollLeft;
+scrollContainer.addEventListener('mousedown', e=>{
+  isDown=true;startX=e.pageX-scrollContainer.offsetLeft;scrollLeft=scrollContainer.scrollLeft;
+});
+scrollContainer.addEventListener('mouseleave', ()=>{isDown=false;});
+scrollContainer.addEventListener('mouseup', ()=>{isDown=false;});
+scrollContainer.addEventListener('mousemove', e=>{
+  if(!isDown) return;
+  e.preventDefault();
+  const x=e.pageX-scrollContainer.offsetLeft;
+  const walk=(x-startX)*2;
+  scrollContainer.scrollLeft=scrollLeft-walk;
+});
+
+// Demo Wallet
+let wallet=0;
+document.getElementById('topupForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const amount=parseInt(document.getElementById('topupAmount').value);
+  const card=document.getElementById('cardNumber').value;
+  if(amount>0 && card){
+    wallet+=amount;
+    document.getElementById('walletBalance').innerText=`₦${wallet}`;
+    alert(`₦${amount} added to your wallet!`);
+    this.reset();
+  } else {
+    alert('Please enter a valid card number and amount.');
+  }
+});
 </script>
+
 </body>
 </html>
