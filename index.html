@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sanuyo Enterprises - Mobile Layout</title>
+<title>Sanuyo Enterprises - Marketplace</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:Arial,sans-serif;color:#333;background:#f7f7f7;line-height:1.5;}
@@ -12,7 +12,7 @@ section.active{display:block;}
 h2{margin-bottom:20px;color:#1a365d;text-align:center;}
 button, .btn, .donate-btn{cursor:pointer;}
 .btn, .donate-btn{display:inline-block;padding:10px 20px;border:none;border-radius:5px;text-decoration:none;}
-input, textarea{width:100%;padding:10px;margin-bottom:10px;border-radius:5px;border:1px solid #ccc;}
+input, textarea, select{width:100%;padding:10px;margin-bottom:10px;border-radius:5px;border:1px solid #ccc;}
 textarea{resize:vertical;}
 /* Bottom Nav */
 .bottom-nav{position:fixed;bottom:0;width:100%;display:flex;background:#1a365d;justify-content:space-around;padding:5px 0;z-index:1000;}
@@ -32,8 +32,19 @@ textarea{resize:vertical;}
 .modal-content img,.modal-content video{width:90%;max-height:90%;object-fit:contain;}
 .modal-close{position:absolute;top:20px;right:20px;color:white;font-size:30px;background:none;border:none;cursor:pointer;}
 /* Sell & Saved Cards */
-.sell-box, .saved-card, .profile-card{background:white;padding:15px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-bottom:10px;text-align:center;}
+.sell-box, .saved-card, .profile-card, .ad-card{background:white;padding:15px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-bottom:10px;text-align:center;}
 .saved-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:20px;}
+/* Categories */
+.categories-scroll{display:flex;overflow-x:auto;gap:10px;padding:10px 0;scroll-behavior:smooth;margin-bottom:10px;}
+.categories-scroll::-webkit-scrollbar{height:6px;}
+.categories-scroll::-webkit-scrollbar-thumb{background:#63b3ed;border-radius:3px;}
+.category-card{flex:0 0 auto;width:80px;background:white;text-align:center;padding:10px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);cursor:pointer;font-size:14px;}
+.category-card p{margin-top:5px;font-size:12px;}
+.items-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:10px;}
+.item-card{background:white;padding:10px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);text-align:center;}
+.item-card img{width:100%;height:100px;object-fit:cover;border-radius:5px;}
+/* Messages */
+.message-card{background:white;padding:10px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-bottom:10px;}
 </style>
 </head>
 <body>
@@ -42,6 +53,23 @@ textarea{resize:vertical;}
 <section id="home" class="active">
 <h2>Business Communication</h2>
 <p style="text-align:center;">Fast, secure, and smart communication for your business.</p>
+
+<!-- Categories -->
+<div class="categories-scroll">
+  <div class="category-card" onclick="filterCategory('Electronics')">📱<p>Electronics</p></div>
+  <div class="category-card" onclick="filterCategory('Vehicles')">🚗<p>Vehicles</p></div>
+  <div class="category-card" onclick="filterCategory('Fashion')">👗<p>Fashion</p></div>
+  <div class="category-card" onclick="filterCategory('Real Estate')">🏠<p>Real Estate</p></div>
+  <div class="category-card" onclick="filterCategory('Home & Garden')">🛋️<p>Home & Garden</p></div>
+  <div class="category-card" onclick="filterCategory('Sports')">⚽<p>Sports</p></div>
+  <div class="category-card" onclick="filterCategory('Services')">🛠️<p>Services</p></div>
+</div>
+
+<!-- Items Grid -->
+<div id="itemsGrid" class="items-grid"></div>
+
+<!-- Features -->
+<h2>Features</h2>
 <div class="features-grid">
 <div class="feature-card">💬<p>Real-Time Chat</p></div>
 <div class="feature-card">🔒<p>Secure Messaging</p></div>
@@ -51,6 +79,7 @@ textarea{resize:vertical;}
 <div class="feature-card">⚡<p>Fast Performance</p></div>
 </div>
 
+<!-- Gallery -->
 <h2>Gallery</h2>
 <div class="gallery-scroll">
 <div class="gallery-item" onclick="openModal(this)"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400" alt="Team"></div>
@@ -63,15 +92,42 @@ textarea{resize:vertical;}
 
 <!-- SELL TAB -->
 <section id="sell">
-<h2>Sell / Upload</h2>
-<div class="sell-box">
-<p>Upload your products or files (demo)</p>
-<form>
-<input type="text" placeholder="Product/File Name" required>
-<input type="file">
-<button class="btn" type="submit">Upload</button>
+<h2>Sell Your Item</h2>
+<form id="sellForm">
+  <label>Category</label>
+  <select id="sellCategory" required>
+    <option value="">Select Category</option>
+    <option>Electronics</option>
+    <option>Vehicles</option>
+    <option>Fashion</option>
+    <option>Real Estate</option>
+    <option>Home & Garden</option>
+    <option>Sports</option>
+    <option>Services</option>
+  </select>
+
+  <label>Title</label>
+  <input type="text" id="sellTitle" placeholder="Item Title" required>
+
+  <label>Description</label>
+  <textarea id="sellDesc" placeholder="Describe your item..." required></textarea>
+
+  <label>Location</label>
+  <input type="text" id="sellLocation" placeholder="City, State" required>
+
+  <label>Phone Number</label>
+  <input type="text" id="sellPhone" placeholder="Your phone number" required>
+
+  <label>Price (₦)</label>
+  <input type="number" id="sellPrice" placeholder="Amount" required>
+
+  <label>Upload Images/Videos</label>
+  <input type="file" id="sellMedia" multiple>
+
+  <button type="submit" class="btn">Post Ad</button>
 </form>
-</div>
+
+<div id="userAds" style="margin-top:20px;"></div>
 </section>
 
 <!-- SAVED TAB -->
@@ -85,46 +141,48 @@ textarea{resize:vertical;}
 </div>
 </section>
 
+<!-- MESSAGES TAB -->
+<section id="messages">
+<h2>Messages</h2>
+<p style="text-align:center;">Your messages will appear here.</p>
+<div id="inbox"></div>
+</section>
+
 <!-- PROFILE TAB -->
 <section id="profile">
-<h2>Profile & Donate</h2>
+<h2>Profile & Wallets</h2>
 <div class="profile-card">
 <p><strong>Name:</strong> Sanusi Olubusayo</p>
-<p><strong>Email:</strong> sanusiemmanuel876@gmail.com</p>
 <p><strong>PalmPay:</strong> 7042850583</p>
-<p><strong>PayPal:</strong> sanusiemmanuel876</p>
+<p><strong>OPay Premium:</strong> 7048715359</p>
 </div>
 
-<h3 style="text-align:center;margin-top:20px;">Donate</h3>
-<div style="text-align:center;margin-bottom:20px;">
-<a href="https://www.paypal.com/paypalme/sanusiemmanuel876" class="donate-btn">PayPal</a><br><br>
-<a href="https://www.palmpay.com/7042850583" target="_blank" class="donate-btn">PalmPay 7042850583</a>
-</div>
-
-<h3 style="text-align:center;margin-top:30px;">My Naira Wallet</h3>
+<h3 style="text-align:center;margin-top:20px;">My Naira Wallet (PalmPay)</h3>
 <div class="profile-card">
 <p><strong>Balance:</strong> <span id="walletBalance">₦0</span></p>
 <form id="topupForm">
 <input type="text" id="cardNumber" placeholder="Card Number (Demo)" required>
 <input type="number" id="topupAmount" placeholder="Amount (₦)" min="1" required>
-<button class="btn" type="submit">Top Up</button>
+<button class="btn" type="submit">Top Up PalmPay</button>
 </form>
-<p style="font-size:0.8rem; margin-top:5px; color:#555;">
-*This is a demo wallet. No real payments are processed.
-</p>
 </div>
 
-<h3 style="text-align:center;margin-top:30px;">Contact</h3>
-<form action="https://formsubmit.co/sanusiemmanuel876@gmail.com" method="POST">
-<input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_template" value="table">
-<input type="hidden" name="_next" value="https://yourwebsite.com/success.html">
-<input type="text" name="name" placeholder="Name" required>
-<input type="email" name="email" placeholder="Email" required>
-<input type="text" name="company" placeholder="Company (optional)">
-<textarea name="message" placeholder="Your message..." required></textarea>
-<button class="btn" type="submit">Send</button>
+<h3 style="text-align:center;margin-top:20px;">Premium Service (OPay)</h3>
+<div class="profile-card">
+<p><strong>Premium Balance:</strong> <span id="premiumBalance">₦0</span></p>
+<form id="premiumForm">
+<input type="number" id="premiumAmount" placeholder="Amount (₦)" min="1" required>
+<button class="btn" type="submit">Top Up Premium</button>
 </form>
+</div>
+
+<h3 style="text-align:center;margin-top:20px;">My Ads</h3>
+<div id="myAdsContainer"></div>
+
+<h3 style="text-align:center;margin-top:20px;">Game Center</h3>
+<div style="text-align:center;">
+<a href="https://www.miniclip.com" target="_blank" class="btn">Play Games</a>
+</div>
 </section>
 
 <!-- BOTTOM NAV -->
@@ -132,6 +190,7 @@ textarea{resize:vertical;}
 <button onclick="showTab('home')">🏠<span>Home</span></button>
 <button onclick="showTab('sell')">💼<span>Sell</span></button>
 <button onclick="showTab('saved')">💾<span>Saved</span></button>
+<button onclick="showTab('messages')">✉️<span>Messages</span></button>
 <button onclick="showTab('profile')">👤<span>Profile</span></button>
 </nav>
 
@@ -173,22 +232,6 @@ const vid=modal.querySelector('video');
 if(vid) vid.pause();
 }
 
-// Gallery horizontal drag for desktop
-const scrollContainer=document.querySelector('.gallery-scroll');
-let isDown=false,startX,scrollLeft;
-scrollContainer.addEventListener('mousedown', e=>{
-  isDown=true;startX=e.pageX-scrollContainer.offsetLeft;scrollLeft=scrollContainer.scrollLeft;
-});
-scrollContainer.addEventListener('mouseleave', ()=>{isDown=false;});
-scrollContainer.addEventListener('mouseup', ()=>{isDown=false;});
-scrollContainer.addEventListener('mousemove', e=>{
-  if(!isDown) return;
-  e.preventDefault();
-  const x=e.pageX-scrollContainer.offsetLeft;
-  const walk=(x-startX)*2;
-  scrollContainer.scrollLeft=scrollLeft-walk;
-});
-
 // Demo Wallet
 let wallet=0;
 document.getElementById('topupForm').addEventListener('submit', function(e){
@@ -198,13 +241,81 @@ document.getElementById('topupForm').addEventListener('submit', function(e){
   if(amount>0 && card){
     wallet+=amount;
     document.getElementById('walletBalance').innerText=`₦${wallet}`;
-    alert(`₦${amount} added to your wallet!`);
+    alert(`₦${amount} added to PalmPay Wallet!`);
     this.reset();
   } else {
     alert('Please enter a valid card number and amount.');
   }
 });
-</script>
 
+// Premium Balance (OPay)
+let premiumBalance=0;
+document.getElementById('premiumForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const amount=parseInt(document.getElementById('premiumAmount').value);
+  if(amount>0){
+    premiumBalance+=amount;
+    document.getElementById('premiumBalance').innerText=`₦${premiumBalance}`;
+    alert(`₦${amount} added to Premium Service!`);
+    this.reset();
+  } else {
+    alert('Enter a valid amount.');
+  }
+});
+
+// Items & Categories
+const allItems=[
+{category:'Electronics', name:'iPhone 14', img:'https://images.unsplash.com/photo-1510552776732-41a67b20c84e?w=200'},
+{category:'Vehicles', name:'Toyota Corolla', img:'https://images.unsplash.com/photo-1549924231-f129b911e442?w=200'},
+{category:'Fashion', name:'Red Dress', img:'https://images.unsplash.com/photo-1520974735194-08cb012d4f36?w=200'},
+{category:'Electronics', name:'Laptop', img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=200'},
+{category:'Real Estate', name:'2 Bedroom Flat', img:'https://images.unsplash.com/photo-1560448204-3dfd3e5d61b7?w=200'}
+];
+
+function filterCategory(category){
+const grid=document.getElementById('itemsGrid');
+grid.innerHTML='';
+const filtered=allItems.filter(i=>i.category===category);
+if(filtered.length===0){
+grid.innerHTML='<p style="text-align:center;">No items in this category yet.</p>';
+return;
+}
+filtered.forEach(item=>{
+const div=document.createElement('div');
+div.classList.add('item-card');
+div.innerHTML=`<img src="${item.img}" alt="${item.name}"><p>${item.name}</p>`;
+grid.appendChild(div);
+});
+}
+
+// Show default category
+filterCategory('Electronics');
+
+// Sell Form
+const sellForm = document.getElementById('sellForm');
+const myAdsContainer = document.getElementById('myAdsContainer');
+sellForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  const ad = {
+    category: document.getElementById('sellCategory').value,
+    title: document.getElementById('sellTitle').value,
+    desc: document.getElementById('sellDesc').value,
+    location: document.getElementById('sellLocation').value,
+    phone: document.getElementById('sellPhone').value,
+    price: document.getElementById('sellPrice').value
+  };
+  const div = document.createElement('div');
+  div.classList.add('ad-card');
+  div.innerHTML=`<h3>${ad.title}</h3>
+                 <p>${ad.category} | ₦${ad.price}</p>
+                 <p>${ad.desc}</p>
+                 <p>${ad.location}</p>
+                 <p>Phone: ${ad.phone}</p>
+                 <p>Views: 0</p>`;
+  myAdsContainer.prepend(div);
+  alert("Your ad has been posted!");
+  sellForm.reset();
+});
+</script>
 </body>
 </html>
