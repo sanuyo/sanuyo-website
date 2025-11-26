@@ -3,319 +3,258 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sanuyo Enterprises - Marketplace</title>
+<title>Sanuyo Marketplace</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:Arial,sans-serif;color:#333;background:#f7f7f7;line-height:1.5;}
-section{display:none;padding:80px 20px 120px;}
-section.active{display:block;}
-h2{margin-bottom:20px;color:#1a365d;text-align:center;}
-button, .btn, .donate-btn{cursor:pointer;}
-.btn, .donate-btn{display:inline-block;padding:10px 20px;border:none;border-radius:5px;text-decoration:none;}
-input, textarea, select{width:100%;padding:10px;margin-bottom:10px;border-radius:5px;border:1px solid #ccc;}
-textarea{resize:vertical;}
+* {margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+body {background:#f7fafc; color:#333; line-height:1.5;}
+a {text-decoration:none; color:inherit;}
+.btn {padding:10px 20px; border:none; border-radius:5px; cursor:pointer; transition:0.3s;}
+.btn:hover {opacity:0.8;}
 /* Bottom Nav */
-.bottom-nav{position:fixed;bottom:0;width:100%;display:flex;background:#1a365d;justify-content:space-around;padding:5px 0;z-index:1000;}
-.bottom-nav button{background:none;color:white;border:none;font-size:14px;display:flex;flex-direction:column;align-items:center;}
-/* Features grid */
-.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:20px;}
-.feature-card{background:white;padding:10px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);text-align:center;}
-/* Gallery horizontal scroll */
-.gallery-scroll{display:flex;overflow-x:auto;gap:10px;padding-bottom:10px;scroll-behavior:smooth;}
-.gallery-scroll::-webkit-scrollbar{height:6px;}
-.gallery-scroll::-webkit-scrollbar-thumb{background:#63b3ed;border-radius:3px;}
-.gallery-scroll .gallery-item{min-width:150px;flex:0 0 auto;background:white;padding:5px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);}
-.gallery-item img,.gallery-item video{width:100%;height:100px;object-fit:cover;border-radius:5px;cursor:pointer;}
-/* Modal */
-.modal{display:none;position:fixed;z-index:2000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.9);align-items:center;justify-content:center;}
-.modal.active{display:flex;}
-.modal-content img,.modal-content video{width:90%;max-height:90%;object-fit:contain;}
-.modal-close{position:absolute;top:20px;right:20px;color:white;font-size:30px;background:none;border:none;cursor:pointer;}
-/* Sell & Saved Cards */
-.sell-box, .saved-card, .profile-card, .ad-card{background:white;padding:15px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-bottom:10px;text-align:center;}
-.saved-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:20px;}
-/* Categories */
-.categories-scroll{display:flex;overflow-x:auto;gap:10px;padding:10px 0;scroll-behavior:smooth;margin-bottom:10px;}
-.categories-scroll::-webkit-scrollbar{height:6px;}
-.categories-scroll::-webkit-scrollbar-thumb{background:#63b3ed;border-radius:3px;}
-.category-card{flex:0 0 auto;width:80px;background:white;text-align:center;padding:10px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);cursor:pointer;font-size:14px;}
-.category-card p{margin-top:5px;font-size:12px;}
-.items-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:10px;}
-.item-card{background:white;padding:10px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);text-align:center;}
-.item-card img{width:100%;height:100px;object-fit:cover;border-radius:5px;}
-/* Messages */
-.message-card{background:white;padding:10px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-bottom:10px;}
+.bottom-nav {position:fixed; bottom:0; left:0; width:100%; display:flex; justify-content:space-around; background:white; border-top:1px solid #ccc; z-index:100;}
+.bottom-nav a {flex:1; text-align:center; padding:10px 0; font-size:14px; color:#333;}
+.bottom-nav a.active {color:#1a365d; font-weight:bold;}
+/* Sections */
+section {padding:70px 15px 120px;}
+h2.section-title {text-align:center; margin-bottom:20px; color:#1a365d;}
+/* Home / Hero */
+#home {background:linear-gradient(135deg,#1a365d 0%,#2c5282 100%); color:white; text-align:center; padding-top:100px; padding-bottom:50px;}
+#home h1 {font-size:2rem; margin-bottom:10px;}
+#home p {font-size:1rem; margin-bottom:15px;}
+/* Features / Categories */
+.categories {display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; margin-top:15px;}
+.category-card {background:white; padding:10px; text-align:center; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+.category-card img {width:50px; height:50px; object-fit:cover; margin-bottom:5px;}
+/* Sell Form */
+#sell form {background:white; padding:15px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+#sell form input, #sell form textarea, #sell form select {width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px;}
+#sell form button {background:#1a365d; color:white; width:100%;}
+/* Saved / Messages / Profile */
+.card {background:white; padding:10px; border-radius:8px; margin-bottom:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+.card h4 {margin-bottom:5px;}
+/* Premium Service */
+.profile-card {margin-top:15px;}
+.profile-card button {margin:5px;}
+/* Donate */
+.donate-content {text-align:center; margin-top:15px;}
+.donate-content .btn {margin:5px;}
+/* Responsive */
+@media(max-width:768px){section{padding-bottom:150px;} #home h1{font-size:1.5rem;}}
 </style>
 </head>
 <body>
 
-<!-- HOME TAB -->
-<section id="home" class="active">
-<h2>Business Communication</h2>
-<p style="text-align:center;">Fast, secure, and smart communication for your business.</p>
+<!-- Home -->
+<section id="home">
+<h1>Sanuyo Marketplace</h1>
+<p>Buy, Sell, and Connect Easily</p>
+</section>
 
 <!-- Categories -->
-<div class="categories-scroll">
-  <div class="category-card" onclick="filterCategory('Electronics')">📱<p>Electronics</p></div>
-  <div class="category-card" onclick="filterCategory('Vehicles')">🚗<p>Vehicles</p></div>
-  <div class="category-card" onclick="filterCategory('Fashion')">👗<p>Fashion</p></div>
-  <div class="category-card" onclick="filterCategory('Real Estate')">🏠<p>Real Estate</p></div>
-  <div class="category-card" onclick="filterCategory('Home & Garden')">🛋️<p>Home & Garden</p></div>
-  <div class="category-card" onclick="filterCategory('Sports')">⚽<p>Sports</p></div>
-  <div class="category-card" onclick="filterCategory('Services')">🛠️<p>Services</p></div>
-</div>
-
-<!-- Items Grid -->
-<div id="itemsGrid" class="items-grid"></div>
-
-<!-- Features -->
-<h2>Features</h2>
-<div class="features-grid">
-<div class="feature-card">💬<p>Real-Time Chat</p></div>
-<div class="feature-card">🔒<p>Secure Messaging</p></div>
-<div class="feature-card">👥<p>Team Collaboration</p></div>
-<div class="feature-card">📱<p>Cross-Platform</p></div>
-<div class="feature-card">📊<p>Analytics & Insights</p></div>
-<div class="feature-card">⚡<p>Fast Performance</p></div>
-</div>
-
-<!-- Gallery -->
-<h2>Gallery</h2>
-<div class="gallery-scroll">
-<div class="gallery-item" onclick="openModal(this)"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400" alt="Team"></div>
-<div class="gallery-item" onclick="openModal(this)"><img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400" alt="Office"></div>
-<div class="gallery-item" onclick="openModal(this)"><video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video></div>
-<div class="gallery-item" onclick="openModal(this)"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400" alt="Meeting"></div>
-<div class="gallery-item" onclick="openModal(this)"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400" alt="Innovation"></div>
+<section id="categories">
+<h2 class="section-title">Categories</h2>
+<div class="categories">
+  <div class="category-card"><img src="https://images.unsplash.com/photo-1581090700227-3eb0f460c6a2?w=50" alt="Electronics"><p>Electronics</p></div>
+  <div class="category-card"><img src="https://images.unsplash.com/photo-1606813902959-0e8d51e3f4db?w=50" alt="Fashion"><p>Fashion</p></div>
+  <div class="category-card"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=50" alt="Motors"><p>Motors</p></div>
+  <div class="category-card"><img src="https://images.unsplash.com/photo-1605902711622-cfb43c4432f3?w=50" alt="Property"><p>Property</p></div>
+  <div class="category-card"><img src="https://images.unsplash.com/photo-1584270354949-989e1fdd8f1f?w=50" alt="Jobs"><p>Jobs</p></div>
+  <div class="category-card"><img src="https://images.unsplash.com/photo-1604079620009-6fcb06d9b1d5?w=50" alt="Services"><p>Services</p></div>
 </div>
 </section>
 
-<!-- SELL TAB -->
+<!-- Sell -->
 <section id="sell">
-<h2>Sell Your Item</h2>
+<h2 class="section-title">Sell Your Item</h2>
 <form id="sellForm">
-  <label>Category</label>
-  <select id="sellCategory" required>
-    <option value="">Select Category</option>
-    <option>Electronics</option>
-    <option>Vehicles</option>
-    <option>Fashion</option>
-    <option>Real Estate</option>
-    <option>Home & Garden</option>
-    <option>Sports</option>
-    <option>Services</option>
-  </select>
-
-  <label>Title</label>
-  <input type="text" id="sellTitle" placeholder="Item Title" required>
-
-  <label>Description</label>
-  <textarea id="sellDesc" placeholder="Describe your item..." required></textarea>
-
-  <label>Location</label>
-  <input type="text" id="sellLocation" placeholder="City, State" required>
-
-  <label>Phone Number</label>
-  <input type="text" id="sellPhone" placeholder="Your phone number" required>
-
-  <label>Price (₦)</label>
-  <input type="number" id="sellPrice" placeholder="Amount" required>
-
-  <label>Upload Images/Videos</label>
-  <input type="file" id="sellMedia" multiple>
-
-  <button type="submit" class="btn">Post Ad</button>
+<select id="sellCategory" required>
+<option value="">Select Category</option>
+<option>Electronics</option>
+<option>Fashion</option>
+<option>Motors</option>
+<option>Property</option>
+<option>Jobs</option>
+<option>Services</option>
+</select>
+<input type="text" id="sellTitle" placeholder="Title" required>
+<textarea id="sellDescription" placeholder="Description" required></textarea>
+<input type="text" id="sellLocation" placeholder="Location" required>
+<input type="text" id="sellPhone" placeholder="Phone Number" required>
+<input type="number" id="sellAmount" placeholder="Amount ₦" required>
+<button type="submit">Post Ad</button>
 </form>
-
-<div id="userAds" style="margin-top:20px;"></div>
 </section>
 
-<!-- SAVED TAB -->
+<!-- Saved -->
 <section id="saved">
-<h2>Saved Items</h2>
-<div class="saved-grid">
-<div class="saved-card">Item 1</div>
-<div class="saved-card">Item 2</div>
-<div class="saved-card">Item 3</div>
-<div class="saved-card">Item 4</div>
-</div>
+<h2 class="section-title">Saved Ads</h2>
+<div class="card"><h4>Ad Title 1</h4><p>Saved Item Info</p></div>
+<div class="card"><h4>Ad Title 2</h4><p>Saved Item Info</p></div>
 </section>
 
-<!-- MESSAGES TAB -->
+<!-- Messages -->
 <section id="messages">
-<h2>Messages</h2>
-<p style="text-align:center;">Your messages will appear here.</p>
-<div id="inbox"></div>
+<h2 class="section-title">Messages</h2>
+<div class="card"><h4>John Doe</h4><p>Hi, I'm interested in your ad.</p></div>
+<div class="card"><h4>Jane Smith</h4><p>Is this still available?</p></div>
 </section>
 
-<!-- PROFILE TAB -->
+<!-- Profile -->
 <section id="profile">
-<h2>Profile & Wallets</h2>
-<div class="profile-card">
-<p><strong>Name:</strong> Sanusi Olubusayo</p>
-<p><strong>PalmPay:</strong> 7042850583</p>
-<p><strong>OPay Premium:</strong> 7048715359</p>
+<h2 class="section-title">Profile</h2>
+<div class="card" id="profileAds">
+<h4>Your Ads</h4>
+<p>No ads posted yet.</p>
+</div>
+<div class="card">
+<h4>Clients Who Viewed Your Ads</h4>
+<p id="clientViews">No views yet.</p>
 </div>
 
-<h3 style="text-align:center;margin-top:20px;">My Naira Wallet (PalmPay)</h3>
-<div class="profile-card">
-<p><strong>Balance:</strong> <span id="walletBalance">₦0</span></p>
-<form id="topupForm">
-<input type="text" id="cardNumber" placeholder="Card Number (Demo)" required>
-<input type="number" id="topupAmount" placeholder="Amount (₦)" min="1" required>
-<button class="btn" type="submit">Top Up PalmPay</button>
-</form>
+<!-- Premium Service -->
+<h3 style="text-align:center;margin-top:20px;">Premium Service</h3>
+<div class="profile-card" style="text-align:center;">
+  <div style="border:1px solid #1a365d; padding:15px; margin-bottom:10px; border-radius:8px;">
+    <h4>Classic Plan</h4>
+    <p>Price: ₦7,000</p>
+    <button class="btn" onclick="payPremium('Classic','PalmPay')">Pay with PalmPay</button>
+    <button class="btn" style="background:#ff7f00;color:white;" onclick="payPremium('Classic','OPay')">Pay with OPay</button>
+  </div>
+  <div style="border:1px solid #1a365d; padding:15px; margin-bottom:10px; border-radius:8px;">
+    <h4>Basic Plan</h4>
+    <p>Price: ₦5,000</p>
+    <button class="btn" onclick="payPremium('Basic','PalmPay')">Pay with PalmPay</button>
+    <button class="btn" style="background:#ff7f00;color:white;" onclick="payPremium('Basic','OPay')">Pay with OPay</button>
+  </div>
 </div>
 
-<h3 style="text-align:center;margin-top:20px;">Premium Service (OPay)</h3>
-<div class="profile-card">
-<p><strong>Premium Balance:</strong> <span id="premiumBalance">₦0</span></p>
-<form id="premiumForm">
-<input type="number" id="premiumAmount" placeholder="Amount (₦)" min="1" required>
-<button class="btn" type="submit">Top Up Premium</button>
-</form>
-</div>
-
-<h3 style="text-align:center;margin-top:20px;">My Ads</h3>
-<div id="myAdsContainer"></div>
-
-<h3 style="text-align:center;margin-top:20px;">Game Center</h3>
-<div style="text-align:center;">
-<a href="https://www.miniclip.com" target="_blank" class="btn">Play Games</a>
+<!-- Wallet Top-up -->
+<div class="card">
+<h4>Wallet Top-up</h4>
+<p>Add money to your account via PalmPay</p>
+<button class="btn" onclick="walletTopUp()">Top-up Wallet</button>
 </div>
 </section>
 
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-<button onclick="showTab('home')">🏠<span>Home</span></button>
-<button onclick="showTab('sell')">💼<span>Sell</span></button>
-<button onclick="showTab('saved')">💾<span>Saved</span></button>
-<button onclick="showTab('messages')">✉️<span>Messages</span></button>
-<button onclick="showTab('profile')">👤<span>Profile</span></button>
-</nav>
+<!-- Donate -->
+<section id="donate">
+<h2 class="section-title">Support Our Mission</h2>
+<div class="donate-content">
+<button class="btn" onclick="donatePayPal()">Donate via PayPal</button>
+<button class="btn" style="background:#00b894;color:white;" onclick="donatePalmPay()">Donate via PalmPay</button>
+</div>
+</section>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
-<button class="modal-close" onclick="closeModal()">×</button>
-<div class="modal-content" id="modalContent"></div>
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a href="#home" class="active">Home</a>
+<a href="#sell">Sell</a>
+<a href="#saved">Saved</a>
+<a href="#messages">Messages</a>
+<a href="#profile">Profile</a>
 </div>
 
 <script>
-// Bottom Tab Navigation
-function showTab(tabId){
-document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
-document.getElementById(tabId).classList.add('active');
+// Bottom nav scroll + active
+const navLinks = document.querySelectorAll('.bottom-nav a');
+navLinks.forEach(link=>{
+  link.addEventListener('click', e=>{
+    e.preventDefault();
+    navLinks.forEach(l=>l.classList.remove('active'));
+    link.classList.add('active');
+    document.querySelector(link.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// Premium Service Payment
+function payPremium(plan, method){
+  let account = '';
+  let amount = 0;
+  if(method==='PalmPay'){account='7042850583';}
+  else if(method==='OPay'){account='7048715359';}
+  if(plan==='Classic'){amount=7000;}
+  else if(plan==='Basic'){amount=5000;}
+  let url='';
+  if(method==='PalmPay'){url=`https://www.palmpay.com/pay?account=${account}&amount=${amount}`;}
+  else if(method==='OPay'){url=`https://www.opay.com/pay?account=${account}&amount=${amount}`;}
+  window.open(url,'_blank');
+  alert(`You will be redirected to ${method} to pay ₦${amount} for the ${plan} plan.`);
 }
 
-// Gallery Modal
-function openModal(element){
-const modal=document.getElementById('modal');
-const content=document.getElementById('modalContent');
-content.innerHTML='';
-if(element.querySelector('img')){
-let img=document.createElement('img');
-img.src=element.querySelector('img').src;
-content.appendChild(img);
-}else if(element.querySelector('video')){
-let video=document.createElement('video');
-video.src=element.querySelector('video').src;
-video.controls=true;
-video.autoplay=true;
-content.appendChild(video);
-}
-modal.classList.add('active');
-}
-function closeModal(){
-const modal=document.getElementById('modal');
-modal.classList.remove('active');
-const vid=modal.querySelector('video');
-if(vid) vid.pause();
+// Wallet Top-up
+function walletTopUp(){
+  let amount = prompt("Enter amount to top-up your wallet (₦):");
+  if(amount && amount>0){
+    window.open(`https://www.palmpay.com/pay?account=7042850583&amount=${amount}`,'_blank');
+  } else {alert("Enter a valid amount");}
 }
 
-// Demo Wallet
-let wallet=0;
-document.getElementById('topupForm').addEventListener('submit', function(e){
+// Donations
+function donatePayPal(){ window.open("https://www.paypal.com/paypalme/sanusiemmanuel876",'_blank'); }
+function donatePalmPay(){
+  let amount=prompt("Enter donation amount in ₦:");
+  if(amount && amount>0){window.open(`https://www.palmpay.com/pay?account=7042850583&amount=${amount}`,'_blank');}
+  else{alert("Please enter a valid amount");}
+}
+
+// Sell Form - Save to localStorage
+document.getElementById('sellForm').addEventListener('submit', function(e){
   e.preventDefault();
-  const amount=parseInt(document.getElementById('topupAmount').value);
-  const card=document.getElementById('cardNumber').value;
-  if(amount>0 && card){
-    wallet+=amount;
-    document.getElementById('walletBalance').innerText=`₦${wallet}`;
-    alert(`₦${amount} added to PalmPay Wallet!`);
-    this.reset();
-  } else {
-    alert('Please enter a valid card number and amount.');
+  const category = document.getElementById('sellCategory').value;
+  const title = document.getElementById('sellTitle').value;
+  const description = document.getElementById('sellDescription').value;
+  const location = document.getElementById('sellLocation').value;
+  const phone = document.getElementById('sellPhone').value;
+  const amount = document.getElementById('sellAmount').value;
+  const ad = { category, title, description, location, phone, amount, views:0 };
+  let ads = JSON.parse(localStorage.getItem('userAds')) || [];
+  ads.push(ad);
+  localStorage.setItem('userAds', JSON.stringify(ads));
+  this.reset();
+  displayAds();
+  alert('Your ad has been posted!');
+});
+
+// Display Ads in Profile
+function displayAds(){
+  const adsContainer = document.getElementById('profileAds');
+  let ads = JSON.parse(localStorage.getItem('userAds')) || [];
+  let html='';
+  if(ads.length===0){html='<h4>Your Ads</h4><p>No ads posted yet.</p>';}
+  else{
+    html='<h4>Your Ads</h4>';
+    ads.forEach((ad,index)=>{
+      html+=`<div style="border:1px solid #ccc;padding:8px;margin-bottom:5px;border-radius:5px;">
+        <strong>${ad.title}</strong> - ₦${ad.amount}<br>
+        ${ad.category} | ${ad.location}<br>
+        Phone: ${ad.phone}<br>
+        <button onclick="viewAd(${index})">View Details</button>
+      </div>`;
+    });
   }
-});
-
-// Premium Balance (OPay)
-let premiumBalance=0;
-document.getElementById('premiumForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const amount=parseInt(document.getElementById('premiumAmount').value);
-  if(amount>0){
-    premiumBalance+=amount;
-    document.getElementById('premiumBalance').innerText=`₦${premiumBalance}`;
-    alert(`₦${amount} added to Premium Service!`);
-    this.reset();
-  } else {
-    alert('Enter a valid amount.');
-  }
-});
-
-// Items & Categories
-const allItems=[
-{category:'Electronics', name:'iPhone 14', img:'https://images.unsplash.com/photo-1510552776732-41a67b20c84e?w=200'},
-{category:'Vehicles', name:'Toyota Corolla', img:'https://images.unsplash.com/photo-1549924231-f129b911e442?w=200'},
-{category:'Fashion', name:'Red Dress', img:'https://images.unsplash.com/photo-1520974735194-08cb012d4f36?w=200'},
-{category:'Electronics', name:'Laptop', img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=200'},
-{category:'Real Estate', name:'2 Bedroom Flat', img:'https://images.unsplash.com/photo-1560448204-3dfd3e5d61b7?w=200'}
-];
-
-function filterCategory(category){
-const grid=document.getElementById('itemsGrid');
-grid.innerHTML='';
-const filtered=allItems.filter(i=>i.category===category);
-if(filtered.length===0){
-grid.innerHTML='<p style="text-align:center;">No items in this category yet.</p>';
-return;
-}
-filtered.forEach(item=>{
-const div=document.createElement('div');
-div.classList.add('item-card');
-div.innerHTML=`<img src="${item.img}" alt="${item.name}"><p>${item.name}</p>`;
-grid.appendChild(div);
-});
+  adsContainer.innerHTML=html;
+  updateViews();
 }
 
-// Show default category
-filterCategory('Electronics');
+// Simulate client viewing an ad
+function viewAd(index){
+  let ads = JSON.parse(localStorage.getItem('userAds')) || [];
+  ads[index].views+=1;
+  localStorage.setItem('userAds', JSON.stringify(ads));
+  displayAds();
+}
 
-// Sell Form
-const sellForm = document.getElementById('sellForm');
-const myAdsContainer = document.getElementById('myAdsContainer');
-sellForm.addEventListener('submit', function(e){
-  e.preventDefault();
-  const ad = {
-    category: document.getElementById('sellCategory').value,
-    title: document.getElementById('sellTitle').value,
-    desc: document.getElementById('sellDesc').value,
-    location: document.getElementById('sellLocation').value,
-    phone: document.getElementById('sellPhone').value,
-    price: document.getElementById('sellPrice').value
-  };
-  const div = document.createElement('div');
-  div.classList.add('ad-card');
-  div.innerHTML=`<h3>${ad.title}</h3>
-                 <p>${ad.category} | ₦${ad.price}</p>
-                 <p>${ad.desc}</p>
-                 <p>${ad.location}</p>
-                 <p>Phone: ${ad.phone}</p>
-                 <p>Views: 0</p>`;
-  myAdsContainer.prepend(div);
-  alert("Your ad has been posted!");
-  sellForm.reset();
-});
+// Update client views count
+function updateViews(){
+  let ads = JSON.parse(localStorage.getItem('userAds')) || [];
+  let totalViews=0;
+  ads.forEach(ad=>{totalViews+=ad.views;});
+  document.getElementById('clientViews').innerText = totalViews>0 ? totalViews+' views' : 'No views yet.';
+}
+
+// Initial load
+displayAds();
 </script>
+
 </body>
 </html>
