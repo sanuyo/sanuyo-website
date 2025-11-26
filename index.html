@@ -489,21 +489,308 @@
                 margin-bottom: 1rem;
                 margin-right: 0;
             }
+            
+            body {
+                padding-bottom: 80px;
+            }
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #718096;
+            cursor: pointer;
+            transition: color 0.3s;
+            padding: 5px 15px;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: #1a365d;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+            min-height: calc(100vh - 150px);
+            padding-top: 80px;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Saved Page */
+        .saved-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .saved-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .saved-item h3 {
+            color: #1a365d;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Sell Page */
+        .sell-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Messages Page */
+        .messages-list {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .message-item {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .message-item:hover {
+            background: #f7fafc;
+        }
+
+        /* Profile Page */
+        .profile-section {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-header {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #1a365d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 1rem;
+        }
+
+        .profile-menu {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .profile-menu-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .profile-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-menu-item:hover {
+            background: #f7fafc;
+        }
+
+        .profile-menu-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #718096;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Premium Services Modal */
+        .premium-modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .premium-modal.active {
+            display: flex;
+        }
+
+        .premium-content {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .premium-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .premium-header h2 {
+            color: #1a365d;
+            margin-bottom: 0.5rem;
+        }
+
+        .premium-packages {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .premium-package {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .premium-package:hover {
+            transform: scale(1.05);
+        }
+
+        .package-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-features {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .close-premium {
+            background: #718096;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
         }
     </style>
 </head>
 <body>
+    <!-- Main Content Wrapper -->
+    <div id="mainContent">
+    
     <!-- Navigation -->
     <nav>
         <div class="container">
             <div class="logo">Sanuyo Enterprises</div>
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <ul id="menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#donate">Donate</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('home'); scrollToSection('features')">Features</a></li>
+                <li><a href="#" onclick="showPage('home'); scrollToSection('gallery')">Gallery</a></li>
+                <li><a href="#" onclick="showPage('home'); scrollToSection('donate')">Top Up</a></li>
+                <li><a href="#" onclick="showPage('home'); scrollToSection('contact')">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -528,32 +815,35 @@
                 </script>
             </div>
 
-            <h1>Business Communication Made Simple</h1>
-            <p>Connect with your team and clients through our professional chat platform</p>
-            <a href="#contact" class="btn">Get Started</a>
+            <h1>Buy, Sell & Connect</h1>
+            <p>Your trusted marketplace for everything - Post ads, find deals, grow your business</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="#" onclick="showPage('sell'); return false;" class="btn">Post Free Ad</a>
+                <a href="#" onclick="scrollToSection('features'); return false;" class="btn" style="background: white; color: #1a365d;">Browse Categories</a>
+            </div>
         </div>
     </section>
 
     <!-- Features Section -->
     <section id="features" class="features">
         <div class="container">
-            <h2 class="section-title">Our Features</h2>
+            <h2 class="section-title">Browse Categories</h2>
             
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">💬</div>
-                    <h3>Real-Time Chat</h3>
-                    <p>Instant messaging with your team members and clients for seamless communication and collaboration.</p>
+                <div class="feature-card" style="cursor: pointer;" onclick="showCategory('property')">
+                    <div class="feature-icon">🏠</div>
+                    <h3>Property</h3>
+                    <p>Houses, apartments, land & commercial property for sale and rent</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Secure & Private</h3>
-                    <p>Enterprise-grade security ensures your conversations and data remain protected at all times.</p>
+                <div class="feature-card" style="cursor: pointer;" onclick="showCategory('vehicles')">
+                    <div class="feature-icon">🚗</div>
+                    <h3>Vehicles</h3>
+                    <p>Cars, trucks, motorcycles, boats & auto parts</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3>Team Collaboration</h3>
-                    <p>Create channels, share files, and work together efficiently with integrated team tools.</p>
+                <div class="feature-card" style="cursor: pointer;" onclick="showCategory('electronics')">
+                    <div class="feature-icon">📱</div>
+                    <h3>Electronics</h3>
+                    <p>Mobile phones, tablets, computers, TVs & accessories</p>
                 </div>
             </div>
 
@@ -575,20 +865,35 @@
             </div>
 
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Cross-Platform</h3>
-                    <p>Access your conversations from any device - desktop, tablet, or mobile seamlessly.</p>
+                <div class="feature-card" style="cursor: pointer;" onclick="showCategory('furniture')">
+                    <div class="feature-icon">🪑</div>
+                    <h3>Home & Furniture</h3>
+                    <p>Furniture, appliances, home decor & garden items</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Analytics</h3>
-                    <p>Track engagement and communication patterns with comprehensive analytics and insights.</p>
+                <div class="feature-card" style="cursor: pointer;" onclick="showCategory('fashion')">
+                    <div class="feature-icon">👔</div>
+                    <h3>Fashion</h3>
+                    <p>Clothing, shoes, bags, watches & accessories</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Fast Performance</h3>
-                    <p>Lightning-fast messaging with minimal latency for efficient business communication.</p>
+                <div class="feature-card" style="cursor: pointer;" onclick="showCategory('services')">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Services</h3>
+                    <p>Professional services, repairs, tutoring & more</p>
+                </div>
+                <div class="feature-card" style="cursor: pointer;" onclick="showCategory('jobs')">
+                    <div class="feature-icon">💼</div>
+                    <h3>Jobs</h3>
+                    <p>Job vacancies, freelance work & career opportunities</p>
+                </div>
+                <div class="feature-card" style="cursor: pointer;" onclick="showCategory('pets')">
+                    <div class="feature-icon">🐕</div>
+                    <h3>Animals & Pets</h3>
+                    <p>Dogs, cats, birds, fish & pet accessories</p>
+                </div>
+                <div class="feature-card" style="cursor: pointer;" onclick="showCategory('other')">
+                    <div class="feature-icon">📦</div>
+                    <h3>Other Items</h3>
+                    <p>Everything else - toys, books, sports & more</p>
                 </div>
             </div>
         </div>
@@ -669,38 +974,39 @@
         <div class="modal-content" id="modalContent"></div>
     </div>
 
-    <!-- Donate Section -->
+    <!-- Top Up Section -->
     <section id="donate" class="donate">
         <div class="container">
-            <h2 class="section-title">Support Our Mission</h2>
+            <h2 class="section-title">💰 Top Up Your Balance</h2>
             <div class="donate-content">
                 <p class="donate-text">
-                    Your generous donations help us continue providing exceptional business communication services 
-                    and support our ongoing development. Every contribution makes a difference!
+                    Add funds to your Sanuyo Enterprises wallet to boost your ads, purchase premium features, 
+                    and unlock exclusive services. Choose an amount below or enter a custom top-up value!
                 </p>
 
                 <div class="donate-options">
-                    <button class="donate-amount" onclick="donateAmount(10)">$10</button>
-                    <button class="donate-amount" onclick="donateAmount(25)">$25</button>
-                    <button class="donate-amount" onclick="donateAmount(50)">$50</button>
-                    <button class="donate-amount" onclick="donateAmount(100)">$100</button>
+                    <button class="donate-amount" onclick="topUpAmount(500)">₦500</button>
+                    <button class="donate-amount" onclick="topUpAmount(1000)">₦1,000</button>
+                    <button class="donate-amount" onclick="topUpAmount(2000)">₦2,000</button>
+                    <button class="donate-amount" onclick="topUpAmount(5000)">₦5,000</button>
+                    <button class="donate-amount" onclick="topUpAmount(10000)">₦10,000</button>
                 </div>
 
                 <a href="https://www.paypal.com/paypalme/sanusiemmanuel876" target="_blank" class="paypal-button">
-                    <span class="paypal-logo">💳</span> Donate via PayPal
+                    <span class="paypal-logo">💳</span> Top Up via PayPal
                 </a>
 
                 <div class="custom-amount">
                     <p style="margin-bottom: 1rem; font-size: 1.1rem;">Or enter a custom amount:</p>
-                    <input type="number" id="customAmount" placeholder="Enter amount" min="1">
-                    <button class="paypal-button" onclick="donateCustomAmount()">
-                        <span class="paypal-logo">💳</span> Donate
+                    <input type="number" id="customTopUpAmount" placeholder="Enter amount (₦)" min="100">
+                    <button class="paypal-button" onclick="topUpCustomAmount()">
+                        <span class="paypal-logo">💳</span> Top Up
                     </button>
                 </div>
 
                 <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.9;">
                     PayPal Account: sanusiemmanuel876@gmail.com<br>
-                    Thank you for your support! 🙏
+                    💡 Funds will be credited to your wallet instantly after payment
                 </p>
             </div>
         </div>
@@ -737,6 +1043,92 @@
         </div>
     </section>
 
+    <!-- Profile Sections on Home Page -->
+    <section style="padding: 80px 2rem; background: #f7fafc;">
+        <div class="container">
+            <h2 class="section-title">Your Account Dashboard</h2>
+            
+            <div class="profile-header" style="max-width: 600px; margin: 0 auto 2rem;">
+                <div class="profile-avatar">👤</div>
+                <h2>Emmanuel Gift</h2>
+                <p style="color: #718096;">070428505588</p>
+                <p style="color: #718096; font-size: 0.9rem;">sanusiemmanuel876@gmail.com</p>
+            </div>
+            
+            <!-- Advice Banner -->
+            <div style="background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%); color: white; padding: 1rem; border-radius: 10px; margin-bottom: 2rem; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <strong>💡 Advice:</strong> Get 15x more clients with TOPs!
+            </div>
+            
+            <!-- Profile Grid Menu -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto;">
+                <div style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">📝</div>
+                    <div style="font-weight: bold; font-size: 1.1rem;">My ads</div>
+                    <span style="background: red; color: white; border-radius: 50%; padding: 4px 10px; font-size: 0.8rem; display: inline-block; margin-top: 0.5rem;">2</span>
+                </div>
+                
+                <div style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">📈</div>
+                    <div style="font-weight: bold; font-size: 1.1rem;">Pro Sales</div>
+                </div>
+                
+                <div style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">👥</div>
+                    <div style="font-weight: bold; font-size: 1.1rem;">My clients</div>
+                    <span style="background: red; color: white; border-radius: 50%; padding: 4px 10px; font-size: 0.8rem; display: inline-block; margin-top: 0.5rem;">2</span>
+                </div>
+                
+                <div onclick="showPremiumServices()" style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">💎</div>
+                    <div style="font-weight: bold; font-size: 1.1rem;">Premium Services</div>
+                    <div style="font-size: 0.9rem; color: #718096; margin-top: 0.3rem;">Boost Your Ads</div>
+                </div>
+                
+                <div style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">💬</div>
+                    <div style="font-weight: bold; font-size: 1.1rem;">Feedback</div>
+                </div>
+                
+                <div style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">₦</div>
+                    <div style="font-weight: bold; font-size: 1.5rem;">₦ 0</div>
+                    <div style="font-size: 0.9rem; color: #718096; margin-top: 0.3rem;">MY BALANCE</div>
+                </div>
+                
+                <div style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">📊</div>
+                    <div style="font-weight: bold; font-size: 1.1rem;">Performance</div>
+                </div>
+                
+                <div style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">📞</div>
+                    <div style="font-weight: bold; font-size: 1.1rem;">Request help</div>
+                </div>
+                
+                <div style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🔔</div>
+                    <div style="font-weight: bold; font-size: 1.1rem;">Notifications</div>
+                </div>
+                
+                <div style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">❓</div>
+                    <div style="font-weight: bold; font-size: 1.1rem;">FAQ</div>
+                </div>
+                
+                <div style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">👤</div>
+                    <div style="font-weight: bold; font-size: 1.1rem;">Followers</div>
+                </div>
+                
+                <div style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎮</div>
+                    <div style="font-weight: bold; font-size: 1.1rem;">Game centre</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -760,8 +1152,333 @@
             <p>&copy; 2024 Sanuyo Enterprises. All rights reserved.</p>
         </div>
     </footer>
+    
+    </div>
+    <!-- End Main Content -->
+
+    <!-- SAVED PAGE -->
+    <div id="savedPage" class="page-section">
+        <div class="container" style="padding-top: 100px;">
+            <h2 class="section-title">Saved Items</h2>
+            <div class="empty-state">
+                <div class="empty-state-icon">🔖</div>
+                <h3>No Saved Items Yet</h3>
+                <p>Items you save will appear here</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SELL PAGE -->
+    <div id="sellPage" class="page-section">
+        <div class="container" style="padding-top: 100px;">
+            <h2 class="section-title">Post Your Ad</h2>
+            
+            <div class="contact-form" style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <div id="adSuccessMessage" class="success-message">
+                    Your ad has been posted successfully! ✅
+                </div>
+                
+                <form id="postAdForm" onsubmit="handleAdSubmit(event)">
+                    <div class="form-group">
+                        <label for="adTitle">Title*</label>
+                        <input type="text" id="adTitle" name="adTitle" placeholder="What are you selling?" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="adCategory">Category*</label>
+                        <select id="adCategory" name="adCategory" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 5px; font-size: 1rem;" required>
+                            <option value="">Select category...</option>
+                            <option value="property">🏠 Property</option>
+                            <option value="vehicles">🚗 Vehicles</option>
+                            <option value="electronics">📱 Electronics</option>
+                            <option value="furniture">🪑 Home & Furniture</option>
+                            <option value="fashion">👔 Fashion</option>
+                            <option value="services">🔧 Services</option>
+                            <option value="jobs">💼 Jobs</option>
+                            <option value="pets">🐕 Animals & Pets</option>
+                            <option value="other">📦 Other Items</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="adPrice">Price (₦)*</label>
+                        <input type="number" id="adPrice" name="adPrice" placeholder="Enter price in Naira" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="adDescription">Description*</label>
+                        <textarea id="adDescription" name="adDescription" placeholder="Describe your item..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="adLocation">Location*</label>
+                        <input type="text" id="adLocation" name="adLocation" placeholder="City or area" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="adName">Your Name*</label>
+                        <input type="text" id="adName" name="adName" value="Emmanuel Gift" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="adPhone">Phone Number*</label>
+                        <input type="tel" id="adPhone" name="adPhone" value="070428505588" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>📸 Add Photos (Optional)</label>
+                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 0.5rem;">
+                            Note: To add photos, you'll need to upload them to an image hosting service (like Imgur) and provide the links after posting
+                        </p>
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%;">Post Ad</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MESSAGES PAGE -->
+    <div id="messagesPage" class="page-section">
+        <div class="container" style="padding-top: 100px;">
+            <h2 class="section-title">Messages</h2>
+            <div class="empty-state">
+                <div class="empty-state-icon">💬</div>
+                <h3>No Messages Yet</h3>
+                <p>Your conversations will appear here</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFILE PAGE -->
+    <div id="profilePage" class="page-section">
+        <div class="profile-section" style="padding-top: 100px;">
+            <div class="profile-header">
+                <div class="profile-avatar">👤</div>
+                <h2>Emmanuel Gift</h2>
+                <p style="color: #718096;">070428505588</p>
+                <p style="color: #718096; font-size: 0.9rem;">sanusiemmanuel876@gmail.com</p>
+            </div>
+            
+            <!-- Advice Banner -->
+            <div style="background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%); color: white; padding: 1rem; border-radius: 10px; margin-bottom: 2rem; text-align: center;">
+                <strong>💡 Advice:</strong> Get 15x more clients with TOPs!
+            </div>
+            
+            <!-- Profile Grid Menu -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                <div class="profile-menu-item" style="background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: none;">
+                    <span class="profile-menu-icon" style="font-size: 2rem;">📝</span>
+                    <div>
+                        <strong>My ads</strong>
+                        <span style="background: red; color: white; border-radius: 50%; padding: 2px 8px; font-size: 0.8rem; margin-left: 5px;">2</span>
+                    </div>
+                </div>
+                
+                <div class="profile-menu-item" style="background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: none;">
+                    <span class="profile-menu-icon" style="font-size: 2rem;">📈</span>
+                    <div><strong>Pro Sales</strong></div>
+                </div>
+                
+                <div class="profile-menu-item" style="background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: none;">
+                    <span class="profile-menu-icon" style="font-size: 2rem;">👥</span>
+                    <div>
+                        <strong>My clients</strong>
+                        <span style="background: red; color: white; border-radius: 50%; padding: 2px 8px; font-size: 0.8rem; margin-left: 5px;">2</span>
+                    </div>
+                </div>
+                
+                <div class="profile-menu-item" onclick="showPremiumServices()" style="background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: none; cursor: pointer;">
+                    <span class="profile-menu-icon" style="font-size: 2rem;">💎</span>
+                    <div><strong>Premium Services</strong></div>
+                </div>
+                
+                <div class="profile-menu-item" style="background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: none;">
+                    <span class="profile-menu-icon" style="font-size: 2rem;">💬</span>
+                    <div><strong>Feedback</strong></div>
+                </div>
+                
+                <div class="profile-menu-item" style="background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: none;">
+                    <span class="profile-menu-icon" style="font-size: 2rem;">₦</span>
+                    <div>
+                        <strong>₦ 0</strong><br>
+                        <span style="font-size: 0.9rem;">MY BALANCE</span>
+                    </div>
+                </div>
+                
+                <div class="profile-menu-item" style="background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: none;">
+                    <span class="profile-menu-icon" style="font-size: 2rem;">📊</span>
+                    <div><strong>Performance</strong></div>
+                </div>
+                
+                <div class="profile-menu-item" style="background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: none;">
+                    <span class="profile-menu-icon" style="font-size: 2rem;">📞</span>
+                    <div><strong>Request help</strong></div>
+                </div>
+                
+                <div class="profile-menu-item" style="background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: none;">
+                    <span class="profile-menu-icon" style="font-size: 2rem;">🔔</span>
+                    <div><strong>Notifications</strong></div>
+                </div>
+                
+                <div class="profile-menu-item" style="background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: none;">
+                    <span class="profile-menu-icon" style="font-size: 2rem;">❓</span>
+                    <div><strong>FAQ</strong></div>
+                </div>
+                
+                <div class="profile-menu-item" style="background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: none;">
+                    <span class="profile-menu-icon" style="font-size: 2rem;">👤</span>
+                    <div><strong>Followers</strong></div>
+                </div>
+                
+                <div class="profile-menu-item" style="background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: none;">
+                    <span class="profile-menu-icon" style="font-size: 2rem;">🎮</span>
+                    <div><strong>Game centre</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav">
+        <a class="nav-item active" onclick="showPage('home')" id="navHome">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </a>
+        <a class="nav-item" onclick="showPage('saved')" id="navSaved">
+            <div class="nav-icon">🔖</div>
+            <div class="nav-label">Saved</div>
+        </a>
+        <a class="nav-item" onclick="showPage('sell')" id="navSell">
+            <div class="nav-icon">➕</div>
+            <div class="nav-label">Sell</div>
+        </a>
+        <a class="nav-item" onclick="showPage('messages')" id="navMessages">
+            <div class="nav-icon">💬</div>
+            <div class="nav-label">Messages</div>
+        </a>
+        <a class="nav-item" onclick="showPage('profile')" id="navProfile">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">Profile</div>
+        </a>
+    </div>
+
+    <!-- Premium Services Modal -->
+    <div id="premiumModal" class="premium-modal" onclick="closePremiumModal()">
+        <div class="premium-content" onclick="event.stopPropagation()">
+            <div class="premium-header">
+                <h2>💎 Premium Services</h2>
+                <p>Boost your ads and get more visibility!</p>
+            </div>
+
+            <div class="premium-packages">
+                <div class="premium-package" onclick="buyPremium(10)">
+                    <div class="package-icon">🥉</div>
+                    <div class="package-title">Basic Boost</div>
+                    <div class="package-price">$10</div>
+                    <div class="package-features">
+                        ✓ Featured ad for 3 days<br>
+                        ✓ 2x more visibility<br>
+                        ✓ Priority in search results
+                    </div>
+                </div>
+
+                <div class="premium-package" onclick="buyPremium(25)">
+                    <div class="package-icon">🥈</div>
+                    <div class="package-title">Standard Boost</div>
+                    <div class="package-price">$25</div>
+                    <div class="package-features">
+                        ✓ Featured ad for 7 days<br>
+                        ✓ 5x more visibility<br>
+                        ✓ Top of category listing<br>
+                        ✓ Social media promotion
+                    </div>
+                </div>
+
+                <div class="premium-package" onclick="buyPremium(50)">
+                    <div class="package-icon">🥇</div>
+                    <div class="package-title">Premium Boost</div>
+                    <div class="package-price">$50</div>
+                    <div class="package-features">
+                        ✓ Featured ad for 14 days<br>
+                        ✓ 10x more visibility<br>
+                        ✓ Homepage featured spot<br>
+                        ✓ Email newsletter feature<br>
+                        ✓ Priority customer support
+                    </div>
+                </div>
+
+                <div class="premium-package" onclick="buyPremium(100)">
+                    <div class="package-icon">💎</div>
+                    <div class="package-title">Diamond Boost</div>
+                    <div class="package-price">$100</div>
+                    <div class="package-features">
+                        ✓ Featured ad for 30 days<br>
+                        ✓ Maximum visibility<br>
+                        ✓ All premium features<br>
+                        ✓ Dedicated account manager<br>
+                        ✓ Custom marketing campaign<br>
+                        ✓ Analytics dashboard
+                    </div>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 1.5rem; color: #718096; font-size: 0.9rem;">
+                Payment via PayPal: sanusiemmanuel876@gmail.com
+            </p>
+
+            <button class="close-premium" onclick="closePremiumModal()">Close</button>
+        </div>
+    </div>
 
     <script>
+        // Page Navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('savedPage').classList.remove('active');
+            document.getElementById('sellPage').classList.remove('active');
+            document.getElementById('messagesPage').classList.remove('active');
+            document.getElementById('profilePage').classList.remove('active');
+            
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected page and activate nav item
+            if (pageName === 'home') {
+                document.getElementById('mainContent').style.display = 'block';
+                document.getElementById('navHome').classList.add('active');
+                window.scrollTo(0, 0);
+            } else if (pageName === 'saved') {
+                document.getElementById('savedPage').classList.add('active');
+                document.getElementById('navSaved').classList.add('active');
+            } else if (pageName === 'sell') {
+                document.getElementById('sellPage').classList.add('active');
+                document.getElementById('navSell').classList.add('active');
+            } else if (pageName === 'messages') {
+                document.getElementById('messagesPage').classList.add('active');
+                document.getElementById('navMessages').classList.add('active');
+            } else if (pageName === 'profile') {
+                document.getElementById('profilePage').classList.add('active');
+                document.getElementById('navProfile').classList.add('active');
+            }
+        }
+        
+        function showCategory(category) {
+            alert(`Showing ${category} listings. In a live version, this would show all ads in this category!`);
+        }
+        
+        function scrollToSection(sectionId) {
+            setTimeout(() => {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        }
+        
         function toggleMenu() {
             const menu = document.getElementById('menu');
             menu.classList.toggle('active');
@@ -784,6 +1501,32 @@
             
             // Scroll to top of contact section
             document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleAdSubmit(e) {
+            e.preventDefault();
+            
+            // Show success message
+            const successMsg = document.getElementById('adSuccessMessage');
+            successMsg.style.display = 'block';
+            
+            // In a real application, this would send the ad data to a server
+            // For now, we'll just show a success message
+            
+            // Reset form
+            document.getElementById('postAdForm').reset();
+            
+            // Pre-fill name and phone
+            document.getElementById('adName').value = 'Emmanuel Gift';
+            document.getElementById('adPhone').value = '070428505588';
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 5000);
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Gallery modal functions
@@ -844,9 +1587,48 @@
             }
         }
 
-        // Smooth scrolling for navigation links
+        // Top Up functions (in Naira - converts to USD for PayPal)
+        function topUpAmount(nairaAmount) {
+            // Convert Naira to approximate USD (1 USD ≈ 1500 NGN)
+            const usdAmount = Math.ceil(nairaAmount / 1500);
+            window.open(`https://www.paypal.com/paypalme/sanusiemmanuel876/${usdAmount}`, '_blank');
+        }
+
+        function topUpCustomAmount() {
+            const nairaAmount = document.getElementById('customTopUpAmount').value;
+            if (nairaAmount && nairaAmount >= 100) {
+                // Convert Naira to approximate USD
+                const usdAmount = Math.ceil(nairaAmount / 1500);
+                window.open(`https://www.paypal.com/paypalme/sanusiemmanuel876/${usdAmount}`, '_blank');
+            } else {
+                alert('Please enter a valid amount (minimum ₦100)');
+            }
+        }
+
+        // Premium Services functions
+        function showPremiumServices() {
+            document.getElementById('premiumModal').classList.add('active');
+        }
+
+        function closePremiumModal() {
+            document.getElementById('premiumModal').classList.remove('active');
+        }
+
+        function buyPremium(amount) {
+            window.open(`https://www.paypal.com/paypalme/sanusiemmanuel876/${amount}`, '_blank');
+        }
+
+        // Close premium modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePremiumModal();
+            }
+        });
+
+        // Smooth scrolling for navigation links (when on home page)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('onclick')) return; // Skip if has onclick
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
