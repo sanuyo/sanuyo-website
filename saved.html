@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saved Items - Sanuyo</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        background: #f3f3f3;
+        padding-bottom: 80px;
+    }
+
+    header {
+        background: #6A0DAD;
+        padding: 15px;
+        color: white;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    /* Product Grid */
+    .products {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 15px;
+    }
+    .product-card {
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .product-card img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+    .product-title {
+        margin-top: 5px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .price {
+        font-size: 15px;
+        font-weight: 600;
+        color: #6A0DAD;
+        margin-top: 4px;
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        border-top: 1px solid #ddd;
+        z-index: 100;
+    }
+    .bnav-item {
+        text-align: center;
+        font-size: 13px;
+        color: #333;
+    }
+</style>
+</head>
+
+<body>
+
+<header>Saved Items</header>
+
+<div id="products" class="products">
+    <p style="grid-column: span 2; text-align:center;">Loading saved items...</p>
+</div>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+    <div class="bnav-item" onclick="location.href='home.html'">Home</div>
+    <div class="bnav-item" onclick="location.href='sell.html'">Sell</div>
+    <div class="bnav-item" onclick="location.href='saved.html'">Saved</div>
+    <div class="bnav-item" onclick="location.href='messages.html'">Messages</div>
+    <div class="bnav-item" onclick="location.href='profile.html'">Profile</div>
+</div>
+
+<!-- Firebase -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { 
+        getFirestore, collection, getDocs, query, where 
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+      authDomain: "sanuyo-website.firebaseapp.com",
+      projectId: "sanuyo-website",
+      storageBucket: "sanuyo-website.firebasestorage.app",
+      messagingSenderId: "765213630366",
+      appId: "1:765213630366:web:03279e61a58289b088808f"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const USER_ID = "demoUser1"; 
+    // Later we will replace with real login authentication.
+
+    async function loadSavedItems() {
+        const container = document.getElementById("products");
+        container.innerHTML = "";
+
+        // Saved items collection: saved -> userId -> items
+        const savedRef = collection(db, "saved");
+        const q = query(savedRef, where("userId", "==", USER_ID));
+
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+            container.innerHTML =
+                "<p style='grid-column: span 2; text-align:center;'>No saved items yet.</p>";
+            return;
+        }
+
+        snap.forEach((docItem) => {
+            const item = docItem.data();
+
+            const card = `
+                <div class="product-card">
+                    <img src="${item.imageURL}" alt="">
+                    <div class="product-title">${item.title}</div>
+                    <div class="price">₦${item.price}</div>
+                </div>
+            `;
+
+            container.innerHTML += card;
+        });
+    }
+
+    loadSavedItems();
+</script>
+
+</body>
+</html>
