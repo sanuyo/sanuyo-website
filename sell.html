@@ -54,6 +54,7 @@
 <h2>Upload a Product</h2>
 
 <div class="container">
+
     <input type="text" id="title" placeholder="Product title">
 
     <textarea id="description" rows="4" placeholder="Describe the product"></textarea>
@@ -68,6 +69,8 @@
         <option>Computers</option>
         <option>Home Appliances</option>
     </select>
+
+    <input type="number" id="phone" placeholder="Your Phone Number">
 
     <label>Select Image</label>
     <input type="file" id="imageFile" accept="image/*">
@@ -84,9 +87,7 @@
     import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-    // -------------------------------
-    // YOUR FIREBASE CONFIG INSERTED
-    // -------------------------------
+    // YOUR FIREBASE CONFIG
     const firebaseConfig = {
       apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
       authDomain: "sanuyo-website.firebaseapp.com",
@@ -101,8 +102,8 @@
     const db = getFirestore(app);
     const storage = getStorage();
 
-    // PREVIEW IMAGE
-    document.getElementById("imageFile").addEventListener("change", function () {
+    // IMAGE PREVIEW
+    document.getElementById("imageFile").addEventListener("change", function() {
         const file = this.files[0];
         const preview = document.getElementById("preview");
         preview.src = URL.createObjectURL(file);
@@ -115,33 +116,34 @@
         const desc = document.getElementById("description").value;
         const price = document.getElementById("price").value;
         const category = document.getElementById("category").value;
+        const phone = document.getElementById("phone").value;
         const file = document.getElementById("imageFile").files[0];
 
-        if (!title || !desc || !price || !category || !file) {
-            alert("Please complete all fields");
+        if (!title || !desc || !price || !category || !phone || !file) {
+            alert("Fill all fields.");
             return;
         }
 
-        onAuthStateChanged(auth, async (user) => {
+        onAuthStateChanged(auth, async(user) => {
             if (!user) {
-                alert("You must be logged in to upload an item.");
+                alert("Login first before uploading.");
                 return;
             }
 
-            // Upload image to Storage
+            // Upload image
             const path = `products/${user.uid}/${Date.now()}_${file.name}`;
             const storageRef = ref(storage, path);
-
             await uploadBytes(storageRef, file);
             const imageURL = await getDownloadURL(storageRef);
 
-            // Save item to Firestore
+            // Save to Firestore
             await addDoc(collection(db, "products"), {
                 sellerId: user.uid,
-                title: title,
+                title,
                 description: desc,
                 price: Number(price),
-                category: category,
+                category,
+                phone,
                 image: imageURL,
                 createdAt: new Date()
             });
