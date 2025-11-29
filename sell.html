@@ -1,155 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sell an Item - Sanuyo Marketplace</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sell Item - Sanuyo</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
             background: #f5f5f5;
+            padding: 20px;
         }
-
-        h2 {
-            text-align: center;
-        }
-
         .container {
             max-width: 500px;
             margin: auto;
             background: white;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ccc;
         }
-
-        input, textarea, select, button {
+        input, textarea {
             width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #bbb;
+            border-radius: 4px;
         }
-
         button {
-            background: #007bff;
+            width: 100%;
+            background: #008cff;
             color: white;
+            padding: 12px;
             border: none;
+            border-radius: 4px;
             cursor: pointer;
         }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        #preview {
-            width: 100%;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
+        button:hover { background: #006fd3; }
     </style>
+
+    <!-- Firebase SDKs (Option B – Using CDN links) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
 </head>
+
 <body>
 
-<h2>Upload a Product</h2>
-
 <div class="container">
+    <h2>Sell an Item</h2>
 
-    <input type="text" id="title" placeholder="Product title">
+    <input type="text" id="sellerName" placeholder="Your Name" required>
+    <input type="text" id="phone" placeholder="Phone Number" required>
+    <input type="text" id="productName" placeholder="Product Name" required>
+    <textarea id="description" placeholder="Product Description" required></textarea>
+    <input type="number" id="price" placeholder="Price (₦)" required>
+    <input type="text" id="imageUrl" placeholder="Image URL (optional)">
 
-    <textarea id="description" rows="4" placeholder="Describe the product"></textarea>
+    <button onclick="submitProduct()">Submit Product</button>
 
-    <input type="number" id="price" placeholder="Price (₦)">
-
-    <select id="category">
-        <option value="">Select Category</option>
-        <option>Phones</option>
-        <option>Electronics</option>
-        <option>Fashion</option>
-        <option>Computers</option>
-        <option>Home Appliances</option>
-    </select>
-
-    <input type="number" id="phone" placeholder="Your Phone Number">
-
-    <label>Select Image</label>
-    <input type="file" id="imageFile" accept="image/*">
-
-    <img id="preview" style="display:none;">
-
-    <button onclick="uploadProduct()">Upload Product</button>
+    <p id="status" style="margin-top: 10px; color: green;"></p>
 </div>
 
-<!-- FIREBASE -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
-
-    // YOUR FIREBASE CONFIG
+<script>
+    // Firebase configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-      authDomain: "sanuyo-website.firebaseapp.com",
-      projectId: "sanuyo-website",
-      storageBucket: "sanuyo-website.firebasestorage.app",
-      messagingSenderId: "765213630366",
-      appId: "1:765213630366:web:03279e61a58289b088808f"
+        apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+        authDomain: "sanuyo-website.firebaseapp.com",
+        projectId: "sanuyo-website",
+        storageBucket: "sanuyo-website.firebasestorage.app",
+        messagingSenderId: "765213630366",
+        appId: "1:765213630366:web:03279e61a58289b088808f"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const db = getFirestore(app);
-    const storage = getStorage();
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-    // IMAGE PREVIEW
-    document.getElementById("imageFile").addEventListener("change", function() {
-        const file = this.files[0];
-        const preview = document.getElementById("preview");
-        preview.src = URL.createObjectURL(file);
-        preview.style.display = "block";
-    });
+    // Add product to Firestore
+    function submitProduct() {
+        let name = document.getElementById("sellerName").value;
+        let phone = document.getElementById("phone").value;
+        let product = document.getElementById("productName").value;
+        let desc = document.getElementById("description").value;
+        let price = document.getElementById("price").value;
+        let img = document.getElementById("imageUrl").value;
 
-    // UPLOAD PRODUCT
-    async function uploadProduct() {
-        const title = document.getElementById("title").value;
-        const desc = document.getElementById("description").value;
-        const price = document.getElementById("price").value;
-        const category = document.getElementById("category").value;
-        const phone = document.getElementById("phone").value;
-        const file = document.getElementById("imageFile").files[0];
-
-        if (!title || !desc || !price || !category || !phone || !file) {
-            alert("Fill all fields.");
+        if (!name || !phone || !product || !desc || !price) {
+            alert("Please fill all required fields.");
             return;
         }
 
-        onAuthStateChanged(auth, async(user) => {
-            if (!user) {
-                alert("Login first before uploading.");
-                return;
-            }
-
-            // Upload image
-            const path = `products/${user.uid}/${Date.now()}_${file.name}`;
-            const storageRef = ref(storage, path);
-            await uploadBytes(storageRef, file);
-            const imageURL = await getDownloadURL(storageRef);
-
-            // Save to Firestore
-            await addDoc(collection(db, "products"), {
-                sellerId: user.uid,
-                title,
-                description: desc,
-                price: Number(price),
-                category,
-                phone,
-                image: imageURL,
-                createdAt: new Date()
-            });
-
-            alert("Product uploaded successfully!");
-            window.location.href = "index.html";
+        db.collection("products").add({
+            sellerName: name,
+            phone: phone,
+            productName: product,
+            description: desc,
+            price: Number(price),
+            imageUrl: img,
+            timestamp: new Date()
+        })
+        .then(() => {
+            document.getElementById("status").innerText = "Product submitted successfully!";
+        })
+        .catch((error) => {
+            alert("Error: " + error);
         });
     }
 </script>
