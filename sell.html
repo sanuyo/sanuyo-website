@@ -1,111 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sell Item - Sanuyo</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sell Your Item - Sanuyo Market</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            padding: 20px;
-        }
-        .container {
-            max-width: 500px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px #ccc;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #bbb;
-            border-radius: 4px;
-        }
-        button {
-            width: 100%;
-            background: #008cff;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover { background: #006fd3; }
-    </style>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
 
-    <!-- Firebase SDKs (Option B – Using CDN links) -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+    .container {
+      max-width: 450px;
+      background: #fff;
+      padding: 20px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+
+    input, textarea {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      background: #007bff;
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .preview {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      display: none;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h2>Sell an Item</h2>
+  <div class="container">
+    <h2>Post an Item for Sale</h2>
 
-    <input type="text" id="sellerName" placeholder="Your Name" required>
-    <input type="text" id="phone" placeholder="Phone Number" required>
-    <input type="text" id="productName" placeholder="Product Name" required>
-    <textarea id="description" placeholder="Product Description" required></textarea>
-    <input type="number" id="price" placeholder="Price (₦)" required>
-    <input type="text" id="imageUrl" placeholder="Image URL (optional)">
+    <form id="sellForm">
 
-    <button onclick="submitProduct()">Submit Product</button>
+      <input type="text" id="itemName" placeholder="Item Name" required />
 
-    <p id="status" style="margin-top: 10px; color: green;"></p>
-</div>
+      <input type="number" id="price" placeholder="Price (₦)" required />
 
-<script>
-    // Firebase configuration
+      <input type="text" id="phone" placeholder="Phone Number" required />
+
+      <textarea id="description" placeholder="Description" rows="4" required></textarea>
+
+      <input type="file" id="imageUpload" accept="image/*" required />
+
+      <img id="previewImage" class="preview" />
+
+      <button type="submit">Upload Item</button>
+    </form>
+
+    <p id="status"></p>
+  </div>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc } 
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
     const firebaseConfig = {
-        apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-        authDomain: "sanuyo-website.firebaseapp.com",
-        projectId: "sanuyo-website",
-        storageBucket: "sanuyo-website.firebasestorage.app",
-        messagingSenderId: "765213630366",
-        appId: "1:765213630366:web:03279e61a58289b088808f"
+      apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+      authDomain: "sanuyo-website.firebaseapp.com",
+      projectId: "sanuyo-website",
+      storageBucket: "sanuyo-website.firebasestorage.app",
+      messagingSenderId: "765213630366",
+      appId: "1:765213630366:web:03279e61a58289b088808f"
     };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    // Add product to Firestore
-    function submitProduct() {
-        let name = document.getElementById("sellerName").value;
-        let phone = document.getElementById("phone").value;
-        let product = document.getElementById("productName").value;
-        let desc = document.getElementById("description").value;
-        let price = document.getElementById("price").value;
-        let img = document.getElementById("imageUrl").value;
+    // IMAGE PREVIEW
+    const imageUpload = document.getElementById("imageUpload");
+    const previewImage = document.getElementById("previewImage");
 
-        if (!name || !phone || !product || !desc || !price) {
-            alert("Please fill all required fields.");
-            return;
-        }
+    imageUpload.addEventListener("change", () => {
+      const file = imageUpload.files[0];
+      previewImage.src = URL.createObjectURL(file);
+      previewImage.style.display = "block";
+    });
 
-        db.collection("products").add({
-            sellerName: name,
-            phone: phone,
-            productName: product,
-            description: desc,
-            price: Number(price),
-            imageUrl: img,
-            timestamp: new Date()
-        })
-        .then(() => {
-            document.getElementById("status").innerText = "Product submitted successfully!";
-        })
-        .catch((error) => {
-            alert("Error: " + error);
+    // FORM SUBMIT
+    const form = document.getElementById("sellForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const itemName = document.getElementById("itemName").value.trim();
+      const price = document.getElementById("price").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const description = document.getElementById("description").value.trim();
+
+      if (phone.length < 10) {
+        alert("Please enter a valid phone number.");
+        return;
+      }
+
+      document.getElementById("status").innerText = "Uploading...";
+
+      try {
+        await addDoc(collection(db, "items"), {
+          itemName,
+          price,
+          phone,
+          description,
+          imageName: imageUpload.files[0].name,
+          createdAt: new Date().toISOString()
         });
-    }
-</script>
+
+        document.getElementById("status").innerText = "Item Uploaded Successfully!";
+        form.reset();
+        previewImage.style.display = "none";
+
+      } catch (error) {
+        document.getElementById("status").innerText = "Error uploading!";
+      }
+    });
+  </script>
 
 </body>
 </html>
