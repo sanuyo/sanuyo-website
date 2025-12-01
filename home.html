@@ -1,175 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sanuyo Market</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sanuyo Website - Home</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-    }
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    /* TOP NAV */
-    .navbar {
-      background: #ff9900;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-      font-size: 22px;
-      font-weight: bold;
-    }
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="styles.css">
 
-    .navbar a {
-      color: white;
-      text-decoration: none;
-      margin-left: 15px;
-      font-size: 16px;
-    }
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"></script>
 
-    .products-section {
-      padding: 20px;
-    }
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+            authDomain: "sanuyo-website.firebaseapp.com",
+            projectId: "sanuyo-website",
+            storageBucket: "sanuyo-website.firebasestorage.app",
+            messagingSenderId: "765213630366",
+            appId: "1:765213630366:web:03279e61a58289b088808f"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+    </script>
 
-    .products-section h2 {
-      margin-bottom: 15px;
-      color: #333;
-    }
-
-    /* PRODUCT GRID */
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-      gap: 18px;
-    }
-
-    .product-card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-      transition: 0.25s;
-    }
-
-    .product-card:hover {
-      transform: scale(1.04);
-    }
-
-    .product-card img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-    }
-
-    .card-body {
-      padding: 12px;
-    }
-
-    .item-name {
-      font-size: 16px;
-      font-weight: bold;
-      margin: 0 0 5px 0;
-      color: #333;
-    }
-
-    .price {
-      color: #ff6600;
-      font-size: 18px;
-      font-weight: bold;
-      margin: 0;
-    }
-
-    .location {
-      font-size: 14px;
-      color: #666;
-      margin: 5px 0;
-    }
-
-    .btn-buy {
-      display: inline-block;
-      margin-top: 10px;
-      background: #ff9900;
-      color: white;
-      padding: 8px 12px;
-      text-align: center;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: bold;
-    }
-  </style>
 </head>
 
 <body>
 
-  <!-- TOP NAVIGATION -->
-  <div class="navbar">
-    Sanuyo Market
-    <div>
-      <a href="home.html">Home</a>
-      <a href="sell.html">Sell</a>
-      <a href="profile.html">Profile</a>
-    </div>
-  </div>
+    <!-- Header -->
+    <header class="top-header">
+        <h2>Sanuyo Website</h2>
+        <div class="search-box">
+            <input type="text" placeholder="Search items...">
+        </div>
+    </header>
 
-  <!-- PRODUCT LIST -->
-  <div class="products-section">
-    <h2>Latest Items</h2>
-    <div class="product-grid" id="itemsContainer">
-      Loading items...
-    </div>
-  </div>
+    <!-- Category Section -->
+    <section class="categories">
+        <h3>Categories</h3>
 
-  <!-- FIREBASE SCRIPTS -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, getDocs }
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        <div class="cat-grid">
+            <a href="categories.html?cat=phones" class="cat-item">
+                <img src="assets/phones.png">
+                <p>Phones</p>
+            </a>
+            <a href="categories.html?cat=fashion" class="cat-item">
+                <img src="assets/fashion.png">
+                <p>Fashion</p>
+            </a>
+            <a href="categories.html?cat=electronics" class="cat-item">
+                <img src="assets/electronics.png">
+                <p>Electronics</p>
+            </a>
+            <a href="categories.html?cat=vehicles" class="cat-item">
+                <img src="assets/car.png">
+                <p>Vehicles</p>
+            </a>
+            <a href="categories.html?cat=property" class="cat-item">
+                <img src="assets/house.png">
+                <p>Property</p>
+            </a>
+            <a href="categories.html?cat=others" class="cat-item">
+                <img src="assets/more.png">
+                <p>More</p>
+            </a>
+        </div>
+    </section>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-      authDomain: "sanuyo-website.firebaseapp.com",
-      projectId: "sanuyo-website",
-      storageBucket: "sanuyo-website.firebasestorage.app",
-      messagingSenderId: "765213630366",
-      appId: "1:765213630366:web:03279e61a58289b088808f"
-    };
+    <!-- Featured Section -->
+    <section class="featured">
+        <h3>Featured Ads</h3>
+        <div class="item-list" id="featured-list"></div>
+    </section>
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    <!-- Recent Items -->
+    <section class="recent">
+        <h3>Recent Ads</h3>
+        <div class="item-list" id="recent-list"></div>
+    </section>
 
-    // LOAD ITEMS FROM FIRESTORE
-    async function loadItems() {
-      const container = document.getElementById("itemsContainer");
-      const querySnapshot = await getDocs(collection(db, "items"));
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="home.html" class="active">
+            <img src="assets/home.png">
+            <span>Home</span>
+        </a>
 
-      container.innerHTML = "";
+        <a href="categories.html">
+            <img src="assets/categories.png">
+            <span>Categories</span>
+        </a>
 
-      querySnapshot.forEach((doc) => {
-        const item = doc.data();
+        <a href="sell.html" class="sell-btn">
+            <div class="sell-circle">+</div>
+        </a>
 
-        container.innerHTML += `
-          <div class="product-card">
-            <img src="${item.imageURL}" alt="${item.itemName}" />
-            <div class="card-body">
-              <p class="item-name">${item.itemName}</p>
-              <p class="price">₦${item.price}</p>
-              <p class="location">${item.location}</p>
-              <a class="btn-buy" href="tel:${item.phone}">
-                Call Seller
-              </a>
-            </div>
-          </div>
-        `;
-      });
-    }
+        <a href="saved.html">
+            <img src="assets/saved.png">
+            <span>Saved</span>
+        </a>
 
-    loadItems();
-  </script>
+        <a href="profile.html">
+            <img src="assets/profile.png">
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <script src="scripts/home.js"></script>
 
 </body>
 </html>
