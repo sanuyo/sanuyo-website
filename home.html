@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanuyo Marketplace</title>
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Load products.js -->
+    <script type="module" src="products.js"></script>
 </head>
 <body>
 
-    <!-- ------------------------------
-         HEADER
-    ------------------------------ -->
+    <!-- ------------------------------ HEADER ------------------------------ -->
     <div class="header">
         <div class="logo">SanuYo</div>
         <div class="nav-links">
@@ -21,16 +22,12 @@
         </div>
     </div>
 
-    <!-- ------------------------------
-         SEARCH BAR
-    ------------------------------ -->
+    <!-- ------------------------------ SEARCH BAR ------------------------------ -->
     <div class="search-area">
-        <input id="searchInput" type="text" placeholder="Search for products, phones, electronics…">
+        <input id="searchInput" type="text" placeholder="Search for products…">
     </div>
 
-    <!-- ------------------------------
-         HERO SLIDER
-    ------------------------------ -->
+    <!-- ------------------------------ HERO SLIDER ------------------------------ -->
     <div class="hero-slider">
         <div class="slides">
             <div class="slide active">
@@ -46,100 +43,90 @@
 
         <div class="slider-arrow left" onclick="prevSlide()">&#10094;</div>
         <div class="slider-arrow right" onclick="nextSlide()">&#10095;</div>
-
         <div class="slider-dots" id="sliderDots"></div>
     </div>
 
-    <!-- ------------------------------
-         CATEGORY ICONS
-    ------------------------------ -->
+    <!-- ------------------------------ CATEGORY ICONS ------------------------------ -->
     <h2 class="section-title">Categories</h2>
 
-    <div class="category-icons">
+    <div class="category-icons" id="categoryArea">
 
-        <div class="cat-box">
+        <div class="cat-box" data-category="phones">
             <img src="https://cdn-icons-png.flaticon.com/128/1040/1040230.png">
             <p>Phones</p>
         </div>
 
-        <div class="cat-box">
+        <div class="cat-box" data-category="electronics">
             <img src="https://cdn-icons-png.flaticon.com/128/3202/3202926.png">
             <p>Electronics</p>
         </div>
 
-        <div class="cat-box">
+        <div class="cat-box" data-category="fashion">
             <img src="https://cdn-icons-png.flaticon.com/128/679/679922.png">
             <p>Fashion</p>
         </div>
 
-        <div class="cat-box">
+        <div class="cat-box" data-category="home">
             <img src="https://cdn-icons-png.flaticon.com/128/2803/2803487.png">
             <p>Home</p>
         </div>
 
-        <div class="cat-box">
+        <div class="cat-box" data-category="computers">
             <img src="https://cdn-icons-png.flaticon.com/128/706/706164.png">
             <p>Computers</p>
         </div>
 
-        <div class="cat-box">
+        <div class="cat-box" data-category="appliances">
             <img src="https://cdn-icons-png.flaticon.com/128/3081/3081559.png">
             <p>Appliances</p>
         </div>
 
-        <div class="cat-box">
+        <div class="cat-box" data-category="vehicles">
             <img src="https://cdn-icons-png.flaticon.com/128/565/565547.png">
             <p>Vehicles</p>
         </div>
 
-        <div class="cat-box">
+        <div class="cat-box" data-category="kids">
             <img src="https://cdn-icons-png.flaticon.com/128/2965/2965567.png">
             <p>Kids</p>
         </div>
 
     </div>
 
-    <!-- ------------------------------
-         PRODUCT LIST
-    ------------------------------ -->
+    <!-- ------------------------------ PRODUCT LIST ------------------------------ -->
     <h2 class="section-title">Latest Listings</h2>
 
     <div class="product-grid" id="productGrid">
-        <!-- Loaded dynamically using Firebase -->
+        <!-- Loaded dynamically -->
     </div>
 
-    <!-- ------------------------------
-         BOTTOM NAVIGATION
-    ------------------------------ -->
+    <!-- ------------------------------ BOTTOM NAV ------------------------------ -->
     <div class="bottom-nav">
         <a href="home.html" class="active">
             <img src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png">
             <span>Home</span>
         </a>
-
         <a href="messages.html">
             <img src="https://cdn-icons-png.flaticon.com/128/2462/2462719.png">
             <span>Messages</span>
         </a>
-
         <a href="sell.html" class="sell-btn">
             <img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png">
             <span>Sell</span>
         </a>
-
         <a href="saved.html">
             <img src="https://cdn-icons-png.flaticon.com/128/833/833472.png">
             <span>Saved</span>
         </a>
-
         <a href="profile.html">
             <img src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png">
             <span>Profile</span>
         </a>
     </div>
 
+    <!-- Logic -->
     <script src="slider.js"></script>
-    <script src="home.js"></script>
+    <script type="module" src="home.js"></script>
 
 </body>
 </html>
