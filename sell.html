@@ -1,181 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sell on Sanuyo Market</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sell an Item - Sanuyo Website</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-    }
+    <link rel="stylesheet" href="styles.css">
 
-    /* HEADER */
-    .header {
-      background: #ff9900;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 22px;
-      font-weight: bold;
-    }
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"></script>
 
-    .container {
-      width: 90%;
-      max-width: 600px;
-      margin: 25px auto;
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+            authDomain: "sanuyo-website.firebaseapp.com",
+            projectId: "sanuyo-website",
+            storageBucket: "sanuyo-website.firebasestorage.app",
+            messagingSenderId: "765213630366",
+            appId: "1:765213630366:web:03279e61a58289b088808f"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+    </script>
 
-    h2 {
-      margin-top: 0;
-      color: #333;
-      font-size: 22px;
-      text-align: center;
-    }
+    <style>
+        /* SELL PAGE STYLE */
+        .sell-container {
+            padding: 20px;
+        }
 
-    label {
-      font-weight: bold;
-      margin: 10px 0 5px;
-      display: block;
-    }
+        .sell-container h2 {
+            margin-bottom: 10px;
+            color: #7A1FF2;
+            font-weight: 600;
+        }
 
-    input, select, textarea {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-    }
+        .input-group {
+            margin-bottom: 15px;
+        }
 
-    textarea {
-      height: 100px;
-      resize: vertical;
-    }
+        .input-group label {
+            font-weight: 500;
+            font-size: 14px;
+        }
 
-    .btn-submit {
-      background: #ff9900;
-      color: white;
-      width: 100%;
-      padding: 14px;
-      font-size: 18px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            margin-top: 5px;
+        }
 
-    .btn-submit:hover {
-      background: #e68a00;
-    }
+        .input-group textarea {
+            height: 100px;
+        }
 
-    .back {
-      text-align: center;
-      margin-top: 15px;
-    }
+        #uploadPreview img {
+            width: 80px;
+            height: 80px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 8px;
+            margin-top: 8px;
+        }
 
-    .back a {
-      color: #ff9900;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #7A1FF2;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+
 </head>
 
 <body>
 
-  <div class="header">Sell on Sanuyo Market</div>
+    <!-- HEADER -->
+    <header class="top-header">
+        <h2>Post an Ad</h2>
+    </header>
 
-  <div class="container">
-    <h2>Post Your Item</h2>
+    <!-- SELL FORM -->
+    <div class="sell-container">
+        <h2>Sell Your Item</h2>
 
-    <label>Category</label>
-    <select id="category">
-      <option value="">Select Category</option>
-      <option>Phones & Tablets</option>
-      <option>Electronics</option>
-      <option>Fashion</option>
-      <option>Home & Furniture</option>
-      <option>Vehicles</option>
-      <option>Computers</option>
-      <option>Food Items</option>
-      <option>Others</option>
-    </select>
+        <div class="input-group">
+            <label>Title</label>
+            <input id="title" type="text" placeholder="E.g. iPhone X, Toyota Camry...">
+        </div>
 
-    <label>Item Name</label>
-    <input type="text" id="itemName" placeholder="e.g. iPhone 11, Sofa, Laptop" />
+        <div class="input-group">
+            <label>Price (₦)</label>
+            <input id="price" type="number" placeholder="50000">
+        </div>
 
-    <label>Price (₦)</label>
-    <input type="number" id="price" placeholder="₦ Amount" />
+        <div class="input-group">
+            <label>Phone Number</label>
+            <input id="phone" type="number" placeholder="08012345678">
+        </div>
 
-    <label>Phone Number</label>
-    <input type="tel" id="phone" placeholder="Your contact number" />
+        <div class="input-group">
+            <label>Location</label>
+            <input id="location" type="text" placeholder="Lagos, Abuja, Ibadan...">
+        </div>
 
-    <label>Location</label>
-    <input type="text" id="location" placeholder="e.g. Lagos, Abuja" />
+        <div class="input-group">
+            <label>Category</label>
+            <select id="category">
+                <option value="">Select Category</option>
+                <option value="phones">Phones</option>
+                <option value="fashion">Fashion</option>
+                <option value="electronics">Electronics</option>
+                <option value="vehicles">Vehicles</option>
+                <option value="property">Property</option>
+                <option value="others">Others</option>
+            </select>
+        </div>
 
-    <label>Description</label>
-    <textarea id="description" placeholder="Describe your item..."></textarea>
+        <div class="input-group">
+            <label>Description</label>
+            <textarea id="description" placeholder="Describe the item..."></textarea>
+        </div>
 
-    <button class="btn-submit" onclick="submitItem()">Post Item</button>
+        <div class="input-group">
+            <label>Upload Images (max 5)</label>
+            <input id="images" type="file" accept="image/*" multiple>
+        </div>
 
-    <div class="back">
-      <a href="home.html">← Back to Home</a>
+        <div id="uploadPreview"></div>
+
+        <button onclick="postAd()">Submit Ad</button>
+
     </div>
-  </div>
 
-  <!-- FIREBASE SCRIPT -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, addDoc }
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+        <a href="home.html">
+            <img src="assets/home.png">
+            <span>Home</span>
+        </a>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-      authDomain: "sanuyo-website.firebaseapp.com",
-      projectId: "sanuyo-website",
-      storageBucket: "sanuyo-website.firebasestorage.app",
-      messagingSenderId: "765213630366",
-      appId: "1:765213630366:web:03279e61a58289b088808f"
-    };
+        <a href="categories.html">
+            <img src="assets/categories.png">
+            <span>Categories</span>
+        </a>
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+        <a href="sell.html" class="sell-btn active">
+            <div class="sell-circle">+</div>
+        </a>
 
-    // SAVE ITEM TO FIRESTORE
-    async function submitItem() {
-      const category = document.getElementById("category").value;
-      const itemName = document.getElementById("itemName").value;
-      const price = document.getElementById("price").value;
-      const phone = document.getElementById("phone").value;
-      const location = document.getElementById("location").value;
-      const description = document.getElementById("description").value;
+        <a href="saved.html">
+            <img src="assets/saved.png">
+            <span>Saved</span>
+        </a>
 
-      if (!category || !itemName || !price || !phone || !location) {
-        alert("Please fill all required fields.");
-        return;
-      }
+        <a href="profile.html">
+            <img src="assets/profile.png">
+            <span>Profile</span>
+        </a>
+    </nav>
 
-      await addDoc(collection(db, "items"), {
-        category,
-        itemName,
-        price,
-        phone,
-        location,
-        description,
-        createdAt: new Date().toISOString()
-      });
-
-      alert("Item posted successfully!");
-      window.location.href = "home.html";
-    }
-  </script>
+    <script src="scripts/sell.js"></script>
 
 </body>
 </html>
