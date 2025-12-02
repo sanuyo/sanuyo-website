@@ -3,151 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details - Sanuyo Marketplace</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 15px;
-        }
-
-        .product-img {
-            width: 100%;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-
-        h2 {
-            margin: 10px 0;
-        }
-
-        .price {
-            font-size: 22px;
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 15px;
-            margin-top: 10px;
-            background: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .btn.whatsapp {
-            background: #25D366;
-        }
-
-        .btn.call {
-            background: #ff9800;
-        }
-
-        .loader {
-            text-align: center;
-            padding: 20px;
-            font-size: 18px;
-        }
-    </style>
+    <title>Product - Sanuyo Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<div class="container">
-    <div id="loader" class="loader">Loading product...</div>
+    <div class="header">
+        <div class="logo">Product</div>
+    </div>
 
-    <img id="productImg" class="product-img" style="display:none;">
+    <div id="productDetails" class="product-details"></div>
 
-    <h2 id="title"></h2>
-    <p class="price" id="price"></p>
-    <p id="category"></p>
-    <p id="description"></p>
+    <script type="module">
+        import { products } from "./products.js";
 
-    <button id="callSeller" class="btn call" style="display:none;">Call Seller</button>
-    <button id="chatSeller" class="btn whatsapp" style="display:none;">Chat on WhatsApp</button>
-</div>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
 
-<!-- FIREBASE -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        const product = products.find(p => p.id == id);
 
-    // -------------------------------
-    // YOUR FIREBASE CONFIG
-    // -------------------------------
-    const firebaseConfig = {
-      apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-      authDomain: "sanuyo-website.firebaseapp.com",
-      projectId: "sanuyo-website",
-      storageBucket: "sanuyo-website.firebasestorage.app",
-      messagingSenderId: "765213630366",
-      appId: "1:765213630366:web:03279e61a58289b088808f"
-    };
+        const box = document.getElementById("productDetails");
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+        if (!product) {
+            box.innerHTML = "<p style='padding:20px;'>Product not found.</p>";
+        } else {
+            box.innerHTML = `
+                <img src="${product.image}" class="product-img-large">
 
-    // Get product ID from URL
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get("id");
+                <div class="details-area">
+                    <h2>${product.name}</h2>
+                    <p class="price">₦${product.price.toLocaleString()}</p>
+                    <p><strong>Location:</strong> ${product.location}</p>
+                    <p><strong>Category:</strong> ${product.category}</p>
 
-    if (!productId) {
-        document.getElementById("loader").innerText = "Invalid product link";
-    } else {
-        loadProduct(productId);
-    }
+                    <h3>Description</h3>
+                    <p>${product.description}</p>
 
-    async function loadProduct(id) {
-        const docRef = doc(db, "products", id);
-        const snapshot = await getDoc(docRef);
-
-        if (!snapshot.exists()) {
-            document.getElementById("loader").innerText = "Product not found.";
-            return;
+                    <a class="call-btn" href="tel:${product.phone}">Call Seller</a>
+                </div>
+            `;
         }
-
-        const data = snapshot.data();
-
-        // Fill UI
-        document.getElementById("loader").style.display = "none";
-
-        document.getElementById("productImg").src = data.image;
-        document.getElementById("productImg").style.display = "block";
-
-        document.getElementById("title").innerText = data.title;
-        document.getElementById("price").innerText = "₦" + data.price.toLocaleString();
-        document.getElementById("category").innerText = "Category: " + data.category;
-        document.getElementById("description").innerText = data.description;
-
-        // Call Seller button
-        const callBtn = document.getElementById("callSeller");
-        callBtn.style.display = "block";
-        callBtn.onclick = () => {
-            window.location.href = "tel:" + data.phone;
-        };
-
-        // WhatsApp button
-        const chatBtn = document.getElementById("chatSeller");
-        chatBtn.style.display = "block";
-        chatBtn.onclick = () => {
-            window.location.href =
-                "https://wa.me/" + data.phone + "?text=Hello! I am interested in your item: " + data.title;
-        };
-    }
-</script>
+    </script>
 
 </body>
 </html>
