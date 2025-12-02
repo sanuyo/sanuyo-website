@@ -3,91 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyMarket - Home</title>
+    <title>Sanuyo Marketplace</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header class="header">
-        <div class="logo">MyMarket</div>
-
-        <nav class="nav-links">
+    <!-- ------------------------------
+         HEADER
+    ------------------------------ -->
+    <div class="header">
+        <div class="logo">SanuYo</div>
+        <div class="nav-links">
             <a href="home.html" class="active">Home</a>
-            <a href="products.html">Products</a>
             <a href="sell.html">Sell</a>
-        </nav>
-    </header>
+            <a href="saved.html">Saved</a>
+            <a href="profile.html">Profile</a>
+        </div>
+    </div>
 
-    <!-- SEARCH BAR -->
+    <!-- ------------------------------
+         SEARCH BAR
+    ------------------------------ -->
     <div class="search-area">
-        <input type="text" id="searchInput" placeholder="Search for products...">
+        <input id="searchInput" type="text" placeholder="Search for products, phones, electronics…">
     </div>
 
-    <!-- CATEGORY SECTION -->
+    <!-- ------------------------------
+         HERO SLIDER
+    ------------------------------ -->
+    <div class="hero-slider">
+        <div class="slides">
+            <div class="slide active">
+                <img src="https://i.imgur.com/zA5WqXW.jpeg" alt="Promo 1">
+            </div>
+            <div class="slide">
+                <img src="https://i.imgur.com/R3qCqkI.jpeg" alt="Promo 2">
+            </div>
+            <div class="slide">
+                <img src="https://i.imgur.com/z8gkSBq.jpeg" alt="Promo 3">
+            </div>
+        </div>
+
+        <div class="slider-arrow left" onclick="prevSlide()">&#10094;</div>
+        <div class="slider-arrow right" onclick="nextSlide()">&#10095;</div>
+
+        <div class="slider-dots" id="sliderDots"></div>
+    </div>
+
+    <!-- ------------------------------
+         CATEGORY ICONS
+    ------------------------------ -->
     <h2 class="section-title">Categories</h2>
-    <div class="categories">
-        <div class="category-item">Phones</div>
-        <div class="category-item">Electronics</div>
-        <div class="category-item">Fashion</div>
-        <div class="category-item">Home Appliances</div>
-        <div class="category-item">Computers</div>
-        <div class="category-item">Kids</div>
-        <div class="category-item">Beauty</div>
-        <div class="category-item">Others</div>
+
+    <div class="category-icons">
+
+        <div class="cat-box">
+            <img src="https://cdn-icons-png.flaticon.com/128/1040/1040230.png">
+            <p>Phones</p>
+        </div>
+
+        <div class="cat-box">
+            <img src="https://cdn-icons-png.flaticon.com/128/3202/3202926.png">
+            <p>Electronics</p>
+        </div>
+
+        <div class="cat-box">
+            <img src="https://cdn-icons-png.flaticon.com/128/679/679922.png">
+            <p>Fashion</p>
+        </div>
+
+        <div class="cat-box">
+            <img src="https://cdn-icons-png.flaticon.com/128/2803/2803487.png">
+            <p>Home</p>
+        </div>
+
+        <div class="cat-box">
+            <img src="https://cdn-icons-png.flaticon.com/128/706/706164.png">
+            <p>Computers</p>
+        </div>
+
+        <div class="cat-box">
+            <img src="https://cdn-icons-png.flaticon.com/128/3081/3081559.png">
+            <p>Appliances</p>
+        </div>
+
+        <div class="cat-box">
+            <img src="https://cdn-icons-png.flaticon.com/128/565/565547.png">
+            <p>Vehicles</p>
+        </div>
+
+        <div class="cat-box">
+            <img src="https://cdn-icons-png.flaticon.com/128/2965/2965567.png">
+            <p>Kids</p>
+        </div>
+
     </div>
 
-    <!-- LATEST PRODUCTS SECTION -->
-    <h2 class="section-title">Latest Products</h2>
+    <!-- ------------------------------
+         PRODUCT LIST
+    ------------------------------ -->
+    <h2 class="section-title">Latest Listings</h2>
 
-    <div id="productList" class="product-grid">
-        <!-- Products added from JS -->
+    <div class="product-grid" id="productGrid">
+        <!-- Loaded dynamically using Firebase -->
     </div>
 
-    <script>
-        function loadProducts() {
-            const products = JSON.parse(localStorage.getItem("products")) || [];
+    <!-- ------------------------------
+         BOTTOM NAVIGATION
+    ------------------------------ -->
+    <div class="bottom-nav">
+        <a href="home.html" class="active">
+            <img src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png">
+            <span>Home</span>
+        </a>
 
-            const productList = document.getElementById("productList");
-            productList.innerHTML = "";
+        <a href="messages.html">
+            <img src="https://cdn-icons-png.flaticon.com/128/2462/2462719.png">
+            <span>Messages</span>
+        </a>
 
-            products.forEach((p, index) => {
-                const card = document.createElement("div");
-                card.className = "product-card";
-                card.onclick = () => openProduct(index);
+        <a href="sell.html" class="sell-btn">
+            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png">
+            <span>Sell</span>
+        </a>
 
-                card.innerHTML = `
-                    <img src="${p.image}" class="product-img">
+        <a href="saved.html">
+            <img src="https://cdn-icons-png.flaticon.com/128/833/833472.png">
+            <span>Saved</span>
+        </a>
 
-                    <div class="product-info">
-                        <h3 class="product-title">${p.name}</h3>
-                        <p class="product-price">₦${p.price}</p>
-                    </div>
-                `;
+        <a href="profile.html">
+            <img src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png">
+            <span>Profile</span>
+        </a>
+    </div>
 
-                productList.appendChild(card);
-            });
-        }
-
-        function openProduct(index) {
-            const products = JSON.parse(localStorage.getItem("products")) || [];
-            localStorage.setItem("selectedProduct", JSON.stringify(products[index]));
-            window.location.href = "product.html";
-        }
-
-        // SEARCH FUNCTION
-        document.getElementById("searchInput").addEventListener("keyup", function () {
-            const searchText = this.value.toLowerCase();
-            const cards = document.querySelectorAll(".product-card");
-
-            cards.forEach(card => {
-                const name = card.querySelector(".product-title").textContent.toLowerCase();
-                card.style.display = name.includes(searchText) ? "block" : "none";
-            });
-        });
-
-        loadProducts();
-    </script>
+    <script src="slider.js"></script>
+    <script src="home.js"></script>
 
 </body>
 </html>
