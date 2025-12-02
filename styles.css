@@ -296,3 +296,72 @@ body {
 .slider-dots .active {
     background: #f68b1e;
 }
+
+/* ------------------------------
+   CATEGORY ICONS (JUMIA STYLE)
+------------------------------ */
+.category-icons {
+    padding: 15px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.cat-box {
+    background: white;
+    padding: 15px 5px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px;
+    border: 1px solid #eee;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.cat-box img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+}
+
+.cat-box:hover {
+    transform: scale(1.05);
+    border-color: #f68b1e;
+}
+
+/* ------------------------------
+   BOTTOM NAVIGATION
+------------------------------ */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 0;
+    z-index: 20;
+}
+
+.bottom-nav a {
+    text-decoration: none;
+    text-align: center;
+    color: #555;
+    font-size: 12px;
+}
+
+.bottom-nav img {
+    width: 22px;
+    height: 22px;
+}
+
+.bottom-nav a.active {
+    color: #f68b1e;
+}
+
+.sell-btn img {
+    width: 30px;
+    height: 30px;
+}
