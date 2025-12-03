@@ -1,7 +1,7 @@
 const params = new URLSearchParams(window.location.search);
 const chatId = params.get("id");
 
-// Dummy chat data (will connect to Firebase later)
+// Dummy chat data (future: Firebase integration)
 let chatUsers = {
     1: "Michael",
     2: "Blessing"
@@ -10,7 +10,7 @@ let chatUsers = {
 let messages = {
     1: [
         { from: "them", text: "Is the phone still available?" },
-        { from: "you", text: "Yes it's available" }
+        { from: "you", text: "Yes, it's available." }
     ],
     2: [
         { from: "them", text: "How much last price?" },
@@ -18,6 +18,7 @@ let messages = {
     ]
 };
 
+// Set the current chat user
 document.getElementById("chatUser").innerText = chatUsers[chatId];
 
 const chatWindow = document.getElementById("chatWindow");
