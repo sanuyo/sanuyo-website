@@ -1,51 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Messages - SanuYo</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messages</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
 
-    <!-- HEADER -->
-    <div class="header">
-        <div class="logo">Messages</div>
+    <!-- Top Bar -->
+    <div class="navbar">
+        <span class="logo">Messages</span>
     </div>
 
-    <!-- CHAT LIST -->
-    <div id="chatList" class="chat-list"></div>
+    <!-- Chat Container -->
+    <div class="chat-container">
+        <div id="messagesBox" class="messages-box"></div>
 
-    <!-- BOTTOM NAVIGATION -->
-    <div class="bottom-nav">
-        <a href="home.html">
-            <img src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png">
-            <span>Home</span>
-        </a>
-
-        <a href="messages.html" class="active">
-            <img src="https://cdn-icons-png.flaticon.com/128/2462/2462719.png">
-            <span>Messages</span>
-        </a>
-
-        <a href="sell.html" class="sell-btn">
-            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png">
-            <span>Sell</span>
-        </a>
-
-        <a href="saved.html">
-            <img src="https://cdn-icons-png.flaticon.com/128/833/833472.png">
-            <span>Saved</span>
-        </a>
-
-        <a href="profile.html">
-            <img src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png">
-            <span>Profile</span>
-        </a>
+        <!-- Input -->
+        <div class="input-area">
+            <input type="text" id="messageInput" placeholder="Type a message..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
     </div>
 
-    <script src="messages.js"></script>
-
+    <script type="module" src="messages.js"></script>
 </body>
 </html>
