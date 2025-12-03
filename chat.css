@@ -1,0 +1,100 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #ececec;
+}
+
+.chat-header {
+    background: #007b55;
+    color: white;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.chat-user-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background: #fff;
+}
+
+.chat-user-info h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.chat-user-info p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.chat-box {
+    height: calc(100vh - 140px);
+    padding: 10px;
+    overflow-y: auto;
+    background: #dcdcdc;
+}
+
+.message {
+    max-width: 75%;
+    margin: 8px 0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 15px;
+    position: relative;
+}
+
+.sent {
+    background: #dcf8c6;
+    margin-left: auto;
+}
+
+.received {
+    background: white;
+    margin-right: auto;
+}
+
+.time {
+    font-size: 10px;
+    opacity: 0.6;
+    margin-left: 6px;
+}
+
+.seen {
+    font-size: 12px;
+    color: #007bff;
+}
+
+.typing {
+    padding-left: 12px;
+    display: none;
+    font-style: italic;
+}
+
+.chat-input-area {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    padding: 10px;
+    display: flex;
+}
+
+.chat-input-area input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+.chat-input-area button {
+    margin-left: 10px;
+    padding: 10px 18px;
+    background: #007b55;
+    color: white;
+    border: none;
+    border-radius: 20px;
+}
