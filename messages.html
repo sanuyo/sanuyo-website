@@ -1,169 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Messages - Sanuyo</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-<style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        margin: 0;
-        background: #f5f5f5;
-        padding-bottom: 80px;
-    }
-
-    /* Header */
-    header {
-        background: #6A0DAD;
-        padding: 15px;
-        text-align: center;
-        color: white;
-        font-size: 20px;
-        font-weight: 600;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-    }
-
-    /* Conversation List */
-    .chat-list {
-        margin-top: 5px;
-    }
-
-    .chat-item {
-        background: white;
-        padding: 12px;
-        display: flex;
-        align-items: center;
-        border-bottom: 1px solid #eee;
-        cursor: pointer;
-    }
-
-    .avatar {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        background: #ddd;
-        margin-right: 12px;
-        object-fit: cover;
-    }
-
-    .chat-info {
-        flex: 1;
-    }
-
-    .chat-name {
-        font-size: 15px;
-        font-weight: 600;
-    }
-
-    .chat-last-message {
-        font-size: 13px;
-        color: #666;
-        margin-top: 3px;
-    }
-
-    /* Bottom Navigation */
-    .bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: white;
-        display: flex;
-        justify-content: space-around;
-        padding: 10px 0;
-        border-top: 1px solid #ddd;
-        z-index: 100;
-    }
-
-    .bnav-item {
-        text-align: center;
-        font-size: 13px;
-        color: #444;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - SanuYo</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<header>Messages</header>
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">Messages</div>
+    </div>
 
-<div id="chatList" class="chat-list">
-    <p style="text-align:center; margin-top:20px;">Loading conversations...</p>
-</div>
+    <!-- CHAT LIST -->
+    <div id="chatList" class="chat-list"></div>
 
-<!-- Bottom Navigation -->
-<div class="bottom-nav">
-    <div class="bnav-item" onclick="location.href='home.html'">Home</div>
-    <div class="bnav-item" onclick="location.href='sell.html'">Sell</div>
-    <div class="bnav-item" onclick="location.href='saved.html'">Saved</div>
-    <div class="bnav-item" onclick="location.href='messages.html'">Messages</div>
-    <div class="bnav-item" onclick="location.href='profile.html'">Profile</div>
-</div>
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+        <a href="home.html">
+            <img src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png">
+            <span>Home</span>
+        </a>
 
-<!-- Firebase & Firestore -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { 
-        getFirestore, collection, query, where, getDocs 
-    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        <a href="messages.html" class="active">
+            <img src="https://cdn-icons-png.flaticon.com/128/2462/2462719.png">
+            <span>Messages</span>
+        </a>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-      authDomain: "sanuyo-website.firebaseapp.com",
-      projectId: "sanuyo-website",
-      storageBucket: "sanuyo-website.firebasestorage.app",
-      messagingSenderId: "765213630366",
-      appId: "1:765213630366:web:03279e61a58289b088808f"
-    };
+        <a href="sell.html" class="sell-btn">
+            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png">
+            <span>Sell</span>
+        </a>
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+        <a href="saved.html">
+            <img src="https://cdn-icons-png.flaticon.com/128/833/833472.png">
+            <span>Saved</span>
+        </a>
 
-    const USER_ID = "demoUser1"; 
-    // Later we replace with real login ID.
+        <a href="profile.html">
+            <img src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png">
+            <span>Profile</span>
+        </a>
+    </div>
 
-    async function loadMessages() {
-        const container = document.getElementById("chatList");
-        container.innerHTML = "";
-
-        const chatsRef = collection(db, "chats");
-        const q = query(chatsRef, where("members", "array-contains", USER_ID));
-        const snap = await getDocs(q);
-
-        if (snap.empty) {
-            container.innerHTML = "<p style='text-align:center; margin-top:20px;'>No messages yet.</p>";
-            return;
-        }
-
-        snap.forEach((doc) => {
-            const chat = doc.data();
-
-            const otherUser = chat.members.filter(id => id !== USER_ID)[0];
-
-            const item = `
-                <div class="chat-item" onclick="openChat('${doc.id}')">
-                    <img class="avatar" src="${chat.avatar || 'https://via.placeholder.com/45'}">
-                    <div class="chat-info">
-                        <div class="chat-name">${chat.name || otherUser}</div>
-                        <div class="chat-last-message">${chat.lastMessage || "Tap to chat"}</div>
-                    </div>
-                </div>
-            `;
-            container.innerHTML += item;
-        });
-    }
-
-    function openChat(chatId) {
-        location.href = `chat.html?chat=${chatId}`;
-    }
-
-    loadMessages();
-</script>
-
+    <script src="messages.js"></script>
 </body>
 </html>
