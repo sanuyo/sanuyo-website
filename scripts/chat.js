@@ -1,7 +1,9 @@
 // FIREBASE IMPORTS
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc, onSnapshot, updateDoc, collection, addDoc } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { 
+    getFirestore, doc, setDoc, getDoc, onSnapshot, updateDoc, 
+    collection, addDoc, serverTimestamp, query, orderBy 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // FIREBASE SETUP
 const firebaseConfig = {
@@ -17,77 +19,103 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // -----------------------------
-// GET CHAT DATA
+// GET USER CHAT DATA
 // -----------------------------
 const params = new URLSearchParams(window.location.search);
 const chatId = params.get("chatId");
-const myId = params.get("me");  
+const myId = params.get("me");
 const otherId = params.get("user");
-
-document.getElementById("typingIndicator").style.display = "none";
 
 const chatRef = doc(db, "messages", chatId);
 const messageListRef = collection(db, "messages", chatId, "chat");
 
-// -----------------------------
-// LOAD USER INFO
-// -----------------------------
-async function loadUserInfo() {
-    const userDoc = await getDoc(doc(db, "users", otherId));
-    if (userDoc.exists()) {
-        document.getElementById("chatUserName").innerText = userDoc.data().name;
-        document.getElementById("chatUserImage").src = userDoc.data().photo;
-    }
+// TIME FORMATTING
+function formatTime(ts) {
+    if (!ts) return "";
+
+    const date = ts.toDate();
+    const now = new Date();
+
+    const diff = now - date;
+    const one_day = 86400000;
+
+    let time = date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+    if (date.toDateString() === now.toDateString()) return "Today • " + time;
+    if (now - date < one_day * 2) return "Yesterday • " + time;
+
+    return date.toLocaleDateString() + " • " + time;
 }
 
-loadUserInfo();
+// -----------------------------
+// LOAD RECEIVER INFO
+// -----------------------------
+async function loadUser() {
+    const docSnap = await getDoc(doc(db, "users", otherId));
+    if (!docSnap.exists()) return;
+
+    const data = docSnap.data();
+    document.getElementById("chatUserName").innerText = data.name;
+    document.getElementById("chatUserImage").src = data.photo;
+
+    // online status listener
+    onSnapshot(doc(db, "users", otherId), (snap) => {
+        const info = snap.data();
+        if (info.online) {
+            document.getElementById("chatUserStatus").innerText = "Online";
+        } else {
+            document.getElementById("chatUserStatus").innerText = "Last seen: " + info.lastSeen;
+        }
+    });
+}
+
+loadUser();
 
 // -----------------------------
-// LISTEN FOR ONLINE STATUS
-// -----------------------------
-onSnapshot(doc(db, "users", otherId), (snap) => {
-    if (!snap.exists()) return;
-
-    const data = snap.data();
-    document.getElementById("chatUserStatus").innerText =
-        data.online ? "Online" : "Last seen: " + data.lastSeen;
-});
-
-// -----------------------------
-// LISTEN FOR TYPING
+// TYPING INDICATOR LISTENER
 // -----------------------------
 onSnapshot(chatRef, (snap) => {
-    if (!snap.exists()) return;
-
     const data = snap.data();
+    const typingDiv = document.getElementById("typingIndicator");
 
-    if (data.typing === otherId) {
-        document.getElementById("typingIndicator").style.display = "block";
-    } else {
-        document.getElementById("typingIndicator").style.display = "none";
-    }
+    typingDiv.style.display = data.typing === otherId ? "block" : "none";
 });
 
 // -----------------------------
-// LOAD MESSAGES LIVE
+// LOAD MESSAGES + SEEN SYSTEM
 // -----------------------------
-onSnapshot(messageListRef, (snapshot) => {
+onSnapshot(query(messageListRef, orderBy("timestamp", "asc")), (snapshot) => {
     const chatBox = document.getElementById("chatBox");
     chatBox.innerHTML = "";
 
-    snapshot.forEach(doc => {
-        const msg = doc.data();
+    snapshot.forEach((docSnap) => {
+        const msg = docSnap.data();
 
-        const bubble = document.createElement("div");
-        bubble.classList.add("message");
-        bubble.classList.add(msg.sender === myId ? "sent" : "received");
+        const div = document.createElement("div");
+        div.classList.add("message", msg.sender === myId ? "sent" : "received");
 
-        bubble.innerHTML = `
+        let ticks = "";
+        if (msg.sender === myId) {
+            if (msg.seen) {
+                ticks = `<span class="seen">✓✓</span>`;
+            } else {
+                ticks = `<span class="delivered">✓</span>`;
+            }
+        }
+
+        div.innerHTML = `
             ${msg.text}
-            <div class="time">${msg.time}</div>
+            <div class="time">${formatTime(msg.timestamp)} ${ticks}</div>
         `;
 
-        chatBox.appendChild(bubble);
+        chatBox.appendChild(div);
+
+        // AUTO-MARK AS SEEN
+        if (msg.receiver === myId && !msg.seen) {
+            updateDoc(doc(db, "messages", chatId, "chat", docSnap.id), {
+                seen: true
+            });
+        }
     });
 
     chatBox.scrollTop = chatBox.scrollHeight;
@@ -96,27 +124,28 @@ onSnapshot(messageListRef, (snapshot) => {
 // -----------------------------
 // SEND MESSAGE
 // -----------------------------
-document.getElementById("sendBtn").onclick = sendMessage;
+document.getElementById("sendBtn").addEventListener("click", sendMessage);
 
 async function sendMessage() {
-    const text = document.getElementById("messageInput").value.trim();
-    if (text === "") return;
+    const input = document.getElementById("messageInput");
+    const text = input.value.trim();
+    if (!text) return;
 
     await addDoc(messageListRef, {
+        text,
         sender: myId,
         receiver: otherId,
-        text,
-        time: new Date().toLocaleTimeString(),
+        timestamp: serverTimestamp(),
         seen: false
     });
 
-    document.getElementById("messageInput").value = "";
-
     await updateDoc(chatRef, { typing: "" });
+
+    input.value = "";
 }
 
 // -----------------------------
-// TYPING INDICATOR LOGIC
+// TYPING DETECTION
 // -----------------------------
 let typingTimeout;
 
@@ -124,7 +153,7 @@ document.getElementById("messageInput").addEventListener("input", async () => {
     await updateDoc(chatRef, { typing: myId });
 
     clearTimeout(typingTimeout);
-    typingTimeout = setTimeout(async () => {
-        await updateDoc(chatRef, { typing: "" });
+    typingTimeout = setTimeout(() => {
+        updateDoc(chatRef, { typing: "" });
     }, 1200);
 });
