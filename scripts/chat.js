@@ -1,49 +1,130 @@
+// FIREBASE IMPORTS
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, doc, setDoc, getDoc, onSnapshot, updateDoc, collection, addDoc } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// FIREBASE SETUP
+const firebaseConfig = {
+    apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+    authDomain: "sanuyo-website.firebaseapp.com",
+    projectId: "sanuyo-website",
+    storageBucket: "sanuyo-website.firebasestorage.app",
+    messagingSenderId: "765213630366",
+    appId: "1:765213630366:web:03279e61a58289b088808f"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// -----------------------------
+// GET CHAT DATA
+// -----------------------------
 const params = new URLSearchParams(window.location.search);
-const chatId = params.get("id");
+const chatId = params.get("chatId");
+const myId = params.get("me");  
+const otherId = params.get("user");
 
-// Dummy chat data (future: Firebase integration)
-let chatUsers = {
-    1: "Michael",
-    2: "Blessing"
-};
+document.getElementById("typingIndicator").style.display = "none";
 
-let messages = {
-    1: [
-        { from: "them", text: "Is the phone still available?" },
-        { from: "you", text: "Yes, it's available." }
-    ],
-    2: [
-        { from: "them", text: "How much last price?" },
-        { from: "you", text: "50k final" }
-    ]
-};
+const chatRef = doc(db, "messages", chatId);
+const messageListRef = collection(db, "messages", chatId, "chat");
 
-// Set the current chat user
-document.getElementById("chatUser").innerText = chatUsers[chatId];
+// -----------------------------
+// LOAD USER INFO
+// -----------------------------
+async function loadUserInfo() {
+    const userDoc = await getDoc(doc(db, "users", otherId));
+    if (userDoc.exists()) {
+        document.getElementById("chatUserName").innerText = userDoc.data().name;
+        document.getElementById("chatUserImage").src = userDoc.data().photo;
+    }
+}
 
-const chatWindow = document.getElementById("chatWindow");
+loadUserInfo();
 
-// Load messages
-messages[chatId].forEach(msg => {
-    chatWindow.innerHTML += `
-        <div class="message ${msg.from}">
-            ${msg.text}
-        </div>
-    `;
+// -----------------------------
+// LISTEN FOR ONLINE STATUS
+// -----------------------------
+onSnapshot(doc(db, "users", otherId), (snap) => {
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+    document.getElementById("chatUserStatus").innerText =
+        data.online ? "Online" : "Last seen: " + data.lastSeen;
 });
 
-// Send new message
-document.getElementById("sendBtn").addEventListener("click", () => {
-    let input = document.getElementById("messageInput");
-    if (input.value.trim() === "") return;
+// -----------------------------
+// LISTEN FOR TYPING
+// -----------------------------
+onSnapshot(chatRef, (snap) => {
+    if (!snap.exists()) return;
 
-    // Add message
-    chatWindow.innerHTML += `
-        <div class="message you">${input.value}</div>
-    `;
+    const data = snap.data();
 
-    // Scroll to bottom
-    chatWindow.scrollTop = chatWindow.scrollHeight;
+    if (data.typing === otherId) {
+        document.getElementById("typingIndicator").style.display = "block";
+    } else {
+        document.getElementById("typingIndicator").style.display = "none";
+    }
+});
 
-    input.value = "";
+// -----------------------------
+// LOAD MESSAGES LIVE
+// -----------------------------
+onSnapshot(messageListRef, (snapshot) => {
+    const chatBox = document.getElementById("chatBox");
+    chatBox.innerHTML = "";
+
+    snapshot.forEach(doc => {
+        const msg = doc.data();
+
+        const bubble = document.createElement("div");
+        bubble.classList.add("message");
+        bubble.classList.add(msg.sender === myId ? "sent" : "received");
+
+        bubble.innerHTML = `
+            ${msg.text}
+            <div class="time">${msg.time}</div>
+        `;
+
+        chatBox.appendChild(bubble);
+    });
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+});
+
+// -----------------------------
+// SEND MESSAGE
+// -----------------------------
+document.getElementById("sendBtn").onclick = sendMessage;
+
+async function sendMessage() {
+    const text = document.getElementById("messageInput").value.trim();
+    if (text === "") return;
+
+    await addDoc(messageListRef, {
+        sender: myId,
+        receiver: otherId,
+        text,
+        time: new Date().toLocaleTimeString(),
+        seen: false
+    });
+
+    document.getElementById("messageInput").value = "";
+
+    await updateDoc(chatRef, { typing: "" });
+}
+
+// -----------------------------
+// TYPING INDICATOR LOGIC
+// -----------------------------
+let typingTimeout;
+
+document.getElementById("messageInput").addEventListener("input", async () => {
+    await updateDoc(chatRef, { typing: myId });
+
+    clearTimeout(typingTimeout);
+    typingTimeout = setTimeout(async () => {
+        await updateDoc(chatRef, { typing: "" });
+    }, 1200);
 });
