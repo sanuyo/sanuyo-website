@@ -98,3 +98,46 @@ body {
     border: none;
     border-radius: 20px;
 }
+
+/* Blue ticks for seen */
+.sent .seen {
+    color: #1e90ff;
+    margin-left: 4px;
+}
+
+.sent .delivered {
+    color: #555;
+}
+
+/* Reaction bubble */
+.reaction {
+    font-size: 14px;
+    background: white;
+    padding: 3px 6px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
+/* Blocked user banner */
+.block-banner {
+    background: #ffdddd;
+    padding: 10px;
+    text-align: center;
+    color: #a00;
+    font-size: 14px;
+    display: none;
+}
+.chat-actions {
+    background: #fff;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.chat-actions button {
+    padding: 8px 15px;
+    border: none;
+    background: #007b55;
+    color: white;
+    border-radius: 5px;
+}
