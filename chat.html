@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat - SanuYo</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Chat</title>
+    <link rel="stylesheet" href="chat.css">
 </head>
-
 <body>
 
-    <!-- HEADER -->
-    <div class="header">
-        <div class="logo" id="chatUser">Chat</div>
+    <div class="chat-header">
+        <img id="chatUserImage" class="chat-user-img">
+        <div class="chat-user-info">
+            <h3 id="chatUserName"></h3>
+            <p id="chatUserStatus">Online</p>
+        </div>
     </div>
 
-    <!-- CHAT AREA -->
-    <div id="chatWindow" class="chat-window"></div>
+    <div class="chat-box" id="chatBox"></div>
 
-    <!-- INPUT AREA -->
-    <div class="chat-input">
+    <p id="typingIndicator" class="typing">Typing...</p>
+
+    <div class="chat-input-area">
         <input type="text" id="messageInput" placeholder="Type a message...">
         <button id="sendBtn">Send</button>
     </div>
 
-    <script src="chat.js"></script>
-
+<script src="chat.js"></script>
 </body>
 </html>
