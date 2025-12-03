@@ -1,37 +1,67 @@
-// TEMP SAMPLE CHAT DATA
-let chats = [
-    {
-        id: 1,
-        user: "Michael",
-        product: "Wireless Bluetooth Headset",
-        lastMessage: "Is this still available?",
-        avatar: "https://cdn-icons-png.flaticon.com/128/1077/1077012.png"
-    },
-    {
-        id: 2,
-        user: "Blessing",
-        product: "Ladies Handbag",
-        lastMessage: "How much last price?",
-        avatar: "https://cdn-icons-png.flaticon.com/128/1946/1946429.png"
+// FIREBASE IMPORTS
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { 
+  getFirestore, collection, addDoc, serverTimestamp, orderBy, query, onSnapshot 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// YOUR FIREBASE DETAILS
+const firebaseConfig = {
+  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+  authDomain: "sanuyo-website.firebaseapp.com",
+  projectId: "sanuyo-website",
+  storageBucket: "sanuyo-website.firebasestorage.app",
+  messagingSenderId: "765213630366",
+  appId: "1:765213630366:web:03279e61a58289b088808f"
+};
+
+// INIT FIREBASE
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// DOM
+const messageInput = document.getElementById("messageInput");
+const messagesBox = document.getElementById("messagesBox");
+
+// DEFAULT USER (You can make dynamic later)
+const currentUser = "User123"; 
+
+// SEND MESSAGE
+async function sendMessage() {
+  let text = messageInput.value.trim();
+  if (text === "") return;
+
+  await addDoc(collection(db, "messages"), {
+    text: text,
+    sender: currentUser,
+    createdAt: serverTimestamp()
+  });
+
+  messageInput.value = "";
+}
+
+// LISTEN TO MESSAGES REAL-TIME
+const q = query(collection(db, "messages"), orderBy("createdAt"));
+
+onSnapshot(q, (snapshot) => {
+  messagesBox.innerHTML = "";
+
+  snapshot.forEach((doc) => {
+    const msg = doc.data();
+
+    let div = document.createElement("div");
+    div.classList.add("message");
+
+    if (msg.sender === currentUser) {
+      div.classList.add("sent");
     }
-];
 
-// LOAD CHAT LIST
-const chatList = document.getElementById("chatList");
+    div.textContent = msg.text;
+    messagesBox.appendChild(div);
+  });
 
-chats.forEach(chat => {
-    chatList.innerHTML += `
-        <div class="chat-item" onclick="openChat(${chat.id})">
-            <img src="${chat.avatar}">
-            <div class="chat-info">
-                <h4>${chat.user}</h4>
-                <p>${chat.lastMessage}</p>
-                <p class="product-name">Product: ${chat.product}</p>
-            </div>
-        </div>
-    `;
+  // AUTO SCROLL
+  messagesBox.scrollTop = messagesBox.scrollHeight;
 });
 
-function openChat(id) {
-    window.location.href = `chat.html?id=${id}`;
-}
+// GLOBAL ACCESS
+window.sendMessage = sendMessage;
