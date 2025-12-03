@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SanuYo - Profile</title>
+    <title>My Profile - SanuYo</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -14,53 +14,82 @@
         <div class="logo">SanuYo</div>
         <div class="nav-links small">
             <a href="home.html">Home</a>
-            <a href="sell.html">Sell</a>
-            <a href="saved.html">Saved</a>
-            <a href="profile.html" class="active">Profile</a>
         </div>
     </div>
 
-    <!-- USER CARD -->
-    <div class="profile-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" class="profile-pic" id="profilePic">
+    <!-- PROFILE TOP -->
+    <div class="profile-top">
+        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" class="profile-pic">
 
-        <h2 id="profileName">Loading...</h2>
-        <p id="profilePhone">...</p>
+        <h2 id="profileName">Guest User</h2>
+        <p id="profilePhone">+234 --- --- ----</p>
 
-        <button class="edit-profile-btn" onclick="editProfile()">
-            Edit Profile
-        </button>
+        <button class="edit-profile-btn">Edit Profile</button>
     </div>
 
-    <!-- MENU LIST -->
-    <div class="profile-menu">
+    <!-- QUICK STATS -->
+    <div class="profile-stats">
 
-        <div class="menu-item">
-            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png">
-            <p>My Listings</p>
+        <div class="stat-box" onclick="goTo('myads.html')">
+            <h3>0</h3>
+            <p>My Ads</p>
         </div>
 
-        <div class="menu-item">
-            <img src="https://cdn-icons-png.flaticon.com/128/1077/1077035.png">
-            <p>Saved Items</p>
+        <div class="stat-box" onclick="goTo('saved.html')">
+            <h3>0</h3>
+            <p>Saved</p>
         </div>
 
-        <div class="menu-item">
-            <img src="https://cdn-icons-png.flaticon.com/128/929/929610.png">
+        <div class="stat-box" onclick="goTo('messages.html')">
+            <h3>0</h3>
             <p>Messages</p>
         </div>
 
-        <div class="menu-item">
-            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828843.png">
-            <p>Settings</p>
-        </div>
-
-        <div class="menu-item logout" onclick="logout()">
-            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828490.png">
-            <p>Logout</p>
-        </div>
-
     </div>
+
+    <!-- WALLET SECTION -->
+    <div class="wallet-box">
+        <h3>My Wallet</h3>
+        <p>Balance: <b>₦0.00</b></p>
+        <button onclick="topUp()" class="topup-btn">Top Up Wallet</button>
+    </div>
+
+    <!-- PREMIUM UPGRADE -->
+    <div class="premium-box">
+        <h3>Boost Your Sales</h3>
+        <p>Upgrade your ads and reach more buyers.</p>
+
+        <button class="premium-btn" onclick="openPremium()">Upgrade to Premium</button>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="settings-box">
+        <h3>Settings</h3>
+
+        <div class="setting-item">
+            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828919.png">
+            <p>Account Settings</p>
+        </div>
+
+        <div class="setting-item">
+            <img src="https://cdn-icons-png.flaticon.com/128/3524/3524659.png">
+            <p>Change Password</p>
+        </div>
+
+        <div class="setting-item">
+            <img src="https://cdn-icons-png.flaticon.com/128/2089/2089799.png">
+            <p>Security</p>
+        </div>
+
+        <div class="setting-item">
+            <img src="https://cdn-icons-png.flaticon.com/128/992/992680.png">
+            <p>Support</p>
+        </div>
+    </div>
+
+    <!-- LOGOUT -->
+    <button class="logout-btn" onclick="logout()">Logout</button>
+
 
     <!-- BOTTOM NAV -->
     <div class="bottom-nav">
