@@ -3,48 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product - Sanuyo Marketplace</title>
+    <title>Sanuyo Products</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
+    <!-- HEADER -->
     <div class="header">
-        <div class="logo">Product</div>
+        <div class="logo">SanuYo</div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="sell.html">Sell</a>
+            <a href="saved.html">Saved</a>
+            <a href="profile.html">Profile</a>
+        </div>
     </div>
 
-    <div id="productDetails" class="product-details"></div>
+    <!-- CATEGORY TITLE -->
+    <div class="category-title" id="categoryTitle">
+        Loading...
+    </div>
 
-    <script type="module">
-        import { products } from "./products.js";
+    <!-- PRODUCT GRID -->
+    <div class="product-grid" id="productGrid">
+        <!-- Products load here -->
+    </div>
 
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get("id");
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+        <a href="home.html">
+            <img src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png">
+            <span>Home</span>
+        </a>
 
-        const product = products.find(p => p.id == id);
+        <a href="messages.html">
+            <img src="https://cdn-icons-png.flaticon.com/128/2462/2462719.png">
+            <span>Messages</span>
+        </a>
 
-        const box = document.getElementById("productDetails");
+        <a href="sell.html" class="sell-btn">
+            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png">
+            <span>Sell</span>
+        </a>
 
-        if (!product) {
-            box.innerHTML = "<p style='padding:20px;'>Product not found.</p>";
-        } else {
-            box.innerHTML = `
-                <img src="${product.image}" class="product-img-large">
+        <a href="saved.html">
+            <img src="https://cdn-icons-png.flaticon.com/128/833/833472.png">
+            <span>Saved</span>
+        </a>
 
-                <div class="details-area">
-                    <h2>${product.name}</h2>
-                    <p class="price">₦${product.price.toLocaleString()}</p>
-                    <p><strong>Location:</strong> ${product.location}</p>
-                    <p><strong>Category:</strong> ${product.category}</p>
+        <a href="profile.html">
+            <img src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png">
+            <span>Profile</span>
+        </a>
+    </div>
 
-                    <h3>Description</h3>
-                    <p>${product.description}</p>
-
-                    <a class="call-btn" href="tel:${product.phone}">Call Seller</a>
-                </div>
-            `;
-        }
-    </script>
+    <script src="products.js"></script>
 
 </body>
 </html>
