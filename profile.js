@@ -1,19 +1,24 @@
-// Load profile info from localStorage or Firebase
-document.addEventListener("DOMContentLoaded", () => {
-    const name = localStorage.getItem("userName") || "Guest User";
-    const phone = localStorage.getItem("userPhone") || "Not set";
+// Load user data (later connected to Firebase)
+document.getElementById("profileName").innerText =
+    localStorage.getItem("sanuUserName") || "Guest User";
 
-    document.getElementById("profileName").innerText = name;
-    document.getElementById("profilePhone").innerText = phone;
-});
+document.getElementById("profilePhone").innerText =
+    localStorage.getItem("sanuUserPhone") || "+234 --- --- ----";
 
-function editProfile() {
-    window.location.href = "edit-profile.html";
+function goTo(page) {
+    window.location.href = page;
+}
+
+function topUp() {
+    alert("Top Up Wallet coming soon!");
+}
+
+function openPremium() {
+    window.location.href = "premium.html";
 }
 
 function logout() {
-    localStorage.removeItem("userName");
-    localStorage.removeItem("userPhone");
-    alert("You have logged out.");
+    localStorage.clear();
+    alert("Logged out!");
     window.location.href = "home.html";
 }
