@@ -1,78 +1,160 @@
-import { products } from "./products.js";   // Load product database
+// ======================
+// SANUYO CATEGORY SYSTEM
+// ======================
 
-// ------------------------------
-// ELEMENTS
-// ------------------------------
-const productGrid = document.getElementById("productGrid");
-const searchInput = document.getElementById("searchInput");
-const categoryArea = document.getElementById("categoryArea");
+// FULL SUBCATEGORY DATA (Jiji Style)
+const subcategoryData = {
+    electronics: [
+        "Mobile Phones",
+        "Accessories",
+        "Laptops",
+        "TVs",
+        "Audio Systems",
+        "Video Games",
+        "Smart Watches",
+        "Cameras"
+    ],
 
-// ------------------------------
-// DISPLAY PRODUCTS
-// ------------------------------
-function displayProducts(list) {
-    productGrid.innerHTML = "";
+    vehicles: [
+        "Cars",
+        "Motorcycles",
+        "Trucks & Trailers",
+        "Vehicle Parts",
+        "Marine"
+    ],
 
-    if (list.length === 0) {
-        productGrid.innerHTML = "<p class='empty-text'>No products found.</p>";
-        return;
-    }
+    property: [
+        "Houses for Rent",
+        "Houses for Sale",
+        "Land & Plots",
+        "Commercial Property",
+        "Short Let"
+    ],
 
-    list.forEach(product => {
+    home: [
+        "Furniture",
+        "Kitchen Appliances",
+        "Home Appliances",
+        "Garden",
+        "Decor Items"
+    ],
+
+    fashion: [
+        "Men's Fashion",
+        "Women's Fashion",
+        "Shoes",
+        "Bags",
+        "Jewelry"
+    ],
+
+    beauty: [
+        "Skincare",
+        "Hair Products",
+        "Makeup",
+        "Fragrances"
+    ],
+
+    sports: [
+        "Gym Equipment",
+        "Sports Gear",
+        "Bicycles"
+    ],
+
+    pets: [
+        "Dogs",
+        "Cats",
+        "Birds",
+        "Fish",
+        "Pet Accessories"
+    ],
+
+    services: [
+        "Repair Services",
+        "Cleaning Services",
+        "Home Tutors",
+        "Event Services",
+        "Catering",
+        "Health & Wellness"
+    ],
+
+    jobs: [
+        "Full-time Jobs",
+        "Part-time Jobs",
+        "Teaching Jobs",
+        "IT Jobs",
+        "Sales Jobs",
+        "Hotel Jobs"
+    ],
+
+    kids: [
+        "Baby Gear",
+        "Toys",
+        "Kids Fashion",
+        "School Items"
+    ],
+
+    agriculture: [
+        "Livestock",
+        "Feeds & Supplements",
+        "Farm Machinery",
+        "Seeds",
+        "Fertilizers"
+    ]
+};
+
+
+// ======================
+// SUBCATEGORY HANDLING
+// ======================
+
+const categoryItems = document.querySelectorAll(".category-item");
+const subPanel = document.getElementById("subcategories-panel");
+const subList = document.getElementById("subcategories-list");
+
+let activeCategory = null;
+
+categoryItems.forEach(item => {
+    item.addEventListener("click", () => {
+        const category = item.getAttribute("data-category");
+
+        // If same category clicked → toggle panel hide
+        if (activeCategory === category) {
+            subPanel.classList.toggle("show");
+            return;
+        }
+
+        activeCategory = category;
+
+        // Load subcategories
+        loadSubcategories(category);
+
+        // Show panel with slide animation
+        subPanel.classList.add("show");
+
+        // Scroll down smoothly to subcategories
+        subPanel.scrollIntoView({ behavior: "smooth" });
+    });
+});
+
+
+// ======================
+// LOAD SUBCATEGORIES
+// ======================
+function loadSubcategories(category) {
+    const list = subcategoryData[category] || [];
+
+    subList.innerHTML = ""; // clear old list
+
+    list.forEach(sub => {
         const div = document.createElement("div");
-        div.classList.add("product-card");
+        div.classList.add("sub-item");
+        div.textContent = sub;
 
-        div.innerHTML = `
-            <img src="${product.image}" class="product-img">
-            <h3>${product.name}</h3>
-            <p class="price">₦${product.price.toLocaleString()}</p>
-            <p class="location">${product.location}</p>
-        `;
-
+        // When clicked redirect to category listing page
         div.onclick = () => {
-            window.location.href = `product.html?id=${product.id}`;
+            window.location.href = `products.html?cat=${category}&sub=${sub}`;
         };
 
-        productGrid.appendChild(div);
+        subList.appendChild(div);
     });
 }
-
-// ------------------------------
-// INITIAL LOAD
-// ------------------------------
-displayProducts(products);
-
-// ------------------------------
-// SEARCH FILTER
-// ------------------------------
-searchInput.addEventListener("input", () => {
-    const text = searchInput.value.toLowerCase();
-
-    const filtered = products.filter(p =>
-        p.name.toLowerCase().includes(text) ||
-        p.category.toLowerCase().includes(text) ||
-        p.location.toLowerCase().includes(text)
-    );
-
-    displayProducts(filtered);
-});
-
-// ------------------------------
-// CATEGORY FILTER
-// ------------------------------
-categoryArea.addEventListener("click", (event) => {
-    const box = event.target.closest(".cat-box");
-    if (!box) return;
-
-    const selected = box.dataset.category.toLowerCase();
-
-    const filtered = products.filter(p =>
-        p.category.toLowerCase() === selected
-    );
-
-    displayProducts(filtered);
-
-    // highlight active category
-    document.querySelectorAll(".cat-box").forEach(c => c.classList.remove("active"));
-    box.classList.add("active");
-});
