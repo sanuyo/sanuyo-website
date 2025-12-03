@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - SanuYo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">SanuYo</div>
+        <div class="nav-links small">
+            <a href="profile.html" class="active">Back</a>
+        </div>
+    </div>
+
+    <h2 class="section-title">Edit Profile</h2>
+
+    <div class="edit-profile-container">
+
+        <!-- PROFILE PIC -->
+        <div class="profile-pic-section">
+            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" 
+                 id="editProfilePic"
+                 class="profile-pic large">
+
+            <input type="file" id="profilePicInput" accept="image/*" style="display:none">
+            <button class="edit-btn" onclick="choosePic()">Change Picture</button>
+        </div>
+
+        <!-- NAME -->
+        <label class="input-label">Full Name</label>
+        <input type="text" id="editName" class="input-field" placeholder="Enter full name">
+
+        <!-- PHONE -->
+        <label class="input-label">Phone Number</label>
+        <input type="text" id="editPhone" class="input-field" placeholder="Enter phone number">
+
+        <button class="save-btn" onclick="saveProfile()">Save Changes</button>
+
+    </div>
+
+    <script src="edit-profile.js"></script>
+
+</body>
+</html>
