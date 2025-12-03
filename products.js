@@ -1,72 +1,76 @@
-// ===========================
-// PRODUCT DATA
-// ===========================
+// ===============================
+// GET CATEGORY & SUBCATEGORY
+// ===============================
 
-const products = [
-  {
-    id: 1,
-    name: "Wireless Bluetooth Headset",
-    price: 8500,
-    image: "images/headset.jpg",
-    category: "electronics",
-    description: "High-quality Bluetooth headset with noise cancellation."
-  },
-  {
-    id: 2,
-    name: "Ladies Handbag",
-    price: 12000,
-    image: "images/handbag.jpg",
-    category: "fashion",
-    description: "Elegant handbag perfect for outings and events."
-  },
-  {
-    id: 3,
-    name: "Running Sneakers",
-    price: 15000,
-    image: "images/shoes.jpg",
-    category: "fashion",
-    description: "Comfortable and durable sneakers for sports and daily wear."
-  },
-  {
-    id: 4,
-    name: "Smartphone Power Bank 20,000mAh",
-    price: 10500,
-    image: "images/powerbank.jpg",
-    category: "electronics",
-    description: "Fast-charging high-capacity power bank."
-  },
-  {
-    id: 5,
-    name: "Non-stick Cooking Pot Set",
-    price: 32000,
-    image: "images/cookingpot.jpg",
-    category: "home",
-    description: "Durable and easy-to-clean non-stick pot set."
-  }
-];
+const urlParams = new URLSearchParams(window.location.search);
+const category = urlParams.get("cat") || "All Products";
+const subcategory = urlParams.get("sub") || null;
 
-// ===========================
-// FILTER BY CATEGORY
-// ===========================
+document.getElementById("categoryTitle").innerText =
+    subcategory ? `${subcategory}` : `${category}`;
 
-function getProductsByCategory(category) {
-  if (category === "all") {
-    return products;
-  }
-  return products.filter(item => item.category === category);
+
+
+// ===============================
+// FIREBASE CONNECTION
+// ===============================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+    authDomain: "sanuyo-website.firebaseapp.com",
+    projectId: "sanuyo-website",
+    storageBucket: "sanuyo-website.firebasestorage.app",
+    messagingSenderId: "765213630366",
+    appId: "1:765213630366:web:03279e61a58289b088808f"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+
+// ===============================
+// LOAD PRODUCTS
+// ===============================
+async function loadProducts() {
+    const grid = document.getElementById("productGrid");
+    grid.innerHTML = "<p>Loading products...</p>";
+
+    const querySnapshot = await getDocs(collection(db, "products"));
+
+    grid.innerHTML = "";
+
+    querySnapshot.forEach(doc => {
+        const p = doc.data();
+
+        // CATEGORY FILTER
+        if (category && category !== "All Products" && p.category !== category) return;
+
+        // SUBCATEGORY FILTER
+        if (subcategory && p.subcategory !== subcategory) return;
+
+        const item = document.createElement("div");
+        item.classList.add("product-item");
+
+        item.innerHTML = `
+            <img src="${p.imageUrl}" class="product-img">
+
+            <div class="product-info">
+                <h3>${p.title}</h3>
+                <p class="price">₦${p.price}</p>
+                <p class="loc">${p.location}</p>
+            </div>
+        `;
+
+        // Go to product page
+        item.onclick = () => {
+            window.location.href = `product.html?id=${doc.id}`;
+        };
+
+        grid.appendChild(item);
+    });
 }
 
-// ===========================
-// SEARCH PRODUCTS
-// ===========================
-
-function searchProducts(query) {
-  const q = query.toLowerCase();
-  return products.filter(item => item.name.toLowerCase().includes(q));
-}
-
-// ===========================
-// EXPORT (for other scripts)
-// ===========================
-
-export { products, getProductsByCategory, searchProducts };
+loadProducts();
