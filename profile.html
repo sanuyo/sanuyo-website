@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - SanuYo</title>
+    <title>SanuYo - Profile</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -11,65 +11,58 @@
 
     <!-- HEADER -->
     <div class="header">
-        <div class="logo">My Profile</div>
+        <div class="logo">SanuYo</div>
+        <div class="nav-links small">
+            <a href="home.html">Home</a>
+            <a href="sell.html">Sell</a>
+            <a href="saved.html">Saved</a>
+            <a href="profile.html" class="active">Profile</a>
+        </div>
     </div>
 
-    <!-- PROFILE AREA -->
-    <div class="profile-container">
+    <!-- USER CARD -->
+    <div class="profile-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" class="profile-pic" id="profilePic">
 
-        <div class="profile-box">
-            <img src="https://cdn-icons-png.flaticon.com/128/1077/1077012.png" class="profile-pic">
+        <h2 id="profileName">Loading...</h2>
+        <p id="profilePhone">...</p>
 
-            <h2 id="username">Guest User</h2>
-            <p class="small-text">Welcome to SanuYo Marketplace</p>
+        <button class="edit-profile-btn" onclick="editProfile()">
+            Edit Profile
+        </button>
+    </div>
 
-            <button class="edit-btn">Edit Profile (Coming Soon)</button>
+    <!-- MENU LIST -->
+    <div class="profile-menu">
+
+        <div class="menu-item">
+            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png">
+            <p>My Listings</p>
         </div>
 
-        <!-- MENU BUTTONS -->
-        <div class="profile-menu">
-
-            <a class="menu-item" href="myads.html">
-                <img src="https://cdn-icons-png.flaticon.com/128/1828/1828961.png">
-                <span>My Ads</span>
-            </a>
-
-            <a class="menu-item" href="saved.html">
-                <img src="https://cdn-icons-png.flaticon.com/128/833/833472.png">
-                <span>Saved Items</span>
-            </a>
-
-            <a class="menu-item" href="messages.html">
-                <img src="https://cdn-icons-png.flaticon.com/128/2462/2462719.png">
-                <span>Messages</span>
-            </a>
+        <div class="menu-item">
+            <img src="https://cdn-icons-png.flaticon.com/128/1077/1077035.png">
+            <p>Saved Items</p>
         </div>
 
-        <!-- PREMIUM SERVICES -->
-        <h3 class="section-title">Premium Services</h3>
-
-        <div class="premium-box">
-
-            <div class="premium-item">
-                <h4>Basic Plan</h4>
-                <p>₦5,000 / month</p>
-                <a class="premium-btn" href="#">Subscribe</a>
-            </div>
-
-            <div class="premium-item">
-                <h4>Classic Plan</h4>
-                <p>₦7,000 / month</p>
-                <a class="premium-btn" href="#">Subscribe</a>
-            </div>
-
+        <div class="menu-item">
+            <img src="https://cdn-icons-png.flaticon.com/128/929/929610.png">
+            <p>Messages</p>
         </div>
 
-        <!-- LOGOUT (future functionality) -->
-        <button class="logout-btn">Logout (Coming Soon)</button>
+        <div class="menu-item">
+            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828843.png">
+            <p>Settings</p>
+        </div>
+
+        <div class="menu-item logout" onclick="logout()">
+            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828490.png">
+            <p>Logout</p>
+        </div>
 
     </div>
 
-    <!-- BOTTOM NAVIGATION -->
+    <!-- BOTTOM NAV -->
     <div class="bottom-nav">
         <a href="home.html">
             <img src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png">
@@ -96,6 +89,8 @@
             <span>Profile</span>
         </a>
     </div>
+
+    <script src="profile.js"></script>
 
 </body>
 </html>
