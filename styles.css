@@ -284,3 +284,118 @@ a {
     border-radius: 6px;
     border: 1px solid #ddd;
 }
+
+/* JIJI STYLE CATEGORY GRID */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    padding: 10px 15px;
+}
+
+.cat-box {
+    background: #ffffff;
+    border: 1px solid #e7e7e7;
+    padding: 12px 5px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    transition: 0.2s;
+}
+
+.cat-box:hover {
+    transform: translateY(-3px);
+}
+
+.cat-box img {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 5px;
+}
+
+.cat-box p {
+    font-size: 13px;
+    color: #444;
+    margin: 0;
+    font-weight: 600;
+    line-height: 14px;
+}
+
+/* Section Title */
+.section-title {
+    padding: 10px 15px;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+/* JIJI CATEGORY STRIP */
+.cat-strip {
+    display: flex;
+    overflow-x: auto;
+    gap: 18px;
+    padding: 12px;
+    background: white;
+}
+.cat-strip::-webkit-scrollbar {
+    display: none;
+}
+.cat-strip-item {
+    text-align: center;
+    min-width: 70px;
+}
+.cat-strip-item img {
+    width: 38px;
+    height: 38px;
+}
+.cat-strip-item p {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* JIJI CATEGORY GRID */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 15px;
+}
+
+.cat-box {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.cat-box:hover {
+    transform: translateY(-3px);
+}
+
+.cat-box img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 7px;
+}
+
+/* SUBCATEGORIES BOX */
+.subcat-box {
+    background: white;
+    border: 1px solid #ccc;
+    margin: 10px 15px;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.subcat-box.hidden {
+    display: none;
+}
+
+#subcat-list div {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+}
