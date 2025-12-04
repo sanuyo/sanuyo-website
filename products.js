@@ -1,108 +1,52 @@
-// -------------------------
-// FIREBASE IMPORTS
-// -------------------------
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs, query, orderBy } 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+// Simulated database import
+import { products } from "./products.js";
 
-// -------------------------
-// FIREBASE CONFIG
-// -------------------------
-const firebaseConfig = {
-  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-  authDomain: "sanuyo-website.firebaseapp.com",
-  projectId: "sanuyo-website",
-  storageBucket: "sanuyo-website.firebasestorage.app",
-  messagingSenderId: "765213630366",
-  appId: "1:765213630366:web:03279e61a58289b088808f"
-};
+// Get product ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get("id");
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Find the product
+const product = products.find(p => p.id == productId);
 
-// -------------------------
-// LOAD PRODUCTS
-// -------------------------
-async function loadProducts() {
-  const productGrid = document.getElementById("productGrid");
+// Display product
+document.getElementById("product-image").src = product.image;
+document.getElementById("product-title").textContent = product.title;
+document.getElementById("product-price").textContent = "₦" + product.price.toLocaleString();
+document.getElementById("product-location").textContent = "Location: " + product.location;
+document.getElementById("product-date").textContent = "Posted: " + product.date;
+document.getElementById("product-description").textContent = product.description;
 
-  let q = query(collection(db, "products"), orderBy("timestamp", "desc"));
+// Seller Info
+document.getElementById("seller-name").textContent = "Seller: " + product.sellerName;
+document.getElementById("seller-phone").textContent = "Phone: " + product.sellerPhone;
 
-  const snapshot = await getDocs(q);
+// Call Seller
+document.getElementById("call-btn").addEventListener("click", () => {
+  window.location.href = `tel:${product.sellerPhone}`;
+});
 
-  let items = [];
-  snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+// Message Seller (WhatsApp)
+document.getElementById("message-btn").addEventListener("click", () => {
+  const message = encodeURIComponent(`Hello, I saw your product "${product.title}" on SM Market.`);
+  window.location.href = `https://wa.me/${product.sellerPhone}?text=${message}`;
+});
 
-  // -------------------------
-  // APPLY FILTERS
-  // -------------------------
-  const params = new URLSearchParams(window.location.search);
+// Similar products
+const similarCtn = document.getElementById("similar-container");
 
-  const min = params.get("min");
-  const max = params.get("max");
-  const condition = params.get("condition");
-  const location = params.get("location");
-  const category = params.get("cat");
-  const subCategory = params.get("sub");
-  const sortBy = params.get("sort");
-
-  // Price filter
-  if (min) items = items.filter(p => Number(p.price) >= Number(min));
-  if (max) items = items.filter(p => Number(p.price) <= Number(max));
-
-  // Condition filter
-  if (condition) items = items.filter(p => p.condition === condition);
-
-  // Location filter
-  if (location) items = items.filter(p => p.location === location);
-
-  // Category filter
-  if (category) items = items.filter(p => p.category === category);
-
-  // Sub-category filter
-  if (subCategory) items = items.filter(p => p.subCategory === subCategory);
-
-  // -------------------------
-  // SORTING
-  // -------------------------
-  if (sortBy === "low") {
-    items.sort((a, b) => a.price - b.price);
-  }
-
-  if (sortBy === "high") {
-    items.sort((a, b) => b.price - a.price);
-  }
-
-  // "latest" is already handled by Firestore orderBy
-
-  // -------------------------
-  // DISPLAY PRODUCTS
-  // -------------------------
-  productGrid.innerHTML = "";
-
-  if (items.length === 0) {
-    productGrid.innerHTML = `
-      <p style="text-align:center; width:100%; color:#666; margin-top:20px;">
-        No products match your filters.
-      </p>`;
-    return;
-  }
-
-  items.forEach(p => {
-    productGrid.innerHTML += `
-      <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'">
-        
-        <img src="${p.image1}" class="prod-img">
-
-        <div class="prod-info">
-          <h3 class="prod-title">${p.title}</h3>
-          <p class="prod-price">₦${Number(p.price).toLocaleString()}</p>
-          <p class="prod-location">${p.location}</p>
-        </div>
-
-      </div>
+products
+  .filter(p => p.category === product.category && p.id !== product.id)
+  .slice(0, 4)
+  .forEach(sim => {
+    let card = document.createElement("div");
+    card.className = "similar-card";
+    card.innerHTML = `
+      <img src="${sim.image}">
+      <p>${sim.title}</p>
+      <p>₦${sim.price.toLocaleString()}</p>
     `;
+    card.onclick = () => {
+      window.location.href = `product.html?id=${sim.id}`;
+    };
+    similarCtn.appendChild(card);
   });
-}
-
-loadProducts();
