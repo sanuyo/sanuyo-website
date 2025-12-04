@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filters</title>
+  <link rel="stylesheet" href="filters.css">
+</head>
+<body>
+
+<header class="header">
+  <h2>Search Filters</h2>
+</header>
+
+<div class="filter-box">
+
+  <div class="filter-group">
+    <label>Price Range</label>
+    <input type="number" id="minPrice" placeholder="Min Price">
+    <input type="number" id="maxPrice" placeholder="Max Price">
+  </div>
+
+  <div class="filter-group">
+    <label>Condition</label>
+    <select id="condition">
+      <option value="">Any</option>
+      <option value="New">New</option>
+      <option value="Used">Used</option>
+      <option value="Refurbished">Refurbished</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label>Location</label>
+    <select id="location">
+      <option value="">Any</option>
+      <option value="Lagos">Lagos</option>
+      <option value="Abuja">Abuja</option>
+      <option value="Port Harcourt">Port Harcourt</option>
+      <option value="Ibadan">Ibadan</option>
+      <option value="Kano">Kano</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label>Category</label>
+    <select id="category"></select>
+  </div>
+
+  <div class="filter-group">
+    <label>Sub Category</label>
+    <select id="subCategory"></select>
+  </div>
+
+  <div class="filter-group">
+    <label>Sort By</label>
+    <select id="sortBy">
+      <option value="latest">Latest</option>
+      <option value="low">Lowest Price</option>
+      <option value="high">Highest Price</option>
+    </select>
+  </div>
+
+  <button class="apply-btn" id="applyFilters">Apply Filters</button>
+
+</div>
+
+<script type="module" src="filters.js"></script>
+
+</body>
+</html>
