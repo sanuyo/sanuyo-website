@@ -1,76 +1,108 @@
-// ===============================
-// GET CATEGORY & SUBCATEGORY
-// ===============================
+// -------------------------
+// FIREBASE IMPORTS
+// -------------------------
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs, query, orderBy } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const urlParams = new URLSearchParams(window.location.search);
-const category = urlParams.get("cat") || "All Products";
-const subcategory = urlParams.get("sub") || null;
-
-document.getElementById("categoryTitle").innerText =
-    subcategory ? `${subcategory}` : `${category}`;
-
-
-
-// ===============================
-// FIREBASE CONNECTION
-// ===============================
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
+// -------------------------
+// FIREBASE CONFIG
+// -------------------------
 const firebaseConfig = {
-    apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-    authDomain: "sanuyo-website.firebaseapp.com",
-    projectId: "sanuyo-website",
-    storageBucket: "sanuyo-website.firebasestorage.app",
-    messagingSenderId: "765213630366",
-    appId: "1:765213630366:web:03279e61a58289b088808f"
+  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+  authDomain: "sanuyo-website.firebaseapp.com",
+  projectId: "sanuyo-website",
+  storageBucket: "sanuyo-website.firebasestorage.app",
+  messagingSenderId: "765213630366",
+  appId: "1:765213630366:web:03279e61a58289b088808f"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
-
-// ===============================
+// -------------------------
 // LOAD PRODUCTS
-// ===============================
+// -------------------------
 async function loadProducts() {
-    const grid = document.getElementById("productGrid");
-    grid.innerHTML = "<p>Loading products...</p>";
+  const productGrid = document.getElementById("productGrid");
 
-    const querySnapshot = await getDocs(collection(db, "products"));
+  let q = query(collection(db, "products"), orderBy("timestamp", "desc"));
 
-    grid.innerHTML = "";
+  const snapshot = await getDocs(q);
 
-    querySnapshot.forEach(doc => {
-        const p = doc.data();
+  let items = [];
+  snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
 
-        // CATEGORY FILTER
-        if (category && category !== "All Products" && p.category !== category) return;
+  // -------------------------
+  // APPLY FILTERS
+  // -------------------------
+  const params = new URLSearchParams(window.location.search);
 
-        // SUBCATEGORY FILTER
-        if (subcategory && p.subcategory !== subcategory) return;
+  const min = params.get("min");
+  const max = params.get("max");
+  const condition = params.get("condition");
+  const location = params.get("location");
+  const category = params.get("cat");
+  const subCategory = params.get("sub");
+  const sortBy = params.get("sort");
 
-        const item = document.createElement("div");
-        item.classList.add("product-item");
+  // Price filter
+  if (min) items = items.filter(p => Number(p.price) >= Number(min));
+  if (max) items = items.filter(p => Number(p.price) <= Number(max));
 
-        item.innerHTML = `
-            <img src="${p.imageUrl}" class="product-img">
+  // Condition filter
+  if (condition) items = items.filter(p => p.condition === condition);
 
-            <div class="product-info">
-                <h3>${p.title}</h3>
-                <p class="price">₦${p.price}</p>
-                <p class="loc">${p.location}</p>
-            </div>
-        `;
+  // Location filter
+  if (location) items = items.filter(p => p.location === location);
 
-        // Go to product page
-        item.onclick = () => {
-            window.location.href = `product.html?id=${doc.id}`;
-        };
+  // Category filter
+  if (category) items = items.filter(p => p.category === category);
 
-        grid.appendChild(item);
-    });
+  // Sub-category filter
+  if (subCategory) items = items.filter(p => p.subCategory === subCategory);
+
+  // -------------------------
+  // SORTING
+  // -------------------------
+  if (sortBy === "low") {
+    items.sort((a, b) => a.price - b.price);
+  }
+
+  if (sortBy === "high") {
+    items.sort((a, b) => b.price - a.price);
+  }
+
+  // "latest" is already handled by Firestore orderBy
+
+  // -------------------------
+  // DISPLAY PRODUCTS
+  // -------------------------
+  productGrid.innerHTML = "";
+
+  if (items.length === 0) {
+    productGrid.innerHTML = `
+      <p style="text-align:center; width:100%; color:#666; margin-top:20px;">
+        No products match your filters.
+      </p>`;
+    return;
+  }
+
+  items.forEach(p => {
+    productGrid.innerHTML += `
+      <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'">
+        
+        <img src="${p.image1}" class="prod-img">
+
+        <div class="prod-info">
+          <h3 class="prod-title">${p.title}</h3>
+          <p class="prod-price">₦${Number(p.price).toLocaleString()}</p>
+          <p class="prod-location">${p.location}</p>
+        </div>
+
+      </div>
+    `;
+  });
 }
 
 loadProducts();
