@@ -2,177 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sell an Item - Sanuyo Website</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Product</title>
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Firebase CDN -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"></script>
-
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-            authDomain: "sanuyo-website.firebaseapp.com",
-            projectId: "sanuyo-website",
-            storageBucket: "sanuyo-website.firebasestorage.app",
-            messagingSenderId: "765213630366",
-            appId: "1:765213630366:web:03279e61a58289b088808f"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const storage = firebase.storage();
-    </script>
-
-    <style>
-        /* SELL PAGE STYLE */
-        .sell-container {
-            padding: 20px;
-        }
-
-        .sell-container h2 {
-            margin-bottom: 10px;
-            color: #7A1FF2;
-            font-weight: 600;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        .input-group label {
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .input-group input,
-        .input-group select,
-        .input-group textarea {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-        .input-group textarea {
-            height: 100px;
-        }
-
-        #uploadPreview img {
-            width: 80px;
-            height: 80px;
-            border-radius: 6px;
-            object-fit: cover;
-            margin-right: 8px;
-            margin-top: 8px;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
-            background: #7A1FF2;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-    </style>
-
 </head>
 
-<body>
+<body class="sell-body">
 
-    <!-- HEADER -->
-    <header class="top-header">
-        <h2>Post an Ad</h2>
+    <header class="top-bar">
+        <h2>Post an Item</h2>
     </header>
 
-    <!-- SELL FORM -->
-    <div class="sell-container">
-        <h2>Sell Your Item</h2>
+    <section class="sell-container">
+        <form id="sellForm" class="sell-form">
 
-        <div class="input-group">
-            <label>Title</label>
-            <input id="title" type="text" placeholder="E.g. iPhone X, Toyota Camry...">
-        </div>
+            <label>Product Title</label>
+            <input type="text" id="title" placeholder="Enter product name" required>
 
-        <div class="input-group">
             <label>Price (₦)</label>
-            <input id="price" type="number" placeholder="50000">
-        </div>
+            <input type="number" id="price" placeholder="Enter price" required>
 
-        <div class="input-group">
             <label>Phone Number</label>
-            <input id="phone" type="number" placeholder="08012345678">
-        </div>
+            <input type="tel" id="phone" placeholder="Your phone number" required>
 
-        <div class="input-group">
-            <label>Location</label>
-            <input id="location" type="text" placeholder="Lagos, Abuja, Ibadan...">
-        </div>
+            <label>Description</label>
+            <textarea id="description" placeholder="Describe your item" required></textarea>
 
-        <div class="input-group">
             <label>Category</label>
-            <select id="category">
+            <select id="category" required>
                 <option value="">Select Category</option>
-                <option value="phones">Phones</option>
-                <option value="fashion">Fashion</option>
                 <option value="electronics">Electronics</option>
                 <option value="vehicles">Vehicles</option>
-                <option value="property">Property</option>
-                <option value="others">Others</option>
+                <option value="fashion">Fashion</option>
+                <option value="real_estate">Real Estate</option>
+                <option value="services">Services</option>
+                <option value="jobs">Jobs</option>
+                <option value="animals">Animals</option>
+                <option value="sports">Sports</option>
+                <option value="babies">Babies & Kids</option>
             </select>
-        </div>
 
-        <div class="input-group">
-            <label>Description</label>
-            <textarea id="description" placeholder="Describe the item..."></textarea>
-        </div>
+            <label>Subcategory</label>
+            <select id="subcategory" required>
+                <option value="">Select Subcategory</option>
+            </select>
 
-        <div class="input-group">
-            <label>Upload Images (max 5)</label>
-            <input id="images" type="file" accept="image/*" multiple>
-        </div>
+            <label>Upload Images (max 6)</label>
+            <input type="file" id="images" accept="image/*" multiple>
+            <div id="preview" class="image-preview"></div>
 
-        <div id="uploadPreview"></div>
+            <button type="submit" id="submitBtn" class="sell-btn">Post Item</button>
 
-        <button onclick="postAd()">Submit Ad</button>
+        </form>
+    </section>
 
-    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
-    <!-- BOTTOM NAV -->
-    <nav class="bottom-nav">
-        <a href="home.html">
-            <img src="assets/home.png">
-            <span>Home</span>
-        </a>
-
-        <a href="categories.html">
-            <img src="assets/categories.png">
-            <span>Categories</span>
-        </a>
-
-        <a href="sell.html" class="sell-btn active">
-            <div class="sell-circle">+</div>
-        </a>
-
-        <a href="saved.html">
-            <img src="assets/saved.png">
-            <span>Saved</span>
-        </a>
-
-        <a href="profile.html">
-            <img src="assets/profile.png">
-            <span>Profile</span>
-        </a>
-    </nav>
-
-    <script src="scripts/sell.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="sell.js"></script>
 
 </body>
 </html>
