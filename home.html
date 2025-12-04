@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+  
 
   <!-- NAVBAR -->
   <div class="navbar">
@@ -24,100 +24,89 @@
     <input class="search-box" type="text" placeholder="Search for products…">
   </div>
 
-  <!-- CATEGORIES SECTION -->
-  <div class="categories-section">
-    <div class="section-title">Categories</div>
-
-    <div class="categories-grid">
-
-      <div class="category-item" data-category="electronics">
-        <span class="category-icon">📱</span>
-        Electronics
-      </div>
-
-      <div class="category-item" data-category="vehicles">
-        <span class="category-icon">🚗</span>
-        Vehicles
-      </div>
-
-      <div class="category-item" data-category="property">
-        <span class="category-icon">🏠</span>
-        Property
-      </div>
-
-      <div class="category-item" data-category="home">
-        <span class="category-icon">🛋️</span>
-        Home & Furniture
-      </div>
-
-      <div class="category-item" data-category="fashion">
-        <span class="category-icon">👗</span>
-        Fashion
-      </div>
-
-      <div class="category-item" data-category="beauty">
-        <span class="category-icon">💄</span>
-        Beauty & Personal Care
-      </div>
-
-      <div class="category-item" data-category="sports">
-        <span class="category-icon">🏀</span>
-        Sports & Fitness
-      </div>
-
-      <div class="category-item" data-category="pets">
-        <span class="category-icon">🐶</span>
-        Pets
-      </div>
-
-      <div class="category-item" data-category="services">
-        <span class="category-icon">🛠️</span>
-        Services
-      </div>
-
-      <div class="category-item" data-category="jobs">
-        <span class="category-icon">💼</span>
-        Jobs
-      </div>
-
-      <div class="category-item" data-category="kids">
-        <span class="category-icon">🧸</span>
-        Babies & Kids
-      </div>
-
-      <div class="category-item" data-category="agriculture">
-        <span class="category-icon">🌾</span>
-        Agriculture
-      </div>
-
+  <!-- ------------------------------
+    CATEGORY STRIP (Jiji Style)
+------------------------------- -->
+<div class="cat-strip">
+    <div class="cat-strip-item" onclick="openCategory('phones')">
+        <img src="https://cdn-icons-png.flaticon.com/128/1040/1040230.png">
+        <p>Phones</p>
     </div>
 
-    <!-- SUB-CATEGORIES CONTAINER -->
-    <div id="subcategories-panel" class="subcategories-container">
-      <div class="sub-title">Subcategories</div>
-      <div id="subcategories-list" class="subcategories-list">
-        <!-- Filled by home.js -->
-      </div>
+    <div class="cat-strip-item" onclick="openCategory('electronics')">
+        <img src="https://cdn-icons-png.flaticon.com/128/3202/3202926.png">
+        <p>Electronics</p>
     </div>
 
-  </div>
-
-  <!-- FEATURED PRODUCTS -->
-  <div class="products-section">
-    <div class="section-title">Featured Products</div>
-    <div id="products-grid" class="products-grid">
-      <!-- Filled by products.js -->
+    <div class="cat-strip-item" onclick="openCategory('vehicles')">
+        <img src="https://cdn-icons-png.flaticon.com/128/3460/3460320.png">
+        <p>Vehicles</p>
     </div>
-  </div>
 
-  <!-- FOOTER -->
-  <div class="footer">
-    © 2025 Sanuyo Market — Buy & Sell Easily
-  </div>
+    <div class="cat-strip-item" onclick="openCategory('fashion')">
+        <img src="https://cdn-icons-png.flaticon.com/128/679/679922.png">
+        <p>Fashion</p>
+    </div>
 
-  <!-- SCRIPTS -->
-  <script src="home.js"></script>
-  <script src="products.js"></script>
+    <div class="cat-strip-item" onclick="openCategory('realestate')">
+        <img src="https://cdn-icons-png.flaticon.com/128/1995/1995574.png">
+        <p>Real Estate</p>
+    </div>
+</div>
 
-</body>
-</html>
+<!-- ------------------------------
+     MAIN CATEGORY GRID (Jiji)
+------------------------------- -->
+<h2 class="section-title">Categories</h2>
+
+<div class="category-grid">
+
+    <div class="cat-box" onclick="toggleSub('phones')">
+        <img src="https://cdn-icons-png.flaticon.com/128/1040/1040230.png">
+        <p>Mobile Phones</p>
+    </div>
+
+    <div class="cat-box" onclick="toggleSub('electronics')">
+        <img src="https://cdn-icons-png.flaticon.com/128/3202/3202926.png">
+        <p>Electronics</p>
+    </div>
+
+    <div class="cat-box" onclick="toggleSub('vehicles')">
+        <img src="https://cdn-icons-png.flaticon.com/128/3460/3460320.png">
+        <p>Vehicles</p>
+    </div>
+
+    <div class="cat-box" onclick="toggleSub('fashion')">
+        <img src="https://cdn-icons-png.flaticon.com/128/679/679922.png">
+        <p>Fashion</p>
+    </div>
+
+    <div class="cat-box" onclick="toggleSub('realestate')">
+        <img src="https://cdn-icons-png.flaticon.com/128/1995/1995574.png">
+        <p>Real Estate</p>
+    </div>
+
+    <div class="cat-box" onclick="toggleSub('home')">
+        <img src="https://cdn-icons-png.flaticon.com/128/565/565547.png">
+        <p>Home & Furniture</p>
+    </div>
+
+    <div class="cat-box" onclick="toggleSub('pets')">
+        <img src="https://cdn-icons-png.flaticon.com/128/1998/1998610.png">
+        <p>Animals & Pets</p>
+    </div>
+
+    <div class="cat-box" onclick="toggleSub('sports')">
+        <img src="https://cdn-icons-png.flaticon.com/128/2972/2972185.png">
+        <p>Sports</p>
+    </div>
+
+</div>
+
+<!-- ------------------------------
+     SUBCATEGORIES DROPDOWN
+------------------------------- -->
+<div id="subcategories" class="subcat-box hidden">
+    <h3 id="subcat-title"></h3>
+    <div id="subcat-list"></div>
+</div>
