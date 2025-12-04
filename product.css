@@ -1,0 +1,88 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+}
+
+.header {
+  background: #005eff;
+  padding: 15px;
+  color: #fff;
+  text-align: center;
+}
+
+.container {
+  width: 95%;
+  margin: auto;
+  padding: 10px;
+}
+
+.image-section img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.info-section {
+  background: #fff;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 8px;
+}
+
+.seller-box {
+  background: #fff;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 8px;
+}
+
+.seller-box button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#call-btn {
+  background: #00a82d;
+  color: white;
+}
+
+#message-btn {
+  background: #005eff;
+  color: white;
+}
+
+.description-box {
+  background: #fff;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 8px;
+}
+
+.similar-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.similar-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.similar-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.similar-card p {
+  margin: 5px 0;
+}
