@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Category - SanuYo</title>
+    <link rel="stylesheet" href="category.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <button onclick="history.back()" class="back-btn">←</button>
+        <h2 id="catTitle">Category</h2>
+    </div>
+
+    <!-- SUBCATEGORY FILTERS -->
+    <div class="subcat-strip" id="subcatStrip">
+        <!-- Loaded from JS -->
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="product-grid" id="catProducts">
+        <!-- Loaded dynamically -->
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
+    <script src="category.js"></script>
+</body>
+
+</html>
