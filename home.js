@@ -34,3 +34,9 @@ function openCategory(cat) {
 function openSubcategory(cat, sub) {
     window.location.href = `category.html?cat=${cat}&sub=${sub}`;
 }
+document.getElementById("searchInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    const q = e.target.value;
+    window.location.href = `search.html?search=${q}`;
+  }
+});
