@@ -1,71 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Filters</title>
-  <link rel="stylesheet" href="filters.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filters • SanuYo</title>
+<link rel="stylesheet" href="filters.css">
 </head>
 <body>
 
-<header class="header">
-  <h2>Search Filters</h2>
-</header>
+<div class="filter-header">
+    <h2>Filters</h2>
+    <button class="close-btn" onclick="history.back()">✕</button>
+</div>
 
-<div class="filter-box">
+<div class="filter-section">
 
-  <div class="filter-group">
-    <label>Price Range</label>
-    <input type="number" id="minPrice" placeholder="Min Price">
-    <input type="number" id="maxPrice" placeholder="Max Price">
-  </div>
+    <!-- CATEGORY -->
+    <div class="filter-box">
+        <label>Category</label>
+        <select id="categorySelect"></select>
+    </div>
 
-  <div class="filter-group">
-    <label>Condition</label>
-    <select id="condition">
-      <option value="">Any</option>
-      <option value="New">New</option>
-      <option value="Used">Used</option>
-      <option value="Refurbished">Refurbished</option>
-    </select>
-  </div>
+    <!-- SUB CATEGORY -->
+    <div class="filter-box">
+        <label>Sub-category</label>
+        <select id="subCategorySelect"></select>
+    </div>
 
-  <div class="filter-group">
-    <label>Location</label>
-    <select id="location">
-      <option value="">Any</option>
-      <option value="Lagos">Lagos</option>
-      <option value="Abuja">Abuja</option>
-      <option value="Port Harcourt">Port Harcourt</option>
-      <option value="Ibadan">Ibadan</option>
-      <option value="Kano">Kano</option>
-    </select>
-  </div>
+    <!-- PRICE RANGE -->
+    <div class="filter-box">
+        <label>Minimum Price (₦)</label>
+        <input type="number" id="minPrice" placeholder="0">
+    </div>
 
-  <div class="filter-group">
-    <label>Category</label>
-    <select id="category"></select>
-  </div>
+    <div class="filter-box">
+        <label>Maximum Price (₦)</label>
+        <input type="number" id="maxPrice" placeholder="500,000+">
+    </div>
 
-  <div class="filter-group">
-    <label>Sub Category</label>
-    <select id="subCategory"></select>
-  </div>
+    <!-- CONDITION -->
+    <div class="filter-box">
+        <label>Condition</label>
+        <select id="conditionSelect">
+            <option value="">Any</option>
+            <option>New</option>
+            <option>Used</option>
+            <option>Refurbished</option>
+        </select>
+    </div>
 
-  <div class="filter-group">
-    <label>Sort By</label>
-    <select id="sortBy">
-      <option value="latest">Latest</option>
-      <option value="low">Lowest Price</option>
-      <option value="high">Highest Price</option>
-    </select>
-  </div>
+    <!-- LOCATION -->
+    <div class="filter-box">
+        <label>State</label>
+        <select id="stateSelect"></select>
+    </div>
 
-  <button class="apply-btn" id="applyFilters">Apply Filters</button>
+    <div class="filter-box">
+        <label>City</label>
+        <select id="citySelect"></select>
+    </div>
+
+    <!-- BRAND -->
+    <div class="filter-box">
+        <label>Brand</label>
+        <input type="text" id="brandInput" placeholder="Samsung, iPhone, Toyota...">
+    </div>
+
+    <!-- YEAR -->
+    <div class="filter-box">
+        <label>Year</label>
+        <input type="number" id="yearInput" placeholder="2020">
+    </div>
 
 </div>
 
-<script type="module" src="filters.js"></script>
+<!-- APPLY BUTTON -->
+<button class="apply-btn" onclick="applyFilters()">Apply Filters</button>
+
+<script src="filters.js"></script>
 
 </body>
 </html>
