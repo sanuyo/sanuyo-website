@@ -1,0 +1,64 @@
+{
+  "subcategories": {
+    "phones": {
+      "id": "phones",
+      "categoryId": "electronics",
+      "name": "Phones",
+      "createdAt": { "_seconds": 0 }
+    },
+    "computers": {
+      "id": "computers",
+      "categoryId": "electronics",
+      "name": "Computers & Laptops",
+      "createdAt": { "_seconds": 0 }
+    },
+    "cars": {
+      "id": "cars",
+      "categoryId": "vehicles",
+      "name": "Cars",
+      "createdAt": { "_seconds": 0 }
+    },
+    "motorcycles": {
+      "id": "motorcycles",
+      "categoryId": "vehicles",
+      "name": "Motorcycles",
+      "createdAt": { "_seconds": 0 }
+    },
+    "houses": {
+      "id": "houses",
+      "categoryId": "property",
+      "name": "Houses",
+      "createdAt": { "_seconds": 0 }
+    },
+    "land-plots": {
+      "id": "land-plots",
+      "categoryId": "property",
+      "name": "Land & Plots",
+      "createdAt": { "_seconds": 0 }
+    },
+    "mens-fashion": {
+      "id": "mens-fashion",
+      "categoryId": "fashion",
+      "name": "Men's Fashion",
+      "createdAt": { "_seconds": 0 }
+    },
+    "womens-fashion": {
+      "id": "womens-fashion",
+      "categoryId": "fashion",
+      "name": "Women's Fashion",
+      "createdAt": { "_seconds": 0 }
+    },
+    "furniture": {
+      "id": "furniture",
+      "categoryId": "home-office",
+      "name": "Furniture",
+      "createdAt": { "_seconds": 0 }
+    },
+    "cleaning-services": {
+      "id": "cleaning-services",
+      "categoryId": "services",
+      "name": "Cleaning Services",
+      "createdAt": { "_seconds": 0 }
+    }
+  }
+}
