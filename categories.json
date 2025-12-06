@@ -1,0 +1,64 @@
+{
+  "categories": {
+    "electronics": {
+      "id": "electronics",
+      "name": "Electronics",
+      "icon": "💻",
+      "createdAt": { "_seconds": 0 }
+    },
+    "vehicles": {
+      "id": "vehicles",
+      "name": "Vehicles",
+      "icon": "🚗",
+      "createdAt": { "_seconds": 0 }
+    },
+    "property": {
+      "id": "property",
+      "name": "Property",
+      "icon": "🏠",
+      "createdAt": { "_seconds": 0 }
+    },
+    "mobile-phones": {
+      "id": "mobile-phones",
+      "name": "Mobile Phones",
+      "icon": "📱",
+      "createdAt": { "_seconds": 0 }
+    },
+    "fashion": {
+      "id": "fashion",
+      "name": "Fashion",
+      "icon": "👗",
+      "createdAt": { "_seconds": 0 }
+    },
+    "home-office": {
+      "id": "home-office",
+      "name": "Home & Office",
+      "icon": "🛋️",
+      "createdAt": { "_seconds": 0 }
+    },
+    "health-beauty": {
+      "id": "health-beauty",
+      "name": "Health & Beauty",
+      "icon": "💅",
+      "createdAt": { "_seconds": 0 }
+    },
+    "sports": {
+      "id": "sports",
+      "name": "Sports & Outdoors",
+      "icon": "🏀",
+      "createdAt": { "_seconds": 0 }
+    },
+    "babies-kids": {
+      "id": "babies-kids",
+      "name": "Babies & Kids",
+      "icon": "🍼",
+      "createdAt": { "_seconds": 0 }
+    },
+    "services": {
+      "id": "services",
+      "name": "Services",
+      "icon": "🛠️",
+      "createdAt": { "_seconds": 0 }
+    }
+  }
+}
