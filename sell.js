@@ -1,85 +1,95 @@
-// Firebase imports
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { 
-    getFirestore, collection, addDoc, getDocs, query, where 
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+// ============================
+// SELL PAGE JS (FULLY FIXED)
+// ============================
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-  authDomain: "sanuyo-website.firebaseapp.com",
-  projectId: "sanuyo-website",
-  storageBucket: "sanuyo-website.firebasestorage.app",
-  messagingSenderId: "765213630366",
-  appId: "1:765213630366:web:03279e61a58289b088808f"
-};
+import { db } from "./firebase.js";
 
-// Init Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+import {
+    collection,
+    getDocs,
+    addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// DOM
-const categorySelect = document.getElementById("categorySelect");
-const subcategorySelect = document.getElementById("subcategorySelect");
 
-// 1. LOAD CATEGORIES
+// ELEMENTS
+const catSelect = document.getElementById("categorySelect");
+const subSelect = document.getElementById("subSelect");
+const postBtn = document.getElementById("postBtn");
+
+
+// ====================================================
+// 1. LOAD CATEGORIES INTO DROPDOWN
+// ====================================================
+
 async function loadCategories() {
-    const snap = await getDocs(collection(db, "categories"));
-    categorySelect.innerHTML = `<option value="">Select category</option>`;
+    let snap = await getDocs(collection(db, "categories"));
+    catSelect.innerHTML = `<option value="">Select Category</option>`;
 
-    snap.forEach(doc => {
-        const cat = doc.data();
-        categorySelect.innerHTML += `
-            <option value="${cat.id}">${cat.name}</option>
+    snap.forEach((doc) => {
+        catSelect.innerHTML += `
+            <option value="${doc.id}">${doc.data().name}</option>
         `;
     });
 }
 
-// 2. LOAD SUBCATEGORIES WHEN CATEGORY SELECTED
-async function loadSubCategories(categoryId) {
-    subcategorySelect.innerHTML = `<option>Loading…</option>`;
+loadCategories();
 
-    const q = query(
-        collection(db, "subcategories"),
-        where("categoryId", "==", categoryId)
-    );
 
-    const snap = await getDocs(q);
+// ====================================================
+// 2. WHEN CATEGORY SELECTED → LOAD SUBCATEGORIES
+// ====================================================
 
-    subcategorySelect.innerHTML = `<option value="">Select subcategory</option>`;
+catSelect.addEventListener("change", async () => {
 
-    snap.forEach(doc => {
-        const sub = doc.data();
-        subcategorySelect.innerHTML += `
-            <option value="${sub.id}">${sub.name}</option>
+    let categoryId = catSelect.value;
+
+    if (!categoryId) {
+        subSelect.innerHTML = `<option value="">Select category first</option>`;
+        return;
+    }
+
+    let subRef = collection(db, `categories/${categoryId}/subcategories`);
+    let subSnap = await getDocs(subRef);
+
+    subSelect.innerHTML = `<option value="">Select Subcategory</option>`;
+
+    subSnap.forEach((doc) => {
+        subSelect.innerHTML += `
+            <option value="${doc.id}">${doc.data().name}</option>
         `;
     });
-}
 
-// Event: When category changes
-categorySelect.addEventListener("change", (e) => {
-    const selected = e.target.value;
-    if (selected) loadSubCategories(selected);
 });
 
-// 3. SUBMIT PRODUCT FORM
-document.getElementById("sellForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
 
-    const product = {
-        title: document.getElementById("title").value,
-        price: document.getElementById("price").value,
-        category: categorySelect.value,
-        subcategory: subcategorySelect.value,
-        description: document.getElementById("description").value,
-        phone: document.getElementById("phone").value,
-        createdAt: new Date().toISOString()
-    };
+// ====================================================
+// 3. SUBMIT AD
+// ====================================================
 
-    await addDoc(collection(db, "products"), product);
+postBtn.addEventListener("click", async () => {
 
-    alert("Product uploaded successfully!");
+    let title = document.getElementById("title").value;
+    let price = document.getElementById("price").value;
+    let phone = document.getElementById("phone").value;
+    let desc = document.getElementById("description").value;
+    let category = catSelect.value;
+    let subcategory = subSelect.value;
+
+    if (!title || !price || !phone || !desc || !category || !subcategory) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    await addDoc(collection(db, "products"), {
+        title,
+        price,
+        phone,
+        desc,
+        category,
+        subcategory,
+        createdAt: Date.now()
+    });
+
+    alert("Product posted successfully!");
     window.location.href = "home.html";
 });
-
-// Load categories on start
-loadCategories();
