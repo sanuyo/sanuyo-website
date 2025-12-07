@@ -154,3 +154,32 @@ body {
 .subcategory-card:hover {
     transform: translateY(-4px);
 }
+
+.sell-container {
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.sell-container input,
+.sell-container textarea,
+.sell-container select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.sell-container button {
+    width: 100%;
+    padding: 12px;
+    background: #ff8800;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+}
