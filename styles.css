@@ -128,3 +128,29 @@ body {
     text-align: center;
     color: #888;
 }
+
+/* ================================
+   SUBCATEGORY GRID
+================================== */
+
+.subcategory-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.subcategory-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid #eee;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.subcategory-card:hover {
+    transform: translateY(-4px);
+}
