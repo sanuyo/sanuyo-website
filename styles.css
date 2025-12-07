@@ -1,423 +1,130 @@
-/* ---------------------------
+/* ================================
    GENERAL PAGE STYLING
----------------------------- */
+================================== */
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #f4f4f4;
-  color: #333;
+    margin: 0;
+    background: #f5f5f5;
+    font-family: "Segoe UI", sans-serif;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* ---------------------------
-   NAVBAR
----------------------------- */
-.navbar {
-  background: #ff9900;
-  color: #fff;
-  padding: 12px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-}
-
-.navbar .logo {
-  font-size: 20px;
-}
-
-.navbar a {
-  color: white;
-  margin-left: 12px;
-  font-size: 14px;
-}
-
-/* ---------------------------
-   SEARCH BAR
----------------------------- */
-.search-container {
-  background: white;
-  padding: 12px;
-  display: flex;
-  justify-content: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.search-box {
-  width: 95%;
-  max-width: 600px;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 15px;
-}
-
-/* ---------------------------
-   CATEGORY SECTION
----------------------------- */
-.categories-section {
-  padding: 15px;
-}
-
-.section-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 12px;
-  color: #333;
-}
-
-/* Category Icons Grid */
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  gap: 15px;
-}
-
-.category-item {
-  background: white;
-  padding: 15px 10px;
-  text-align: center;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-  transition: 0.25s;
-}
-
-.category-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  cursor: pointer;
-}
-
-.category-icon {
-  font-size: 28px;
-  margin-bottom: 8px;
-  display: block;
-}
-
-/* ---------------------------
-   SUB-CATEGORIES PANEL
----------------------------- */
-.subcategories-container {
-  margin-top: 15px;
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  display: none;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.sub-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.subcategories-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 10px;
-}
-
-.subcategories-list div {
-  background: #fafafa;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #eee;
-  font-size: 14px;
-  transition: 0.2s;
-}
-
-.subcategories-list div:hover {
-  background: #ff9900;
-  color: white;
-  cursor: pointer;
-}
-
-/* ---------------------------
-   FEATURED PRODUCTS
----------------------------- */
-.products-section {
-  marginTop: 20px;
-  padding: 15px;
-}
-
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 15px;
-}
-
-/* Product Card */
-.product-card {
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: 0.2s;
-}
-
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-}
-
-.product-img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-}
-
-.product-info {
-  padding: 10px;
-}
-
-.product-title {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.product-price {
-  font-size: 16px;
-  font-weight: bold;
-  color: #ff9900;
-  margin-top: 5px;
-}
-
-/* ---------------------------
-   FOOTER
----------------------------- */
-.footer {
-  background: #333;
-  color: #fff;
-  padding: 20px;
-  margin-top: 30px;
-  text-align: center;
-  font-size: 14px;
-}
-
-/* SELL PAGE UI */
-.sell-body {
-    background: #f2f3f7;
-    font-family: Arial, sans-serif;
-}
-
-.top-bar {
-    background: #ff9900;
-    padding: 15px;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.sell-container {
+.container {
     width: 95%;
-    margin: 20px auto;
+    margin: auto;
 }
 
-.sell-form {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
+/* ================================
+   SEARCH BAR
+================================== */
 
-.sell-form label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-.sell-form input, 
-.sell-form select, 
-.sell-form textarea {
-    width: 100%;
-    padding: 12px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    outline: none;
-    font-size: 16px;
-}
-
-.sell-form textarea {
-    height: 120px;
-    resize: none;
-}
-
-.sell-btn {
-    margin-top: 20px;
-    width: 100%;
-    background: #ff9900;
-    padding: 15px;
-    font-size: 18px;
-    border: none;
-    color: white;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.sell-btn:hover {
-    background: #e88b00;
-}
-
-/* IMAGE PREVIEW */
-.image-preview {
-    margin-top: 10px;
+.search-area {
     display: flex;
     gap: 10px;
-    flex-wrap: wrap;
-}
-
-.preview-img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-}
-
-/* JIJI STYLE CATEGORY GRID */
-.category-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
-    padding: 10px 15px;
-}
-
-.cat-box {
-    background: #ffffff;
-    border: 1px solid #e7e7e7;
-    padding: 12px 5px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    transition: 0.2s;
-}
-
-.cat-box:hover {
-    transform: translateY(-3px);
-}
-
-.cat-box img {
-    width: 38px;
-    height: 38px;
-    margin-bottom: 5px;
-}
-
-.cat-box p {
-    font-size: 13px;
-    color: #444;
-    margin: 0;
-    font-weight: 600;
-    line-height: 14px;
-}
-
-/* Section Title */
-.section-title {
-    padding: 10px 15px;
-    margin-top: 15px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-}
-/* JIJI CATEGORY STRIP */
-.cat-strip {
-    display: flex;
-    overflow-x: auto;
-    gap: 18px;
-    padding: 12px;
-    background: white;
-}
-.cat-strip::-webkit-scrollbar {
-    display: none;
-}
-.cat-strip-item {
-    text-align: center;
-    min-width: 70px;
-}
-.cat-strip-item img {
-    width: 38px;
-    height: 38px;
-}
-.cat-strip-item p {
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-/* JIJI CATEGORY GRID */
-.category-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
     padding: 15px;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
-.cat-box {
-    border: 1px solid #ddd;
+.search-area input {
+    flex: 1;
     padding: 12px;
-    text-align: center;
-    border-radius: 10px;
-    background: white;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.cat-box:hover {
-    transform: translateY(-3px);
-}
-
-.cat-box img {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 7px;
-}
-
-/* SUBCATEGORIES BOX */
-.subcat-box {
-    background: white;
-    border: 1px solid #ccc;
-    margin: 10px 15px;
-    padding: 15px;
+    border: 2px solid #ddd;
     border-radius: 8px;
-}
-
-.subcat-box.hidden {
-    display: none;
-}
-
-#subcat-list div {
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
     font-size: 15px;
 }
 
-.sub-panel {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    margin-top: 10px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+.search-area button {
+    background: #008f2a;
+    color: white;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
-.sub-grid {
+/* ================================
+   CATEGORY SECTION
+================================== */
+
+#category-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.category-card {
+    background: white;
+    padding: 16px 10px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: 0.2s;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+.category-card .icon {
+    font-size: 30px;
+}
+
+.category-card p {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* ================================
+   PRODUCT GRID
+================================== */
+
+#products-box {
+    margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
 }
 
-.sub-box {
+.product-card {
+    background: white;
+    border-radius: 10px;
     padding: 10px;
-    background: #f4f4f4;
+    border: 1px solid #eee;
+    cursor: pointer;
+}
+
+.product-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
     border-radius: 8px;
-    text-align: center;
+}
+
+.product-title {
     font-size: 14px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.product-price {
+    font-size: 15px;
+    color: #008f2a;
+    margin-top: 3px;
+}
+
+.product-location {
+    font-size: 12px;
+    color: #666;
+    margin-top: 2px;
+}
+
+/* Loading text */
+.loading {
+    text-align: center;
+    color: #888;
 }
