@@ -1,112 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - Sanuyo Market</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanuyo Marketplace</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
+<body>
 
-  
-
-  <!-- NAVBAR -->
-  <div class="navbar">
-    <div class="logo">Sanuyo Market</div>
-    <div>
-      <a href="sell.html">Sell</a>
-      <a href="messages.html">Messages</a>
-      <a href="profile.html">Profile</a>
-    </div>
-  </div>
-
-  <!-- SEARCH -->
-  <div class="search-container">
-    <input class="search-box" type="text" placeholder="Search for products…">
-  </div>
-
-  <!-- ------------------------------
-    CATEGORY STRIP (Jiji Style)
-------------------------------- -->
-<div class="cat-strip">
-    <div class="cat-strip-item" onclick="openCategory('phones')">
-        <img src="https://cdn-icons-png.flaticon.com/128/1040/1040230.png">
-        <p>Phones</p>
+    <!-- TOP HEADER -->
+    <div class="header">
+        <div class="logo">SanuYo</div>
     </div>
 
-    <div class="cat-strip-item" onclick="openCategory('electronics')">
-        <img src="https://cdn-icons-png.flaticon.com/128/3202/3202926.png">
-        <p>Electronics</p>
+    <!-- SEARCH BAR -->
+    <div class="search-area">
+        <input id="searchInput" type="text" placeholder="Search products, phones, electronics…" />
     </div>
 
-    <div class="cat-strip-item" onclick="openCategory('vehicles')">
-        <img src="https://cdn-icons-png.flaticon.com/128/3460/3460320.png">
-        <p>Vehicles</p>
+    <!-- CATEGORY ICONS -->
+    <h2 class="section-title">Categories</h2>
+    <div id="categoryGrid" class="category-icons"></div>
+
+    <!-- SUBCATEGORY PANEL -->
+    <div id="subCategoryPanel" class="sub-panel"></div>
+
+    <!-- PRODUCT GRID -->
+    <h2 class="section-title">Latest Listings</h2>
+    <div class="product-grid" id="productGrid"></div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+        <a href="home.html" class="active">
+            <i class="fa fa-home"></i>
+            <span>Home</span>
+        </a>
+
+        <a href="messages.html">
+            <i class="fa fa-comments"></i>
+            <span>Messages</span>
+        </a>
+
+        <a href="sell.html" class="sell-btn">
+            <i class="fa fa-plus-circle"></i>
+            <span>Sell</span>
+        </a>
+
+        <a href="saved.html">
+            <i class="fa fa-heart"></i>
+            <span>Saved</span>
+        </a>
+
+        <a href="profile.html">
+            <i class="fa fa-user"></i>
+            <span>Profile</span>
+        </a>
     </div>
 
-    <div class="cat-strip-item" onclick="openCategory('fashion')">
-        <img src="https://cdn-icons-png.flaticon.com/128/679/679922.png">
-        <p>Fashion</p>
-    </div>
+    <!-- JS FILE -->
+    <script type="module" src="home.js"></script>
 
-    <div class="cat-strip-item" onclick="openCategory('realestate')">
-        <img src="https://cdn-icons-png.flaticon.com/128/1995/1995574.png">
-        <p>Real Estate</p>
-    </div>
-</div>
-
-<!-- ------------------------------
-     MAIN CATEGORY GRID (Jiji)
-------------------------------- -->
-<h2 class="section-title">Categories</h2>
-
-<div class="category-grid">
-
-    <div class="cat-box" onclick="toggleSub('phones')">
-        <img src="https://cdn-icons-png.flaticon.com/128/1040/1040230.png">
-        <p>Mobile Phones</p>
-    </div>
-
-    <div class="cat-box" onclick="toggleSub('electronics')">
-        <img src="https://cdn-icons-png.flaticon.com/128/3202/3202926.png">
-        <p>Electronics</p>
-    </div>
-
-    <div class="cat-box" onclick="toggleSub('vehicles')">
-        <img src="https://cdn-icons-png.flaticon.com/128/3460/3460320.png">
-        <p>Vehicles</p>
-    </div>
-
-    <div class="cat-box" onclick="toggleSub('fashion')">
-        <img src="https://cdn-icons-png.flaticon.com/128/679/679922.png">
-        <p>Fashion</p>
-    </div>
-
-    <div class="cat-box" onclick="toggleSub('realestate')">
-        <img src="https://cdn-icons-png.flaticon.com/128/1995/1995574.png">
-        <p>Real Estate</p>
-    </div>
-
-    <div class="cat-box" onclick="toggleSub('home')">
-        <img src="https://cdn-icons-png.flaticon.com/128/565/565547.png">
-        <p>Home & Furniture</p>
-    </div>
-
-    <div class="cat-box" onclick="toggleSub('pets')">
-        <img src="https://cdn-icons-png.flaticon.com/128/1998/1998610.png">
-        <p>Animals & Pets</p>
-    </div>
-
-    <div class="cat-box" onclick="toggleSub('sports')">
-        <img src="https://cdn-icons-png.flaticon.com/128/2972/2972185.png">
-        <p>Sports</p>
-    </div>
-
-</div>
-
-<!-- ------------------------------
-     SUBCATEGORIES DROPDOWN
-------------------------------- -->
-<div id="subcategories" class="subcat-box hidden">
-    <h3 id="subcat-title"></h3>
-    <div id="subcat-list"></div>
-</div>
+</body>
+</html>
