@@ -1,114 +1,87 @@
-// --- Subcategory data ---
-const subcategories = {
-    phones: ["Smartphones", "iPhone", "Samsung", "Tecno", "Infinix", "Accessories"],
-    electronics: ["TV", "Home Theatre", "Speakers", "Cameras", "Power Banks"],
-    vehicles: ["Cars", "Motorcycles", "Trucks", "Buses", "Vehicle Parts"],
-    fashion: ["Men", "Women", "Shoes", "Bags", "Jewelry"],
-    realestate: ["Houses", "Apartments", "Lands", "Commercial Property"],
-    home: ["Furniture", "Kitchen", "Decoration", "Garden"],
-    pets: ["Dogs", "Cats", "Birds", "Fish"],
-    sports: ["Gym", "Bicycles", "Sportswear"]
-};
+// ===============================
+// HOME.JS – JIJI STYLE HOMEPAGE
+// ===============================
 
-// --- Show dropdown ---
-function toggleSub(cat) {
-    const box = document.getElementById("subcategories");
-    const title = document.getElementById("subcat-title");
-    const list = document.getElementById("subcat-list");
+// Firebase Setup
+import { db } from "./firebase.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    title.innerText = cat.toUpperCase();
-
-    list.innerHTML = subcategories[cat]
-        .map(item => `<div onclick="openSubcategory('${cat}','${item}')">${item}</div>`)
-        .join("");
-
-    box.classList.remove("hidden");
-}
-
-// --- Open category page ---
-function openCategory(cat) {
-    window.location.href = `category.html?cat=${cat}`;
-}
-
-// --- Open subcategory page ---
-function openSubcategory(cat, sub) {
-    window.location.href = `category.html?cat=${cat}&sub=${sub}`;
-}
-document.getElementById("searchInput").addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    const q = e.target.value;
-    window.location.href = `search.html?search=${q}`;
-  }
-});
-
-// Firebase imports
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { 
-    getFirestore, getDocs, collection, query, where 
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-  authDomain: "sanuyo-website.firebaseapp.com",
-  projectId: "sanuyo-website",
-  storageBucket: "sanuyo-website.firebasestorage.app",
-  messagingSenderId: "765213630366",
-  appId: "1:765213630366:web:03279e61a58289b088808f"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// DOM
-const categoryGrid = document.getElementById("categoryGrid");
-const subcategoryPanel = document.getElementById("subCategoryPanel");
-
+// ===============
 // LOAD CATEGORIES
+// ===============
 async function loadCategories() {
-    const snap = await getDocs(collection(db, "categories"));
-    snap.forEach(doc => {
-        const cat = doc.data();
+    const categoryBox = document.getElementById("category-list");
+    categoryBox.innerHTML = `<p class="loading">Loading categories...</p>`;
 
-        categoryGrid.innerHTML += `
-            <div class="cat-box" onclick="openSubcategories('${cat.id}', '${cat.name}')">
-                <div class="cat-icon">${cat.icon}</div>
-                <p>${cat.name}</p>
-            </div>
+    const querySnapshot = await getDocs(collection(db, "categories"));
+
+    categoryBox.innerHTML = "";
+
+    querySnapshot.forEach((doc) => {
+        const data = doc.data();
+
+        const item = document.createElement("div");
+        item.className = "category-card";
+
+        item.innerHTML = `
+            <div class="icon">${data.icon || "📦"}</div>
+            <p>${data.name}</p>
         `;
+
+        item.onclick = () => {
+            localStorage.setItem("selectedCategory", doc.id);
+            window.location.href = "subcategories.html";
+        };
+
+        categoryBox.appendChild(item);
     });
 }
 
-// OPEN SUBCATEGORIES LIKE JIJI
-window.openSubcategories = async function(catId, catName) {
-    subcategoryPanel.innerHTML = `
-        <h3>${catName}</h3>
-        <div class="sub-grid" id="subGrid">Loading...</div>
-    `;
+// =====================
+// LOAD RECENT PRODUCTS
+// =====================
+async function loadProducts() {
+    const productsBox = document.getElementById("products-box");
+    productsBox.innerHTML = `<p class='loading'>Loading products...</p>`;
 
-    const subGrid = document.getElementById("subGrid");
+    const productSnap = await getDocs(collection(db, "products"));
 
-    const q = query(
-        collection(db, "subcategories"),
-        where("categoryId", "==", catId)
-    );
+    productsBox.innerHTML = "";
 
-    const snap = await getDocs(q);
+    productSnap.forEach((doc) => {
+        const p = doc.data();
 
-    subGrid.innerHTML = "";
+        const card = document.createElement("div");
+        card.className = "product-card";
 
-    snap.forEach(doc => {
-        const sub = doc.data();
-        subGrid.innerHTML += `
-            <div class="sub-box" onclick="filterBySub('${sub.id}')">
-                ${sub.name}
-            </div>
+        card.innerHTML = `
+            <img src="${p.images?.[0] || 'default.jpg'}" class="product-img">
+            <p class="product-title">${p.title}</p>
+            <p class="product-price">₦${p.price}</p>
+            <p class="product-location">${p.location || "Unknown"}</p>
         `;
+
+        card.onclick = () => {
+            localStorage.setItem("selectedProduct", doc.id);
+            window.location.href = "product.html";
+        };
+
+        productsBox.appendChild(card);
     });
+}
+
+// ==================
+// SEARCH SYSTEM
+// ==================
+document.getElementById("searchBtn").onclick = function () {
+    const query = document.getElementById("searchInput").value.trim();
+    
+    if (query === "") return;
+
+    localStorage.setItem("searchQuery", query);
+    window.location.href = "search.html";
 };
 
-// FILTER PRODUCTS BY SUBCATEGORY
-window.filterBySub = function(subId) {
-    window.location.href = `products.html?sub=${subId}`;
-};
-
+// Start homepage
 loadCategories();
+loadProducts();
