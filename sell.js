@@ -1,136 +1,85 @@
-// ================================
-//  SELL PAGE SCRIPT
-// ================================
+// Firebase imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { 
+    getFirestore, collection, addDoc, getDocs, query, where 
+} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-// Firebase initialization (make sure firebase is already loaded in HTML)
-const auth = firebase.auth();
-const db = firebase.firestore();
-const storage = firebase.storage();
+const firebaseConfig = {
+  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+  authDomain: "sanuyo-website.firebaseapp.com",
+  projectId: "sanuyo-website",
+  storageBucket: "sanuyo-website.firebasestorage.app",
+  messagingSenderId: "765213630366",
+  appId: "1:765213630366:web:03279e61a58289b088808f"
+};
 
+// Init Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-// ================================
-//  HANDLE PRODUCT IMAGE UPLOAD
-// ================================
-let selectedImages = [];
+// DOM
+const categorySelect = document.getElementById("categorySelect");
+const subcategorySelect = document.getElementById("subcategorySelect");
 
-document.getElementById("images").addEventListener("change", (e) => {
-    selectedImages = Array.from(e.target.files);
-    previewImages();
-});
+// 1. LOAD CATEGORIES
+async function loadCategories() {
+    const snap = await getDocs(collection(db, "categories"));
+    categorySelect.innerHTML = `<option value="">Select category</option>`;
 
-function previewImages() {
-    const preview = document.getElementById("preview");
-    preview.innerHTML = "";
-
-    selectedImages.forEach(file => {
-        const img = document.createElement("img");
-        img.src = URL.createObjectURL(file);
-        img.classList.add("preview-img");
-        preview.appendChild(img);
+    snap.forEach(doc => {
+        const cat = doc.data();
+        categorySelect.innerHTML += `
+            <option value="${cat.id}">${cat.name}</option>
+        `;
     });
 }
 
+// 2. LOAD SUBCATEGORIES WHEN CATEGORY SELECTED
+async function loadSubCategories(categoryId) {
+    subcategorySelect.innerHTML = `<option>Loading…</option>`;
 
+    const q = query(
+        collection(db, "subcategories"),
+        where("categoryId", "==", categoryId)
+    );
 
-// ================================
-//  HANDLE CATEGORY → SUBCATEGORY
-// ================================
-const subcategoryData = {
-    electronics: ["Mobile Phones", "Tablets", "Computers", "TVs", "Accessories"],
-    vehicles: ["Cars", "Motorcycles", "Trucks", "Buses"],
-    fashion: ["Men's Fashion", "Women's Fashion", "Kids Fashion", "Shoes"],
-    real_estate: ["Land", "Houses & Apartments for Rent", "Houses & Apartments for Sale"],
-    services: ["Home Services", "Business Services", "Repairs", "Health & Beauty"],
-    jobs: ["Part-Time Jobs", "Full-Time Jobs", "Internships"],
-    animals: ["Dogs", "Cats", "Birds", "Livestock"],
-    sports: ["Gym Equipment", "Sports Equipment", "Bicycles"],
-    babies: ["Baby Clothing", "Baby Toys", "Baby Furniture"]
-};
+    const snap = await getDocs(q);
 
-document.getElementById("category").addEventListener("change", function () {
-    const category = this.value;
-    const subcatSelect = document.getElementById("subcategory");
+    subcategorySelect.innerHTML = `<option value="">Select subcategory</option>`;
 
-    subcatSelect.innerHTML = "<option value=''>Select Subcategory</option>";
+    snap.forEach(doc => {
+        const sub = doc.data();
+        subcategorySelect.innerHTML += `
+            <option value="${sub.id}">${sub.name}</option>
+        `;
+    });
+}
 
-    if (subcategoryData[category]) {
-        subcategoryData[category].forEach(sub => {
-            const option = document.createElement("option");
-            option.value = sub.toLowerCase().replace(/ /g, "_");
-            option.textContent = sub;
-            subcatSelect.appendChild(option);
-        });
-    }
+// Event: When category changes
+categorySelect.addEventListener("change", (e) => {
+    const selected = e.target.value;
+    if (selected) loadSubCategories(selected);
 });
 
-
-
-// ================================
-//  SUBMIT PRODUCT
-// ================================
+// 3. SUBMIT PRODUCT FORM
 document.getElementById("sellForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const title = document.getElementById("title").value.trim();
-    const price = document.getElementById("price").value;
-    const phone = document.getElementById("phone").value.trim();
-    const description = document.getElementById("description").value.trim();
-    const category = document.getElementById("category").value;
-    const subcategory = document.getElementById("subcategory").value;
-
-    const user = auth.currentUser;
-    if (!user) {
-        alert("You must be logged in to post a product!");
-        return;
-    }
-
-    if (selectedImages.length === 0) {
-        alert("Please select at least 1 image");
-        return;
-    }
-
-    document.getElementById("submitBtn").textContent = "Uploading...";
-    
-
-    // ================================
-    //  UPLOAD IMAGES TO STORAGE
-    // ================================
-    const imageUrls = [];
-
-    for (let i = 0; i < selectedImages.length; i++) {
-        const file = selectedImages[i];
-        const fileRef = storage.ref(`products/${user.uid}/${Date.now()}_${file.name}`);
-
-        const uploadTask = await fileRef.put(file);
-        const url = await uploadTask.ref.getDownloadURL();
-        imageUrls.push(url);
-    }
-
-
-    // ================================
-    //  SAVE PRODUCT TO FIRESTORE
-    // ================================
-    const productData = {
-        title,
-        price,
-        phone,
-        description,
-        category,
-        subcategory,
-        images: imageUrls,
-        userId: user.uid,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        status: "active"
+    const product = {
+        title: document.getElementById("title").value,
+        price: document.getElementById("price").value,
+        category: categorySelect.value,
+        subcategory: subcategorySelect.value,
+        description: document.getElementById("description").value,
+        phone: document.getElementById("phone").value,
+        createdAt: new Date().toISOString()
     };
 
-    try {
-        await db.collection("products").add(productData);
+    await addDoc(collection(db, "products"), product);
 
-        alert("Product posted successfully!");
-        window.location.href = "home.html";
-
-    } catch (err) {
-        console.error(err);
-        alert("Error posting product.");
-    }
+    alert("Product uploaded successfully!");
+    window.location.href = "home.html";
 });
+
+// Load categories on start
+loadCategories();
