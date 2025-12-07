@@ -3,69 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sell on Sanuyo</title>
-
+    <title>Sell Item</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div class="header">
-        <div class="logo">Sell Item</div>
-    </div>
+<div class="sell-container">
 
-    <form id="sellForm" class="sell-form">
+    <h2>Post an Item</h2>
 
-        <label>Title</label>
-        <input type="text" id="title" placeholder="e.g iPhone 12 Pro Max" required>
+    <label>Title</label>
+    <input id="title" type="text" placeholder="e.g. iPhone 12 Pro Max">
 
-        <label>Price (₦)</label>
-        <input type="number" id="price" placeholder="Price" required>
+    <label>Price (₦)</label>
+    <input id="price" type="number" placeholder="Price">
 
-        <label>Phone Number</label>
-        <input type="text" id="phone" placeholder="Your phone number" required>
+    <label>Phone Number</label>
+    <input id="phone" type="tel" placeholder="Your phone number">
 
-        <label>Category</label>
-        <select id="categorySelect"></select>
+    <label>Category</label>
+    <select id="categorySelect">
+        <option value="">Loading...</option>
+    </select>
 
-        <label>Subcategory</label>
-        <select id="subcategorySelect"></select>
+    <label>Subcategory</label>
+    <select id="subSelect">
+        <option value="">Select category first</option>
+    </select>
 
-        <label>Description</label>
-        <textarea id="description" placeholder="Describe your item…" required></textarea>
+    <label>Description</label>
+    <textarea id="description" placeholder="Describe your item..."></textarea>
 
-        <button type="submit" class="btn-primary">Post Ad</button>
+    <button id="postBtn">Post Ad</button>
 
-    </form>
+</div>
 
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <a href="home.html">
-            <i class="fa fa-home"></i>
-            <span>Home</span>
-        </a>
+<div class="bottom-nav">
+    <a href="home.html">Home</a>
+    <a href="messages.html">Messages</a>
+    <a class="active" href="sell.html">Sell</a>
+    <a href="saved.html">Saved</a>
+    <a href="profile.html">Profile</a>
+</div>
 
-        <a href="messages.html">
-            <i class="fa fa-comments"></i>
-            <span>Messages</span>
-        </a>
-
-        <a href="sell.html" class="sell-btn active">
-            <i class="fa fa-plus-circle"></i>
-            <span>Sell</span>
-        </a>
-
-        <a href="saved.html">
-            <i class="fa fa-heart"></i>
-            <span>Saved</span>
-        </a>
-
-        <a href="profile.html">
-            <i class="fa fa-user"></i>
-            <span>Profile</span>
-        </a>
-    </div>
-
-    <script type="module" src="sell.js"></script>
+<script type="module" src="sell.js"></script>
 
 </body>
 </html>
