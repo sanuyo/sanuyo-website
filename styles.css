@@ -399,3 +399,25 @@ a {
     border-bottom: 1px solid #eee;
     font-size: 15px;
 }
+
+.sub-panel {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.sub-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.sub-box {
+    padding: 10px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+}
