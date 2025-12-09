@@ -3,67 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanuyo Marketplace</title>
-
+    <title>Home - Marketplace</title>
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
+    <script>
+        const firebaseConfig = {
+            apiKey: "YOUR_KEY",
+            authDomain: "YOUR_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_BUCKET",
+            messagingSenderId: "YOUR_SENDER",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+    </script>
 </head>
 <body>
 
-    <!-- TOP HEADER -->
-    <div class="header">
-        <div class="logo">SanuYo</div>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="home.html" class="nav-link active">Home</a>
+        <a href="messages.html" class="nav-link">Messages</a>
+        <a href="sell.html" class="nav-link">Sell</a>
+        <a href="saved.html" class="nav-link">Saved</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+    </nav>
+
+    <!-- CATEGORIES SECTION -->
+    <div class="categories-container">
+        <h2 class="section-title">Browse Categories</h2>
+        <div id="categoriesGrid" class="categories-grid">
+            <!-- Filled by JS -->
+        </div>
     </div>
 
-    <!-- SEARCH BAR -->
-    <div class="search-area">
-        <input id="searchInput" type="text" placeholder="Search products, phones, electronics…" />
+    <!-- SUBCATEGORIES SECTION -->
+    <div class="subcat-section">
+        <h3 id="subcatTitle" class="hidden">Subcategories</h3>
+        <div id="subcategoriesGrid" class="subcategories-grid hidden">
+            <!-- Filled by JS -->
+        </div>
     </div>
 
-    <!-- CATEGORY ICONS -->
-    <h2 class="section-title">Categories</h2>
-    <div id="categoryGrid" class="category-icons"></div>
-
-    <!-- SUBCATEGORY PANEL -->
-    <div id="subCategoryPanel" class="sub-panel"></div>
-
-    <!-- PRODUCT GRID -->
-    <h2 class="section-title">Latest Listings</h2>
-    <div class="product-grid" id="productGrid"></div>
-
-    <!-- BOTTOM NAV -->
-    <div class="bottom-nav">
-        <a href="home.html" class="active">
-            <i class="fa fa-home"></i>
-            <span>Home</span>
-        </a>
-
-        <a href="messages.html">
-            <i class="fa fa-comments"></i>
-            <span>Messages</span>
-        </a>
-
-        <a href="sell.html" class="sell-btn">
-            <i class="fa fa-plus-circle"></i>
-            <span>Sell</span>
-        </a>
-
-        <a href="saved.html">
-            <i class="fa fa-heart"></i>
-            <span>Saved</span>
-        </a>
-
-        <a href="profile.html">
-            <i class="fa fa-user"></i>
-            <span>Profile</span>
-        </a>
-    </div>
-
-    <!-- JS FILE -->
-    <script type="module" src="home.js"></script>
+    <script src="home.js"></script>
 
 </body>
 </html>
