@@ -1,59 +1,59 @@
-// ==========================
-// SUBCATEGORIES.JS – LEVEL 2
-// ==========================
+// subcategories.js
 
-import { db } from "./firebase.js";
-import {
-    doc,
-    getDoc,
-    collection,
-    getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const subcatDiv = document.getElementById("subcat-list");
+const catTitle = document.getElementById("cat-title");
 
-// Get selected category from homepage
-const categoryId = localStorage.getItem("selectedCategory");
+const catId = localStorage.getItem("selectedCategoryId");
+const catName = localStorage.getItem("selectedCategoryName");
+
+// Set page title
+catTitle.textContent = catName ?? "Subcategories";
 
 async function loadSubcategories() {
-    const titleBox = document.getElementById("categoryTitle");
-    const subList = document.getElementById("subList");
-
-    if (!categoryId) {
-        titleBox.innerText = "No category selected";
+    if (!catId) {
+        subcatDiv.innerHTML = `<p class="empty-text">Category not found.</p>`;
         return;
     }
 
-    // GET CATEGORY TITLE
-    const catRef = doc(db, "categories", categoryId);
-    const catSnap = await getDoc(catRef);
+    try {
+        const ref = firebase.firestore()
+            .collection("categories")
+            .doc(catId)
+            .collection("subcategories");
 
-    if (catSnap.exists()) {
-        titleBox.innerText = catSnap.data().name;
+        const snap = await ref.get();
+
+        subcatDiv.innerHTML = "";
+
+        if (snap.empty) {
+            subcatDiv.innerHTML = `<p class="empty-text">No subcategories available.</p>`;
+            return;
+        }
+
+        snap.forEach(doc => {
+            const data = doc.data();
+
+            const item = document.createElement("div");
+            item.className = "category-item";
+
+            item.innerHTML = `
+                <div class="cat-icon">${data.icon}</div>
+                <div class="cat-name">${data.name}</div>
+            `;
+
+            // On click → Go to Products page
+            item.onclick = () => {
+                localStorage.setItem("selectedSubId", doc.id);
+                localStorage.setItem("selectedSubName", data.name);
+                window.location.href = "products.html";
+            };
+
+            subcatDiv.appendChild(item);
+        });
+
+    } catch (error) {
+        console.error("Error loading subcategories:", error);
     }
-
-    // LOAD SUBCATEGORIES
-    const subRef = collection(db, `categories/${categoryId}/subcategories`);
-    const subSnap = await getDocs(subRef);
-
-    subList.innerHTML = "";
-
-    subSnap.forEach((docItem) => {
-        const sub = docItem.data();
-
-        const card = document.createElement("div");
-        card.className = "subcategory-card";
-
-        card.innerHTML = `
-            <p>${sub.name}</p>
-        `;
-
-        card.onclick = () => {
-            localStorage.setItem("selectedSub", docItem.id);
-            window.location.href = "products-list.html"; // next page
-        };
-
-        subList.appendChild(card);
-    });
-
 }
 
 loadSubcategories();
