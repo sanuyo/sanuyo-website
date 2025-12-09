@@ -3,50 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sell Item</title>
+    <title>Post an Item</title>
+
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "YOUR_KEY",
+            authDomain: "YOUR_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_BUCKET",
+            messagingSenderId: "YOUR_SENDER",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
 </head>
 <body>
 
 <div class="sell-container">
-
-    <h2>Post an Item</h2>
+    <h1>Post an Item</h1>
 
     <label>Title</label>
-    <input id="title" type="text" placeholder="e.g. iPhone 12 Pro Max">
+    <input type="text" id="title" placeholder="e.g iPhone 12 Pro Max">
 
     <label>Price (₦)</label>
-    <input id="price" type="number" placeholder="Price">
+    <input type="number" id="price" placeholder="Price">
 
     <label>Phone Number</label>
-    <input id="phone" type="tel" placeholder="Your phone number">
+    <input type="text" id="phone" placeholder="Your phone number">
 
     <label>Category</label>
-    <select id="categorySelect">
-        <option value="">Loading...</option>
+    <select id="category">
+        <option>Loading...</option>
     </select>
 
     <label>Subcategory</label>
-    <select id="subSelect">
-        <option value="">Select category first</option>
+    <select id="subcategory">
+        <option>Select category first</option>
     </select>
 
     <label>Description</label>
     <textarea id="description" placeholder="Describe your item..."></textarea>
 
     <button id="postBtn">Post Ad</button>
-
 </div>
 
-<div class="bottom-nav">
-    <a href="home.html">Home</a>
-    <a href="messages.html">Messages</a>
-    <a class="active" href="sell.html">Sell</a>
-    <a href="saved.html">Saved</a>
-    <a href="profile.html">Profile</a>
-</div>
-
-<script type="module" src="sell.js"></script>
+<script src="sell.js"></script>
 
 </body>
 </html>
