@@ -1,185 +1,99 @@
-/* ================================
-   GENERAL PAGE STYLING
-================================== */
-
 body {
+    font-family: Arial, sans-serif;
     margin: 0;
-    background: #f5f5f5;
-    font-family: "Segoe UI", sans-serif;
+    padding: 0;
+    background: #fafafa;
 }
 
-.container {
-    width: 95%;
-    margin: auto;
-}
-
-/* ================================
-   SEARCH BAR
-================================== */
-
-.search-area {
+/* NAVBAR */
+.navbar {
     display: flex;
-    gap: 10px;
-    padding: 15px;
+    justify-content: space-around;
     background: white;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
 }
 
-.search-area input {
-    flex: 1;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 15px;
-}
-
-.search-area button {
-    background: #008f2a;
-    color: white;
-    padding: 12px 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-/* ================================
-   CATEGORY SECTION
-================================== */
-
-#category-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-top: 15px;
-}
-
-.category-card {
-    background: white;
-    padding: 16px 10px;
-    border-radius: 10px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: 0.2s;
-}
-
-.category-card:hover {
-    transform: translateY(-5px);
-}
-
-.category-card .icon {
-    font-size: 30px;
-}
-
-.category-card p {
-    margin-top: 5px;
-    font-size: 14px;
-}
-
-/* ================================
-   PRODUCT GRID
-================================== */
-
-#products-box {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-}
-
-.product-card {
-    background: white;
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid #eee;
-    cursor: pointer;
-}
-
-.product-img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.product-title {
-    font-size: 14px;
-    margin-top: 5px;
+.nav-link {
+    color: #333;
+    text-decoration: none;
     font-weight: bold;
 }
 
-.product-price {
-    font-size: 15px;
-    color: #008f2a;
-    margin-top: 3px;
+.nav-link.active {
+    color: #009688;
 }
 
-.product-location {
-    font-size: 12px;
-    color: #666;
-    margin-top: 2px;
+/* CATEGORY SECTION */
+.categories-container {
+    width: 95%;
+    margin: 20px auto;
 }
 
-/* Loading text */
-.loading {
-    text-align: center;
-    color: #888;
+.section-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-/* ================================
-   SUBCATEGORY GRID
-================================== */
-
-.subcategory-grid {
+.categories-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-top: 15px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
 }
 
-.subcategory-card {
-    background: white;
-    padding: 15px;
+.category-card {
+    background: #fff;
+    border: 1px solid #ddd;
     border-radius: 10px;
+    padding: 20px 10px;
     text-align: center;
-    border: 1px solid #eee;
-    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.category-card:hover {
+    border-color: #009688;
+    box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+.category-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.category-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* SUBCATEGORIES */
+.subcat-section {
+    width: 95%;
+    margin: 20px auto;
+}
+
+.subcategories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.subcat-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
     cursor: pointer;
     transition: 0.2s;
+    text-align: center;
 }
 
-.subcategory-card:hover {
-    transform: translateY(-4px);
+.subcat-card:hover {
+    border-color: #009688;
+    background: #fff;
 }
 
-.sell-container {
-    width: 90%;
-    margin: auto;
-    margin-top: 20px;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-}
-
-.sell-container input,
-.sell-container textarea,
-.sell-container select {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
-
-.sell-container button {
-    width: 100%;
-    padding: 12px;
-    background: #ff8800;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
+.hidden {
+    display: none;
 }
