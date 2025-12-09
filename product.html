@@ -1,54 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product Details</title>
-  <link rel="stylesheet" href="product.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "YOUR_KEY",
+            authDomain: "YOUR_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_BUCKET",
+            messagingSenderId: "YOUR_SENDER",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+    </script>
+
 </head>
 <body>
 
-  <header class="header">
-    <h2 class="logo">SM Market</h2>
-  </header>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="home.html" class="nav-link">Home</a>
+        <a href="messages.html" class="nav-link">Messages</a>
+        <a href="sell.html" class="nav-link">Sell</a>
+        <a href="saved.html" class="nav-link">Saved</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+    </nav>
 
-  <div class="container" id="product-container">
-
-    <!-- Product Image -->
-    <div class="image-section">
-      <img id="product-image" alt="Product Image">
+    <div class="products-container">
+        <h2 id="productTitle">Products</h2>
+        <div id="productsGrid" class="products-grid">
+            <!-- Filled by JS -->
+        </div>
     </div>
 
-    <!-- Product Main Info -->
-    <div class="info-section">
-      <h2 id="product-title"></h2>
-      <h3 id="product-price"></h3>
-      <p id="product-location"></p>
-      <p id="product-date"></p>
-    </div>
-
-    <!-- Seller Contact Section -->
-    <div class="seller-box">
-      <h3>Seller Information</h3>
-      <p id="seller-name"></p>
-      <p id="seller-phone"></p>
-
-      <button id="call-btn">Call Seller</button>
-      <button id="message-btn">Message Seller</button>
-    </div>
-
-    <!-- Description -->
-    <div class="description-box">
-      <h3>Description</h3>
-      <p id="product-description"></p>
-    </div>
-
-    <!-- Similar Products -->
-    <h3>Similar Products</h3>
-    <div class="similar-container" id="similar-container"></div>
-
-  </div>
-
-  <script src="product.js"></script>
+    <script src="products.js"></script>
 </body>
 </html>
