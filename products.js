@@ -1,52 +1,57 @@
-// Simulated database import
-import { products } from "./products.js";
+const productsRef = db.collection("products");
+const subcategoriesRef = db.collection("subcategories");
 
-// Get product ID from URL
+// Get subcategory ID from URL
 const urlParams = new URLSearchParams(window.location.search);
-const productId = urlParams.get("id");
+const subcatId = urlParams.get("subcat");
 
-// Find the product
-const product = products.find(p => p.id == productId);
+const productTitle = document.getElementById("productTitle");
+const productsGrid = document.getElementById("productsGrid");
 
-// Display product
-document.getElementById("product-image").src = product.image;
-document.getElementById("product-title").textContent = product.title;
-document.getElementById("product-price").textContent = "₦" + product.price.toLocaleString();
-document.getElementById("product-location").textContent = "Location: " + product.location;
-document.getElementById("product-date").textContent = "Posted: " + product.date;
-document.getElementById("product-description").textContent = product.description;
+// LOAD SUBCATEGORY NAME
+async function loadTitle() {
+    const doc = await subcategoriesRef.doc(subcatId).get();
+    if (doc.exists) {
+        productTitle.innerText = doc.data().name;
+    }
+}
 
-// Seller Info
-document.getElementById("seller-name").textContent = "Seller: " + product.sellerName;
-document.getElementById("seller-phone").textContent = "Phone: " + product.sellerPhone;
+loadTitle();
 
-// Call Seller
-document.getElementById("call-btn").addEventListener("click", () => {
-  window.location.href = `tel:${product.sellerPhone}`;
-});
+// LOAD PRODUCTS IN THAT SUBCATEGORY
+async function loadProducts() {
+    const snapshot = await productsRef
+        .where("subcatId", "==", subcatId)
+        .get();
 
-// Message Seller (WhatsApp)
-document.getElementById("message-btn").addEventListener("click", () => {
-  const message = encodeURIComponent(`Hello, I saw your product "${product.title}" on SM Market.`);
-  window.location.href = `https://wa.me/${product.sellerPhone}?text=${message}`;
-});
+    productsGrid.innerHTML = "";
 
-// Similar products
-const similarCtn = document.getElementById("similar-container");
+    if (snapshot.empty) {
+        productsGrid.innerHTML = "<p>No products found.</p>";
+        return;
+    }
 
-products
-  .filter(p => p.category === product.category && p.id !== product.id)
-  .slice(0, 4)
-  .forEach(sim => {
-    let card = document.createElement("div");
-    card.className = "similar-card";
-    card.innerHTML = `
-      <img src="${sim.image}">
-      <p>${sim.title}</p>
-      <p>₦${sim.price.toLocaleString()}</p>
-    `;
-    card.onclick = () => {
-      window.location.href = `product.html?id=${sim.id}`;
-    };
-    similarCtn.appendChild(card);
-  });
+    snapshot.forEach(doc => {
+        const p = doc.data();
+
+        productsGrid.innerHTML += `
+            <div class="product-card" onclick="openProductDetails('${doc.id}')">
+
+                <img class="product-img" src="${p.images[0]}" alt="product">
+
+                <div class="product-info">
+                    <div class="product-title">${p.title}</div>
+                    <div class="product-price">₦${p.price}</div>
+                    <div class="product-location">${p.location}</div>
+                </div>
+
+            </div>
+        `;
+    });
+}
+
+loadProducts();
+
+function openProductDetails(productId) {
+    window.location.href = `product-details.html?id=${productId}`;
+}
