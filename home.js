@@ -1,87 +1,56 @@
-// ===============================
-// HOME.JS – JIJI STYLE HOMEPAGE
-// ===============================
+// FIRESTORE REFERENCES
+const categoriesRef = db.collection("categories");
+const subcategoriesRef = db.collection("subcategories");
 
-// Firebase Setup
-import { db } from "./firebase.js";
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// DOM ITEMS
+const categoriesGrid = document.getElementById("categoriesGrid");
+const subcategoriesGrid = document.getElementById("subcategoriesGrid");
+const subcatTitle = document.getElementById("subcatTitle");
 
-// ===============
 // LOAD CATEGORIES
-// ===============
 async function loadCategories() {
-    const categoryBox = document.getElementById("category-list");
-    categoryBox.innerHTML = `<p class="loading">Loading categories...</p>`;
+    const snapshot = await categoriesRef.get();
 
-    const querySnapshot = await getDocs(collection(db, "categories"));
+    categoriesGrid.innerHTML = "";
 
-    categoryBox.innerHTML = "";
-
-    querySnapshot.forEach((doc) => {
+    snapshot.forEach(doc => {
         const data = doc.data();
 
-        const item = document.createElement("div");
-        item.className = "category-card";
-
-        item.innerHTML = `
-            <div class="icon">${data.icon || "📦"}</div>
-            <p>${data.name}</p>
+        categoriesGrid.innerHTML += `
+            <div class="category-card" onclick="showSubcategories('${doc.id}', '${data.name}')">
+                <div class="category-icon">${data.icon}</div>
+                <div class="category-name">${data.name}</div>
+            </div>
         `;
-
-        item.onclick = () => {
-            localStorage.setItem("selectedCategory", doc.id);
-            window.location.href = "subcategories.html";
-        };
-
-        categoryBox.appendChild(item);
     });
 }
 
-// =====================
-// LOAD RECENT PRODUCTS
-// =====================
-async function loadProducts() {
-    const productsBox = document.getElementById("products-box");
-    productsBox.innerHTML = `<p class='loading'>Loading products...</p>`;
-
-    const productSnap = await getDocs(collection(db, "products"));
-
-    productsBox.innerHTML = "";
-
-    productSnap.forEach((doc) => {
-        const p = doc.data();
-
-        const card = document.createElement("div");
-        card.className = "product-card";
-
-        card.innerHTML = `
-            <img src="${p.images?.[0] || 'default.jpg'}" class="product-img">
-            <p class="product-title">${p.title}</p>
-            <p class="product-price">₦${p.price}</p>
-            <p class="product-location">${p.location || "Unknown"}</p>
-        `;
-
-        card.onclick = () => {
-            localStorage.setItem("selectedProduct", doc.id);
-            window.location.href = "product.html";
-        };
-
-        productsBox.appendChild(card);
-    });
-}
-
-// ==================
-// SEARCH SYSTEM
-// ==================
-document.getElementById("searchBtn").onclick = function () {
-    const query = document.getElementById("searchInput").value.trim();
-    
-    if (query === "") return;
-
-    localStorage.setItem("searchQuery", query);
-    window.location.href = "search.html";
-};
-
-// Start homepage
 loadCategories();
-loadProducts();
+
+// SHOW SUBCATEGORIES OF CLICKED CATEGORY
+async function showSubcategories(categoryId, categoryName) {
+    subcatTitle.innerText = "Subcategories of " + categoryName;
+    subcatTitle.classList.remove("hidden");
+
+    const snapshot = await subcategoriesRef
+        .where("categoryId", "==", categoryId)
+        .get();
+
+    subcategoriesGrid.classList.remove("hidden");
+    subcategoriesGrid.innerHTML = "";
+
+    snapshot.forEach(doc => {
+        const data = doc.data();
+
+        subcategoriesGrid.innerHTML += `
+            <div class="subcat-card" onclick="openProducts('${doc.id}')">
+                ${data.icon} ${data.name}
+            </div>
+        `;
+    });
+}
+
+// OPEN PRODUCT LIST PAGE
+function openProducts(subcatId) {
+    window.location.href = `products.html?subcat=${subcatId}`;
+}
