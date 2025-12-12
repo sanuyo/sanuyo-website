@@ -1,51 +1,48 @@
-// Initialize Firestore
-const db = firebase.firestore();
-
-// HTML elements
-const categorySelect = document.getElementById("category");
-const subcategorySelect = document.getElementById("subcategory");
-
-// LOAD CATEGORIES
-async function loadCategories() {
-    categorySelect.innerHTML = `<option>Loading...</option>`;
-
-    const snapshot = await db.collection("categories").orderBy("name").get();
-
-    categorySelect.innerHTML = `<option value="">Select Category</option>`;
-
-    snapshot.forEach(doc => {
-        const c = doc.data();
-        categorySelect.innerHTML += `
-            <option value="${doc.id}">${c.icon} ${c.name}</option>
-        `;
-    });
-}
-
-// LOAD SUBCATEGORIES WHEN CATEGORY IS SELECTED
-categorySelect.addEventListener("change", async function () {
-    const catId = this.value;
-
-    subcategorySelect.innerHTML = `<option>Loading...</option>`;
-
-    if (!catId) {
-        subcategorySelect.innerHTML = `<option value="">Select category first</option>`;
-        return;
-    }
-
-    const snapshot = await db.collection("subcategories")
-        .where("categoryId", "==", catId)
-        .orderBy("name")
-        .get();
-
-    subcategorySelect.innerHTML = `<option value="">Select Subcategory</option>`;
-
-    snapshot.forEach(doc => {
-        const s = doc.data();
-        subcategorySelect.innerHTML += `
-            <option value="${doc.id}">${s.icon} ${s.name}</option>
+// Load Categories
+db.collection("categories").get().then(snap => {
+    snap.forEach(doc => {
+        let data = doc.data();
+        document.getElementById("categorySelect").innerHTML += `
+            <option value="${doc.id}">${data.name}</option>
         `;
     });
 });
 
-// RUN
-loadCategories();
+
+// Load Subcategories
+function loadSubcategories() {
+    let catId = document.getElementById("categorySelect").value;
+
+    db.collection("categories").doc(catId).collection("subcategories").get().then(snap => {
+        let html = `<option value="">Select Subcategory</option>`;
+
+        snap.forEach(doc => {
+            html += `<option value="${doc.id}">${doc.data().name}</option>`;
+        });
+
+        document.getElementById("subcategorySelect").innerHTML = html;
+    });
+}
+
+
+
+// Upload Product
+function uploadProduct() {
+
+    let data = {
+        category: document.getElementById("categorySelect").value,
+        subcategory: document.getElementById("subcategorySelect").value,
+        title: document.getElementById("title").value,
+        description: document.getElementById("description").value,
+        phone: document.getElementById("phone").value,
+        price: Number(document.getElementById("price").value),
+        location: document.getElementById("location").value,
+        images: [document.getElementById("img1").value],
+        date: new Date()
+    };
+
+    db.collection("products").add(data).then(() => {
+        alert("Product Uploaded Successfully!");
+        window.location.href = "home.html";
+    });
+}
