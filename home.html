@@ -3,52 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Marketplace</title>
+    <title>Sanuyo Marketplace</title>
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <!-- Firebase v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "YOUR_KEY",
-            authDomain: "YOUR_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_BUCKET",
-            messagingSenderId: "YOUR_SENDER",
-            appId: "YOUR_APP_ID"
+        var firebaseConfig = {
+          apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+          authDomain: "sanuyo-website.firebaseapp.com",
+          projectId: "sanuyo-website",
+          storageBucket: "sanuyo-website.firebasestorage.app",
+          messagingSenderId: "765213630366",
+          appId: "1:765213630366:web:03279e61a58289b088808f"
         };
         firebase.initializeApp(firebaseConfig);
-        db = firebase.firestore();
+        var db = firebase.firestore();
     </script>
+
 </head>
 <body>
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <a href="home.html" class="nav-link active">Home</a>
-        <a href="messages.html" class="nav-link">Messages</a>
-        <a href="sell.html" class="nav-link">Sell</a>
-        <a href="saved.html" class="nav-link">Saved</a>
-        <a href="profile.html" class="nav-link">Profile</a>
+    <header class="top-header">
+        <h1 class="logo">SanuYo</h1>
+        <input type="text" id="searchInput" placeholder="Search products..." />
+    </header>
+
+    <section class="category-section">
+        <h2>Categories</h2>
+
+        <div class="category-list" id="categoryList">
+            <!-- Loaded from Firebase -->
+        </div>
+    </section>
+
+    <section class="product-section">
+        <h2>Latest products</h2>
+        <div class="product-grid" id="productGrid">
+            <!-- Loaded from Firebase -->
+        </div>
+    </section>
+
+    <nav class="bottom-nav">
+        <a href="home.html" class="active">Home</a>
+        <a href="messages.html">Messages</a>
+        <a href="sell.html">Sell</a>
+        <a href="saved.html">Saved</a>
+        <a href="profile.html">Profile</a>
     </nav>
-
-    <!-- CATEGORIES SECTION -->
-    <div class="categories-container">
-        <h2 class="section-title">Browse Categories</h2>
-        <div id="categoriesGrid" class="categories-grid">
-            <!-- Filled by JS -->
-        </div>
-    </div>
-
-    <!-- SUBCATEGORIES SECTION -->
-    <div class="subcat-section">
-        <h3 id="subcatTitle" class="hidden">Subcategories</h3>
-        <div id="subcategoriesGrid" class="subcategories-grid hidden">
-            <!-- Filled by JS -->
-        </div>
-    </div>
 
     <script src="home.js"></script>
 
