@@ -1,56 +1,45 @@
-// FIRESTORE REFERENCES
-const categoriesRef = db.collection("categories");
-const subcategoriesRef = db.collection("subcategories");
-
-// DOM ITEMS
-const categoriesGrid = document.getElementById("categoriesGrid");
-const subcategoriesGrid = document.getElementById("subcategoriesGrid");
-const subcatTitle = document.getElementById("subcatTitle");
-
-// LOAD CATEGORIES
-async function loadCategories() {
-    const snapshot = await categoriesRef.get();
-
-    categoriesGrid.innerHTML = "";
-
+// Load Categories
+db.collection("categories").get().then(snapshot => {
+    let html = "";
     snapshot.forEach(doc => {
-        const data = doc.data();
+        let data = doc.data();
 
-        categoriesGrid.innerHTML += `
-            <div class="category-card" onclick="showSubcategories('${doc.id}', '${data.name}')">
-                <div class="category-icon">${data.icon}</div>
-                <div class="category-name">${data.name}</div>
-            </div>
+        html += `
+        <div class="category-box" onclick="openCategory('${doc.id}')">
+            <img src="${data.icon}">
+            <p>${data.name}</p>
+        </div>
         `;
     });
+
+    document.getElementById("categoryList").innerHTML = html;
+});
+
+function openCategory(id) {
+    window.location.href = "subcategories.html?cat=" + id;
 }
 
-loadCategories();
 
-// SHOW SUBCATEGORIES OF CLICKED CATEGORY
-async function showSubcategories(categoryId, categoryName) {
-    subcatTitle.innerText = "Subcategories of " + categoryName;
-    subcatTitle.classList.remove("hidden");
 
-    const snapshot = await subcategoriesRef
-        .where("categoryId", "==", categoryId)
-        .get();
-
-    subcategoriesGrid.classList.remove("hidden");
-    subcategoriesGrid.innerHTML = "";
+// Load Latest Products
+db.collection("products").orderBy("date", "desc").limit(20).get().then(snapshot => {
+    let html = "";
 
     snapshot.forEach(doc => {
-        const data = doc.data();
+        let p = doc.data();
 
-        subcategoriesGrid.innerHTML += `
-            <div class="subcat-card" onclick="openProducts('${doc.id}')">
-                ${data.icon} ${data.name}
-            </div>
+        html += `
+        <div class="product-card" onclick="openProduct('${doc.id}')">
+            <img src="${p.images[0]}">
+            <h4>${p.title}</h4>
+            <p>₦${p.price}</p>
+        </div>
         `;
     });
-}
 
-// OPEN PRODUCT LIST PAGE
-function openProducts(subcatId) {
-    window.location.href = `products.html?subcat=${subcatId}`;
+    document.getElementById("productGrid").innerHTML = html;
+});
+
+function openProduct(id) {
+    window.location.href = "product.html?id=" + id;
 }
