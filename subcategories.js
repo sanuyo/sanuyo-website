@@ -1,59 +1,23 @@
-// subcategories.js
+const urlParams = new URLSearchParams(window.location.search);
+const catId = urlParams.get("cat");
 
-const subcatDiv = document.getElementById("subcat-list");
-const catTitle = document.getElementById("cat-title");
+db.collection("categories").doc(catId).collection("subcategories").get().then(snapshot => {
+    let html = "";
 
-const catId = localStorage.getItem("selectedCategoryId");
-const catName = localStorage.getItem("selectedCategoryName");
+    snapshot.forEach(doc => {
+        let data = doc.data();
 
-// Set page title
-catTitle.textContent = catName ?? "Subcategories";
+        html += `
+        <div class="category-box" onclick="openProducts('${catId}', '${doc.id}')">
+            <img src="${data.icon}">
+            <p>${data.name}</p>
+        </div>
+        `;
+    });
 
-async function loadSubcategories() {
-    if (!catId) {
-        subcatDiv.innerHTML = `<p class="empty-text">Category not found.</p>`;
-        return;
-    }
+    document.getElementById("subList").innerHTML = html;
+});
 
-    try {
-        const ref = firebase.firestore()
-            .collection("categories")
-            .doc(catId)
-            .collection("subcategories");
-
-        const snap = await ref.get();
-
-        subcatDiv.innerHTML = "";
-
-        if (snap.empty) {
-            subcatDiv.innerHTML = `<p class="empty-text">No subcategories available.</p>`;
-            return;
-        }
-
-        snap.forEach(doc => {
-            const data = doc.data();
-
-            const item = document.createElement("div");
-            item.className = "category-item";
-
-            item.innerHTML = `
-                <div class="cat-icon">${data.icon}</div>
-                <div class="cat-name">${data.name}</div>
-            `;
-
-            // On click → Go to Products page
-            item.onclick = () => {
-                localStorage.setItem("selectedSubId", doc.id);
-                localStorage.setItem("selectedSubName", data.name);
-                window.location.href = "products.html";
-            };
-
-            subcatDiv.appendChild(item);
-        });
-
-    } catch (error) {
-        console.error("Error loading subcategories:", error);
-    }
+function openProducts(cat, sub) {
+    window.location.href = "products.html?cat=" + cat + "&sub=" + sub;
 }
-
-loadSubcategories();
