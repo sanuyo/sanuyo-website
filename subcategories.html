@@ -5,19 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subcategories</title>
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Firebase v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script>
+        var firebaseConfig = {
+          apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+          authDomain: "sanuyo-website.firebaseapp.com",
+          projectId: "sanuyo-website",
+          storageBucket: "sanuyo-website.firebasestorage.app",
+          messagingSenderId: "765213630366",
+          appId: "1:765213630366:web:03279e61a58289b088808f"
+        };
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+    </script>
+
 </head>
+
 <body>
 
-<header class="top-header">
-    <h2 id="cat-title">Subcategories</h2>
-</header>
+    <header class="top-header">
+        <h1>Subcategories</h1>
+    </header>
 
-<div id="subcat-list" class="category-list">
-    <!-- Subcategories load here -->
-</div>
+    <div class="category-list" id="subList"></div>
 
-<script src="firebase.js"></script>
-<script src="subcategories.js"></script>
+    <script src="subcategories.js"></script>
 
 </body>
 </html>
