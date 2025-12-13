@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanuyo Marketplace</title>
+    <title>Sanuyo Market</title>
     <link rel="stylesheet" href="styles.css">
 
     <!-- Firebase v8 -->
@@ -22,39 +22,54 @@
         firebase.initializeApp(firebaseConfig);
         var db = firebase.firestore();
     </script>
-
 </head>
+
 <body>
 
-    <header class="top-header">
-        <h1 class="logo">SanuYo</h1>
-        <input type="text" id="searchInput" placeholder="Search products..." />
+    <!-- TOP HEADER -->
+    <header class="header">
+        <h2>Sanuyo Market</h2>
+        <input id="searchBox" class="search-box" placeholder="Search products…">
     </header>
 
-    <section class="category-section">
-        <h2>Categories</h2>
-
-        <div class="category-list" id="categoryList">
-            <!-- Loaded from Firebase -->
+    <!-- SLIDER -->
+    <div class="slider">
+        <div class="slides" id="slides">
+            <img src="https://i.imgur.com/VpGWU2p.jpeg">
+            <img src="https://i.imgur.com/6n8MlPi.jpeg">
+            <img src="https://i.imgur.com/RksSa0R.jpeg">
         </div>
-    </section>
+    </div>
 
-    <section class="product-section">
-        <h2>Latest products</h2>
-        <div class="product-grid" id="productGrid">
-            <!-- Loaded from Firebase -->
+    <!-- CATEGORIES TITLE -->
+    <h3 class="section-title">Categories</h3>
+
+    <!-- CATEGORY GRID -->
+    <div id="categoryGrid" class="category-grid"></div>
+
+    <!-- SUBCATEGORY POPUP -->
+    <div id="subPopup" class="sub-popup hidden">
+        <div class="sub-content">
+            <h3 id="subTitle"></h3>
+            <div id="subList"></div>
+            <button onclick="closeSub()" class="close-btn">Close</button>
         </div>
-    </section>
+    </div>
 
-    <nav class="bottom-nav">
-        <a href="home.html" class="active">Home</a>
-        <a href="messages.html">Messages</a>
+    <!-- FEATURED PRODUCTS -->
+    <h3 class="section-title">Latest Products</h3>
+    <div id="latestProducts" class="product-list"></div>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <a href="home.html">Home</a>
         <a href="sell.html">Sell</a>
         <a href="saved.html">Saved</a>
+        <a href="messages.html">Messages</a>
         <a href="profile.html">Profile</a>
-    </nav>
+    </div>
 
     <script src="home.js"></script>
 
 </body>
-</html>
+    </html>
