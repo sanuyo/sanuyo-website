@@ -1,78 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post Ad – Sanuyo</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post Ad</title>
 
-    <!-- Firebase v8 -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<link rel="stylesheet" href="styles.css">
 
-    <script>
-        var firebaseConfig = {
-          apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-          authDomain: "sanuyo-website.firebaseapp.com",
-          projectId: "sanuyo-website",
-          storageBucket: "sanuyo-website.firebasestorage.app",
-          messagingSenderId: "765213630366",
-          appId: "1:765213630366:web:03279e61a58289b088808f"
-        };
-        firebase.initializeApp(firebaseConfig);
-        var db = firebase.firestore();
-    </script>
+<!-- Firebase v8 -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+    authDomain: "sanuyo-website.firebaseapp.com",
+    projectId: "sanuyo-website",
+    storageBucket: "sanuyo-website.firebasestorage.app",
+    messagingSenderId: "765213630366",
+    appId: "1:765213630366:web:03279e61a58289b088808f"
+  };
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.firestore();
+</script>
 </head>
 
 <body>
 
 <header class="header">
-    <h2>Post an Ad</h2>
+  <h2>Post an Ad</h2>
 </header>
 
 <div class="form-box">
 
-    <label>Category</label>
-    <select id="categorySelect" onchange="loadSubcategories()">
-        <option value="">Select Category</option>
-    </select>
+  <label>Category</label>
+  <select id="categorySelect">
+    <option value="">Loading categories...</option>
+  </select>
 
-    <label>Subcategory</label>
-    <select id="subcategorySelect">
-        <option value="">Select Subcategory</option>
-    </select>
+  <label>Subcategory</label>
+  <select id="subcategorySelect">
+    <option value="">Select category first</option>
+  </select>
 
-    <label>Title</label>
-    <input type="text" id="title" placeholder="e.g iPhone 13 Pro Max">
+  <label>Title</label>
+  <input id="title" type="text">
 
-    <label>Price (₦)</label>
-    <input type="number" id="price" placeholder="e.g 350000">
+  <label>Price</label>
+  <input id="price" type="number">
 
-    <label>Phone Number</label>
-    <input type="text" id="phone" placeholder="e.g 08012345678">
+  <label>Phone</label>
+  <input id="phone" type="text">
 
-    <label>Location</label>
-    <input type="text" id="location" placeholder="e.g Lagos">
+  <label>Location</label>
+  <input id="location" type="text">
 
-    <label>Description</label>
-    <textarea id="description" placeholder="Describe your product"></textarea>
+  <label>Description</label>
+  <textarea id="description"></textarea>
 
-    <label>Image URL (for now)</label>
-    <input type="text" id="imageUrl" placeholder="Paste image link">
+  <label>Image URL</label>
+  <input id="imageUrl" type="text">
 
-    <button onclick="postAd()" class="post-btn">Post Ad</button>
+  <button onclick="postAd()" class="post-btn">Post Ad</button>
 
-</div>
-
-<div class="navbar">
-    <a href="home.html">Home</a>
-    <a href="sell.html">Sell</a>
-    <a href="saved.html">Saved</a>
-    <a href="messages.html">Messages</a>
-    <a href="profile.html">Profile</a>
 </div>
 
 <script src="sell.js"></script>
-
 </body>
-    </html>
+</html>
