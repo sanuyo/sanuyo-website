@@ -1,79 +1,56 @@
-// Make sure page is fully loaded
-document.addEventListener("DOMContentLoaded", function () {
-  loadCategories();
-  document.getElementById("categorySelect").addEventListener("change", loadSubcategories);
-});
+const categorySelect = document.getElementById("categorySelect");
+const subcategorySelect = document.getElementById("subcategorySelect");
 
-// Load categories
+document.addEventListener("DOMContentLoaded", loadCategories);
+
 function loadCategories() {
-  const catSelect = document.getElementById("categorySelect");
-  catSelect.innerHTML = `<option value="">Select Category</option>`;
-
   db.collection("categories").get()
     .then(snapshot => {
+      categorySelect.innerHTML = '<option value="">Select category</option>';
+
       snapshot.forEach(doc => {
-        const c = doc.data();
+        const data = doc.data();
         const option = document.createElement("option");
         option.value = doc.id;
-        option.textContent = c.name;
-        catSelect.appendChild(option);
+        option.textContent = `${data.icon || ""} ${data.name}`;
+        categorySelect.appendChild(option);
       });
     })
     .catch(err => {
-      alert("Category load error");
-      console.error(err);
+      console.error("Category error:", err);
+      categorySelect.innerHTML = '<option>Error loading categories</option>';
     });
 }
 
-// Load subcategories
-function loadSubcategories() {
-  const catId = document.getElementById("categorySelect").value;
-  const subSelect = document.getElementById("subcategorySelect");
+categorySelect.addEventListener("change", () => {
+  const categoryId = categorySelect.value;
 
-  subSelect.innerHTML = `<option value="">Select Subcategory</option>`;
-  if (!catId) return;
-
-  db.collection("subcategories")
-    .where("categoryId", "==", catId)
-    .get()
-    .then(snapshot => {
-      snapshot.forEach(doc => {
-        const s = doc.data();
-        const option = document.createElement("option");
-        option.value = s.name;
-        option.textContent = s.name;
-        subSelect.appendChild(option);
-      });
-    })
-    .catch(err => {
-      alert("Subcategory load error");
-      console.error(err);
-    });
-}
-
-// Post product
-function postAd() {
-  const catSelect = document.getElementById("categorySelect");
-
-  const product = {
-    category: catSelect.options[catSelect.selectedIndex].text,
-    subcategory: document.getElementById("subcategorySelect").value,
-    title: document.getElementById("title").value,
-    price: Number(document.getElementById("price").value),
-    phone: document.getElementById("phone").value,
-    location: document.getElementById("location").value,
-    description: document.getElementById("description").value,
-    images: [document.getElementById("imageUrl").value],
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  };
-
-  if (!product.category || !product.subcategory || !product.title) {
-    alert("Fill all required fields");
+  if (!categoryId) {
+    subcategorySelect.innerHTML = '<option>Select category first</option>';
+    subcategorySelect.disabled = true;
     return;
   }
 
-  db.collection("products").add(product).then(() => {
-    alert("Ad posted successfully");
-    window.location.href = "home.html";
-  });
-           }
+  subcategorySelect.disabled = true;
+  subcategorySelect.innerHTML = '<option>Loading subcategories...</option>';
+
+  db.collection("subcategories")
+    .where("categoryId", "==", categoryId)
+    .get()
+    .then(snapshot => {
+      subcategorySelect.innerHTML = '<option value="">Select subcategory</option>';
+
+      snapshot.forEach(doc => {
+        const option = document.createElement("option");
+        option.value = doc.id;
+        option.textContent = doc.data().name;
+        subcategorySelect.appendChild(option);
+      });
+
+      subcategorySelect.disabled = false;
+    })
+    .catch(err => {
+      console.error("Subcategory error:", err);
+      subcategorySelect.innerHTML = '<option>Error loading subcategories</option>';
+    });
+});
