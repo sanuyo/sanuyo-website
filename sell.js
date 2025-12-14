@@ -1,48 +1,63 @@
-// Load Categories
-db.collection("categories").get().then(snap => {
-    snap.forEach(doc => {
-        let data = doc.data();
-        document.getElementById("categorySelect").innerHTML += `
-            <option value="${doc.id}">${data.name}</option>
-        `;
+// LOAD CATEGORIES
+db.collection("categories").get().then(snapshot => {
+    let select = document.getElementById("categorySelect");
+
+    snapshot.forEach(doc => {
+        let c = doc.data();
+        let option = document.createElement("option");
+        option.value = doc.id;
+        option.textContent = c.name;
+        select.appendChild(option);
     });
 });
 
-
-// Load Subcategories
+// LOAD SUBCATEGORIES
 function loadSubcategories() {
     let catId = document.getElementById("categorySelect").value;
+    let subSelect = document.getElementById("subcategorySelect");
 
-    db.collection("categories").doc(catId).collection("subcategories").get().then(snap => {
-        let html = `<option value="">Select Subcategory</option>`;
+    subSelect.innerHTML = `<option value="">Select Subcategory</option>`;
 
-        snap.forEach(doc => {
-            html += `<option value="${doc.id}">${doc.data().name}</option>`;
-        });
+    if (!catId) return;
 
-        document.getElementById("subcategorySelect").innerHTML = html;
-    });
+    db.collection("subcategories")
+      .where("categoryId", "==", catId)
+      .get()
+      .then(snapshot => {
+          snapshot.forEach(doc => {
+              let s = doc.data();
+              let option = document.createElement("option");
+              option.value = s.name;
+              option.textContent = s.name;
+              subSelect.appendChild(option);
+          });
+      });
 }
 
+// POST AD
+function postAd() {
+    let catSelect = document.getElementById("categorySelect");
+    let categoryName = catSelect.options[catSelect.selectedIndex].text;
 
-
-// Upload Product
-function uploadProduct() {
-
-    let data = {
-        category: document.getElementById("categorySelect").value,
+    let product = {
+        category: categoryName,
         subcategory: document.getElementById("subcategorySelect").value,
         title: document.getElementById("title").value,
-        description: document.getElementById("description").value,
-        phone: document.getElementById("phone").value,
         price: Number(document.getElementById("price").value),
+        phone: document.getElementById("phone").value,
         location: document.getElementById("location").value,
-        images: [document.getElementById("img1").value],
-        date: new Date()
+        description: document.getElementById("description").value,
+        images: [document.getElementById("imageUrl").value],
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
 
-    db.collection("products").add(data).then(() => {
-        alert("Product Uploaded Successfully!");
+    if (!product.category || !product.subcategory || !product.title) {
+        alert("Please fill all required fields");
+        return;
+    }
+
+    db.collection("products").add(product).then(() => {
+        alert("Ad posted successfully!");
         window.location.href = "home.html";
     });
-}
+        }
