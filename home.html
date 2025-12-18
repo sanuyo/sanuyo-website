@@ -1,75 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanuyo Market</title>
-    <link rel="stylesheet" href="styles.css">
-
-    <!-- Firebase v8 -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
-    <script>
-        var firebaseConfig = {
-          apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-          authDomain: "sanuyo-website.firebaseapp.com",
-          projectId: "sanuyo-website",
-          storageBucket: "sanuyo-website.firebasestorage.app",
-          messagingSenderId: "765213630366",
-          appId: "1:765213630366:web:03279e61a58289b088808f"
-        };
-        firebase.initializeApp(firebaseConfig);
-        var db = firebase.firestore();
-    </script>
+  <meta charset="UTF-8">
+  <title>Sanuyo Marketplace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
-    <!-- TOP HEADER -->
-    <header class="header">
-        <h2>Sanuyo Market</h2>
-        <input id="searchBox" class="search-box" placeholder="Search products…">
-    </header>
+<header class="top-bar">
+  <h2>SanuYo</h2>
+  <input type="text" id="searchInput" placeholder="Search products...">
+</header>
 
-    <!-- SLIDER -->
-    <div class="slider">
-        <div class="slides" id="slides">
-            <img src="https://i.imgur.com/VpGWU2p.jpeg">
-            <img src="https://i.imgur.com/6n8MlPi.jpeg">
-            <img src="https://i.imgur.com/RksSa0R.jpeg">
-        </div>
-    </div>
+<section id="categories" class="category-list"></section>
 
-    <!-- CATEGORIES TITLE -->
-    <h3 class="section-title">Categories</h3>
+<h3 class="section-title">Latest Ads</h3>
+<section id="productGrid" class="product-grid"></section>
 
-    <!-- CATEGORY GRID -->
-    <div id="categoryGrid" class="category-grid"></div>
+<nav class="bottom-nav">
+  <a class="active" href="home.html">Home</a>
+  <a href="messages.html">Messages</a>
+  <a class="sell-btn" href="sell.html">Sell</a>
+  <a href="saved.html">Saved</a>
+  <a href="profile.html">Profile</a>
+</nav>
 
-    <!-- SUBCATEGORY POPUP -->
-    <div id="subPopup" class="sub-popup hidden">
-        <div class="sub-content">
-            <h3 id="subTitle"></h3>
-            <div id="subList"></div>
-            <button onclick="closeSub()" class="close-btn">Close</button>
-        </div>
-    </div>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-    <!-- FEATURED PRODUCTS -->
-    <h3 class="section-title">Latest Products</h3>
-    <div id="latestProducts" class="product-list"></div>
+<script>
+var firebaseConfig = {
+  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+  authDomain: "sanuyo-website.firebaseapp.com",
+  projectId: "sanuyo-website"
+};
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
+</script>
 
-    <!-- NAVBAR -->
-    <div class="navbar">
-        <a href="home.html">Home</a>
-        <a href="sell.html">Sell</a>
-        <a href="saved.html">Saved</a>
-        <a href="messages.html">Messages</a>
-        <a href="profile.html">Profile</a>
-    </div>
-
-    <script src="home.js"></script>
-
+<script src="home.js"></script>
 </body>
-    </html>
+</html>
