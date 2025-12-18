@@ -1,4 +1,4 @@
-const categorySelect = document.getElementById("categorySelect");
+console.log("CATEGORIES:", categoryMap);const categorySelect = document.getElementById("categorySelect");
 const subcategorySelect = document.getElementById("subcategorySelect");
 const sellForm = document.getElementById("sellForm");
 
