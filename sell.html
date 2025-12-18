@@ -1,74 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Post an Ad | Sanuyo</title>
+  <title>Post Ad - Sanuyo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <header class="top-header">
-    <h1>Post an Ad</h1>
-  </header>
+<h2 class="page-title">Post an Ad</h2>
 
-  <div class="form-container">
+<form id="sellForm">
 
-    <label>Category</label>
-    <select id="categorySelect">
-      <option>Loading categories...</option>
-    </select>
+  <select id="categorySelect" required>
+    <option value="">Select Category</option>
+  </select>
 
-    <label>Subcategory</label>
-    <select id="subcategorySelect" disabled>
-      <option>Select category first</option>
-    </select>
+  <select id="subcategorySelect" required>
+    <option value="">Select Subcategory</option>
+  </select>
 
-    <label>Title</label>
-    <input type="text" id="title" placeholder="e.g. iPhone 12 Pro Max">
+  <input type="text" id="title" placeholder="Ad title" required>
+  <input type="number" id="price" placeholder="Price" required>
+  <input type="text" id="phone" placeholder="Phone number" required>
+  <input type="text" id="location" placeholder="Location" required>
 
-    <label>Price (₦)</label>
-    <input type="number" id="price" placeholder="Price">
+  <textarea id="description" placeholder="Description"></textarea>
 
-    <label>Phone</label>
-    <input type="tel" id="phone" placeholder="Your phone number">
+  <input type="text" id="image" placeholder="Image URL">
 
-    <label>Location</label>
-    <input type="text" id="location" placeholder="City / Area">
+  <button type="submit">Post Ad</button>
+</form>
 
-    <label>Description</label>
-    <textarea id="description" placeholder="Describe your item"></textarea>
+<nav class="bottom-nav">
+  <a href="home.html">Home</a>
+  <a href="messages.html">Messages</a>
+  <a class="active sell-btn" href="sell.html">Sell</a>
+  <a href="saved.html">Saved</a>
+  <a href="profile.html">Profile</a>
+</nav>
 
-    <button id="postBtn">Post Ad</button>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-  </div>
+<script>
+var firebaseConfig = {
+  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+  authDomain: "sanuyo-website.firebaseapp.com",
+  projectId: "sanuyo-website"
+};
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
+</script>
 
-  <!-- Bottom Nav -->
-  <nav class="bottom-nav">
-    <a href="home.html">Home</a>
-    <a href="messages.html">Messages</a>
-    <a class="active" href="sell.html">Sell</a>
-    <a href="saved.html">Saved</a>
-    <a href="profile.html">Profile</a>
-  </nav>
-
-  <!-- 🔥 FIREBASE v8 (REQUIRED) -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
-  <script>
-    var firebaseConfig = {
-      apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-      authDomain: "sanuyo-website.firebaseapp.com",
-      projectId: "sanuyo-website",
-      storageBucket: "sanuyo-website.appspot.com",
-      messagingSenderId: "765213630366",
-      appId: "1:765213630366:web:03279e61a58289b088808f"
-    };
-    firebase.initializeApp(firebaseConfig);
-    var db = firebase.firestore();
-  </script>
-
-  <script src="sell.js"></script>
+<script src="sell.js"></script>
 </body>
-                     </html>
+</html>
