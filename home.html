@@ -1,45 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Sanuyo Marketplace</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SanuYo Marketplace</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header class="top-bar">
-  <h2>SanuYo</h2>
-  <input type="text" id="searchInput" placeholder="Search products...">
-</header>
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">SanuYo</div>
+    <div class="nav-links">
+        <a href="home.html" class="active">Home</a>
+        <a href="sell.html">Sell</a>
+        <a href="saved.html">Saved</a>
+        <a href="profile.html">Profile</a>
+    </div>
+</div>
 
-<section id="categories" class="category-list"></section>
+<!-- SEARCH BAR -->
+<div class="search-area">
+    <input id="searchInput" type="text" placeholder="Search products, tags, location…">
+</div>
 
-<h3 class="section-title">Latest Ads</h3>
-<section id="productGrid" class="product-grid"></section>
+<!-- HERO SLIDER -->
+<div class="hero-slider">
+    <div class="slides">
+        <div class="slide active"><img src="https://i.imgur.com/zA5WqXW.jpeg" alt="Promo 1"></div>
+        <div class="slide"><img src="https://i.imgur.com/R3qCqkI.jpeg" alt="Promo 2"></div>
+        <div class="slide"><img src="https://i.imgur.com/z8gkSBq.jpeg" alt="Promo 3"></div>
+    </div>
+    <div class="slider-arrow left" onclick="prevSlide()">&#10094;</div>
+    <div class="slider-arrow right" onclick="nextSlide()">&#10095;</div>
+    <div class="slider-dots" id="sliderDots"></div>
+</div>
 
-<nav class="bottom-nav">
-  <a class="active" href="home.html">Home</a>
-  <a href="messages.html">Messages</a>
-  <a class="sell-btn" href="sell.html">Sell</a>
-  <a href="saved.html">Saved</a>
-  <a href="profile.html">Profile</a>
-</nav>
+<!-- CATEGORIES/TAGS -->
+<h2 class="section-title">Categories</h2>
+<div class="category-icons" id="categoryIcons">
+    <!-- Loaded dynamically -->
+</div>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<!-- PRODUCTS GRID -->
+<h2 class="section-title">Latest Listings</h2>
+<div class="product-grid" id="productGrid">
+    <!-- Loaded dynamically from Firestore -->
+</div>
 
-<script>
-var firebaseConfig = {
-  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-  authDomain: "sanuyo-website.firebaseapp.com",
-  projectId: "sanuyo-website"
-};
-firebase.initializeApp(firebaseConfig);
-var db = firebase.firestore();
-</script>
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+    <a href="home.html" class="active"><img src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png"><span>Home</span></a>
+    <a href="messages.html"><img src="https://cdn-icons-png.flaticon.com/128/2462/2462719.png"><span>Messages</span></a>
+    <a href="sell.html" class="sell-btn"><img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png"><span>Sell</span></a>
+    <a href="saved.html"><img src="https://cdn-icons-png.flaticon.com/128/833/833472.png"><span>Saved</span></a>
+    <a href="profile.html"><img src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png"><span>Profile</span></a>
+</div>
 
-<script src="home.js"></script>
+<script src="home.js" type="module"></script>
+<script src="slider.js"></script>
 </body>
 </html>
