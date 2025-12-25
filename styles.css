@@ -1,193 +1,143 @@
-/* ===============================
-   GLOBAL RESET
-================================ */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    background: #f2f4f5;
-    color: #222;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
 }
 
-/* ===============================
-   HEADER (JIJI STYLE)
-================================ */
 .header {
-    background: #00b53f;
-    padding: 14px;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.logo {
-    color: #fff;
-    font-size: 24px;
-    font-weight: 800;
-}
-
-.nav-links {
-    margin-top: 6px;
-}
+.logo { font-size: 24px; font-weight: bold; color: #ff6600; }
 
 .nav-links a {
-    color: #eaffef;
+    margin-left: 15px;
     text-decoration: none;
-    margin: 0 8px;
-    font-weight: 600;
+    color: #333;
 }
 
-.nav-links a.active {
-    text-decoration: underline;
-}
+.nav-links a.active { color: #ff6600; }
 
-/* ===============================
-   PAGE TITLE
-================================ */
-.section-title {
-    background: #fff;
-    padding: 14px;
-    font-size: 20px;
-    font-weight: 700;
-    border-bottom: 1px solid #ddd;
-}
-
-/* ===============================
-   SELL PAGE CARD
-================================ */
-.sell-card {
-    background: #fff;
-    margin: 12px;
-    padding: 16px;
-    border-radius: 8px;
-}
-
-/* ===============================
-   FORM (JIJI LAYOUT)
-================================ */
-.sell-card form {
-    display: flex;
-    flex-direction: column;
-}
-
-.sell-card label {
-    margin-top: 14px;
-    margin-bottom: 6px;
-    font-size: 13px;
-    font-weight: 700;
-    color: #444;
-}
-
-.sell-card input,
-.sell-card textarea {
-    width: 100%;
-    padding: 14px;
-    font-size: 15px;
-    border-radius: 6px;
-    border: 1px solid #d0d0d0;
-    background: #fff;
-}
-
-.sell-card textarea {
-    resize: none;
-    min-height: 120px;
-}
-
-/* ===============================
-   IMAGE UPLOAD PREVIEW
-================================ */
-.image-preview {
+.search-area {
+    padding: 10px 20px;
     display: flex;
     gap: 10px;
-    margin-top: 10px;
-    flex-wrap: wrap;
+    background: #fff;
 }
 
-.image-preview img {
-    width: 90px;
-    height: 90px;
+.search-area input, .search-area select {
+    padding: 8px;
+    font-size: 14px;
+    flex: 1;
+}
+
+.hero-slider {
+    position: relative;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.hero-slider img {
+    width: 100%;
+    height: 200px;
     object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-/* ===============================
-   BUTTON
-================================ */
-.post-btn {
-    margin-top: 22px;
-    padding: 15px;
-    background: #00b53f;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 17px;
-    font-weight: 800;
+.category-icons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 10px 0;
+}
+
+.cat-box {
+    text-align: center;
+    width: 22%;
+    margin-bottom: 10px;
     cursor: pointer;
 }
 
-.post-btn:active {
-    transform: scale(0.98);
-}
+.cat-box img { width: 50px; height: 50px; }
 
-/* ===============================
-   SUCCESS / ERROR
-================================ */
-.success-msg {
-    margin-top: 14px;
-    color: #00b53f;
-    font-weight: 700;
-    text-align: center;
-}
+.section-title { margin: 15px 20px 10px; font-weight: bold; }
 
-.error-msg {
-    margin-top: 14px;
-    color: red;
-    font-weight: 700;
-    text-align: center;
-}
-
-/* ===============================
-   PRODUCT CARDS (HOME)
-================================ */
 .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 12px;
-    padding: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 20px;
 }
 
 .product-card {
     background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.product-card img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-}
-
-.product-card .info {
+    border-radius: 5px;
+    width: 48%;
     padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative;
 }
 
-.product-card .price {
-    color: #00b53f;
-    font-weight: 800;
+.product-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; }
+
+.product-card h3 { margin: 5px 0; font-size: 16px; }
+
+.product-card p { color: #ff6600; font-weight: bold; }
+
+.badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ff6600;
+    color: #fff;
+    padding: 3px 5px;
+    font-size: 12px;
+    border-radius: 3px;
 }
 
-.product-card .title {
-    font-size: 14px;
-    margin-top: 4px;
+.badge.negotiable { background: #28a745; }
+
+.product-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
 }
 
-/* ===============================
-   FOOTER SPACE
-================================ */
-.footer-space {
-    height: 30px;
+.btn-call, .btn-whatsapp {
+    text-decoration: none;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
 }
+
+.btn-call { background: #007bff; }
+.btn-whatsapp { background: #25d366; }
+
+.sell-form {
+    background: #fff;
+    padding: 20px;
+    margin: 10px 20px;
+    border-radius: 5px;
+}
+
+.sell-form input, .sell-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.btn-submit {
+    background: #ff6600;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 3px;
+   }
