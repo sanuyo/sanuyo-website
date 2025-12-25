@@ -2,34 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sell on Sanuyo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Ad</title>
 
+  <!-- CSS -->
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Firebase -->
-  <script type="module" src="sell.js" defer></script>
+  <!-- Viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
   <!-- HEADER -->
-  <header class="header">
-    <h2 class="logo">Sanuyo</h2>
-    <a href="home.html" class="back-btn">← Back</a>
-  </header>
+  <div class="header">
+    <a href="index.html" class="back-btn">← Back</a>
+    <div class="logo">Sanuyo</div>
+  </div>
 
   <!-- SELL FORM -->
-  <main class="sell-container">
-
+  <div class="sell-container">
     <h2 class="sell-title">Post an Ad</h2>
 
-    <div class="sell-form">
+    <form class="sell-form">
 
-      <label>Product Title</label>
-      <input type="text" id="title" placeholder="e.g iPhone 11 Pro" required>
+      <label>Ad Title</label>
+      <input type="text" id="title" placeholder="e.g iPhone 11 Clean" />
 
       <label>Price (₦)</label>
-      <input type="number" id="price" placeholder="e.g 250000" required>
+      <input type="number" id="price" placeholder="e.g 250000" />
 
       <label>Price Type</label>
       <select id="priceType">
@@ -44,22 +43,27 @@
       </select>
 
       <label>Phone Number</label>
-      <input type="tel" id="phone" placeholder="080xxxxxxxx" required>
+      <input type="tel" id="phone" placeholder="e.g 08012345678" />
 
       <label>Location</label>
-      <input type="text" id="location" placeholder="Lagos, Abuja, Ibadan" required>
+      <input type="text" id="location" placeholder="e.g Lagos" />
 
       <label>Description</label>
-      <textarea id="description" placeholder="Describe your product clearly" required></textarea>
+      <textarea id="description" placeholder="Describe your item"></textarea>
 
-      <label>Tags (comma separated)</label>
-      <input type="text" id="tags" placeholder="iphone, used, clean, lagos, urgent">
+      <label>Tags (auto-generated)</label>
+      <input type="text" id="tags" placeholder="iphone, clean, lagos" />
 
-      <button id="postBtn" class="post-btn">Post Ad</button>
+      <!-- IMPORTANT BUTTON -->
+      <button type="button" id="postBtn" class="post-btn">
+        Post Ad
+      </button>
 
-    </div>
+    </form>
+  </div>
 
-  </main>
+  <!-- JS (MUST BE MODULE) -->
+  <script type="module" src="sell.js"></script>
 
 </body>
-</html>
+        </html>
