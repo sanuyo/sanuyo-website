@@ -1,69 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Post Ad</title>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- Viewport -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sell Product - SanuYo</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- HEADER -->
-  <div class="header">
-    <a href="index.html" class="back-btn">← Back</a>
-    <div class="logo">Sanuyo</div>
-  </div>
+<div class="header">
+    <div class="logo">SanuYo</div>
+    <div class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="sell.html" class="active">Sell</a>
+        <a href="saved.html">Saved</a>
+        <a href="profile.html">Profile</a>
+    </div>
+</div>
 
-  <!-- SELL FORM -->
-  <div class="sell-container">
-    <h2 class="sell-title">Post an Ad</h2>
-
-    <form class="sell-form">
-
-      <label>Ad Title</label>
-      <input type="text" id="title" placeholder="e.g iPhone 11 Clean" />
-
-      <label>Price (₦)</label>
-      <input type="number" id="price" placeholder="e.g 250000" />
-
-      <label>Price Type</label>
-      <select id="priceType">
-        <option value="fixed">Fixed</option>
-        <option value="negotiable">Negotiable</option>
-      </select>
-
-      <label>Urgency</label>
-      <select id="urgency">
-        <option value="normal">Normal</option>
-        <option value="urgent">Urgent</option>
-      </select>
-
-      <label>Phone Number</label>
-      <input type="tel" id="phone" placeholder="e.g 08012345678" />
-
-      <label>Location</label>
-      <input type="text" id="location" placeholder="e.g Lagos" />
-
-      <label>Description</label>
-      <textarea id="description" placeholder="Describe your item"></textarea>
-
-      <label>Tags (auto-generated)</label>
-      <input type="text" id="tags" placeholder="iphone, clean, lagos" />
-
-      <!-- IMPORTANT BUTTON -->
-      <button type="button" id="postBtn" class="post-btn">
-        Post Ad
-      </button>
-
+<div class="sell-form-container">
+    <h2>Post Your Ad</h2>
+    <form id="sellForm">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" id="title" required>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea id="description" required></textarea>
+        </div>
+        <div class="form-group">
+            <label>Price (₦)</label>
+            <input type="number" id="price" required>
+        </div>
+        <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="location" required>
+        </div>
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="phone" required>
+        </div>
+        <div class="form-group">
+            <label>Tags (comma separated)</label>
+            <input type="text" id="tags">
+        </div>
+        <div class="form-group">
+            <label>Images (URLs)</label>
+            <input type="text" id="images" placeholder="Separate multiple URLs with commas">
+        </div>
+        <button type="submit" class="btn">Post Ad</button>
     </form>
-  </div>
+    <div id="sellSuccess" class="success-message">Ad posted successfully!</div>
+</div>
 
-  <!-- JS (MUST BE MODULE) -->
-  <script type="module" src="sell.js"></script>
-
+<script src="sell.js"></script>
 </body>
-        </html>
+</html>
