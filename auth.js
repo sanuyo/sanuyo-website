@@ -23,36 +23,39 @@ const db = getFirestore(app);
 
 // REGISTER
 const registerBtn = document.getElementById("registerBtn");
+
 if (registerBtn) {
-  registerBtn.onclick = async () => {
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+  registerBtn.addEventListener("click", async () => {
+    try {
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
 
-    const userCred = await createUserWithEmailAndPassword(auth, email, password);
-
-    await setDoc(doc(db, "users", userCred.user.uid), {
-      name,
-      phone,
-      email,
-      joinedAt: serverTimestamp()
-    });
-
-    alert("Account created successfully");
-    window.location.href = "home.html";
-  };
-}
-
-// LOGIN
-const loginBtn = document.getElementById("loginBtn");
-if (loginBtn) {
-  loginBtn.onclick = async () => {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    await signInWithEmailAndPassword(auth, email, password);
-    alert("Login successful");
-    window.location.href = "home.html";
-  };
+      if (!name || !phone || !email || !password) {
+        alert("Fill all fields");
+        return;
       }
+
+      const userCred = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await setDoc(doc(db, "users", userCred.user.uid), {
+        name,
+        phone,
+        email,
+        joinedAt: serverTimestamp()
+      });
+
+      alert("Registration successful!");
+      window.location.href = "home.html";
+
+    } catch (error) {
+      alert(error.message);
+      console.error(error);
+    }
+  });
+                       }
