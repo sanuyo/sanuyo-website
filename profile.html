@@ -1,125 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - SanuYo</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Seller Profile | Sanuyo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
-    <!-- HEADER -->
-    <div class="header">
-        <div class="logo">SanuYo</div>
-        <div class="nav-links small">
-            <a href="home.html">Home</a>
-        </div>
-    </div>
+<div class="header">
+  <div class="logo">SanuYo</div>
+</div>
 
-    <!-- PROFILE TOP -->
-    <div class="profile-top">
-        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" class="profile-pic">
+<div class="profile-page">
+  <h2 id="sellerName"></h2>
+  <p id="sellerPhone"></p>
+  <p id="sellerRating"></p>
 
-        <h2 id="profileName">Guest User</h2>
-        <p id="profilePhone">+234 --- --- ----</p>
+  <h3>Seller Listings</h3>
+  <div class="product-grid" id="sellerProducts"></div>
+</div>
 
-        <button class="edit-profile-btn">Edit Profile</button>
-    </div>
-
-    <!-- QUICK STATS -->
-    <div class="profile-stats">
-
-        <div class="stat-box" onclick="goTo('myads.html')">
-            <h3>0</h3>
-            <p>My Ads</p>
-        </div>
-
-        <div class="stat-box" onclick="goTo('saved.html')">
-            <h3>0</h3>
-            <p>Saved</p>
-        </div>
-
-        <div class="stat-box" onclick="goTo('messages.html')">
-            <h3>0</h3>
-            <p>Messages</p>
-        </div>
-
-    </div>
-
-    <!-- WALLET SECTION -->
-    <div class="wallet-box">
-        <h3>My Wallet</h3>
-        <p>Balance: <b>₦0.00</b></p>
-        <button onclick="topUp()" class="topup-btn">Top Up Wallet</button>
-    </div>
-
-    <!-- PREMIUM UPGRADE -->
-    <div class="premium-box">
-        <h3>Boost Your Sales</h3>
-        <p>Upgrade your ads and reach more buyers.</p>
-
-        <button class="premium-btn" onclick="openPremium()">Upgrade to Premium</button>
-    </div>
-
-    <!-- SETTINGS -->
-    <div class="settings-box">
-        <h3>Settings</h3>
-
-        <div class="setting-item">
-            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828919.png">
-            <p>Account Settings</p>
-        </div>
-
-        <div class="setting-item">
-            <img src="https://cdn-icons-png.flaticon.com/128/3524/3524659.png">
-            <p>Change Password</p>
-        </div>
-
-        <div class="setting-item">
-            <img src="https://cdn-icons-png.flaticon.com/128/2089/2089799.png">
-            <p>Security</p>
-        </div>
-
-        <div class="setting-item">
-            <img src="https://cdn-icons-png.flaticon.com/128/992/992680.png">
-            <p>Support</p>
-        </div>
-    </div>
-
-    <!-- LOGOUT -->
-    <button class="logout-btn" onclick="logout()">Logout</button>
-
-
-    <!-- BOTTOM NAV -->
-    <div class="bottom-nav">
-        <a href="home.html">
-            <img src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png">
-            <span>Home</span>
-        </a>
-
-        <a href="messages.html">
-            <img src="https://cdn-icons-png.flaticon.com/128/2462/2462719.png">
-            <span>Messages</span>
-        </a>
-
-        <a href="sell.html" class="sell-btn">
-            <img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png">
-            <span>Sell</span>
-        </a>
-
-        <a href="saved.html">
-            <img src="https://cdn-icons-png.flaticon.com/128/833/833472.png">
-            <span>Saved</span>
-        </a>
-
-        <a href="profile.html" class="active">
-            <img src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png">
-            <span>Profile</span>
-        </a>
-    </div>
-
-    <script src="profile.js"></script>
-
+<script type="module" src="profile.js"></script>
 </body>
 </html>
