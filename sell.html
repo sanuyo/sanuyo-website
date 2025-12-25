@@ -1,76 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Post Ad | SanuYo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanuyo Marketplace - Sell</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<!-- HEADER -->
 <div class="header">
-  <div class="logo">SanuYo</div>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="sell.html" class="active">Sell</a>
-    <a href="saved.html">Saved</a>
-    <a href="profile.html">Profile</a>
-  </div>
+    <div class="logo">SanuYo</div>
+    <div class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="sell.html" class="active">Sell</a>
+        <a href="saved.html">Saved</a>
+        <a href="profile.html">Profile</a>
+    </div>
 </div>
 
-<h2 class="section-title">Post Your Ad</h2>
+<div class="sell-container">
+    <h2>Post Your Ad</h2>
+    <div id="successMessage" class="success-message">Ad posted successfully!</div>
+    <form id="sellForm">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" required>
+        </div>
 
-<div class="sell-card">
-  <form id="sellForm">
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" required></textarea>
+        </div>
 
-    <label>Ad Title</label>
-    <input type="text" id="title" placeholder="e.g. iPhone 12 Pro Max" required>
+        <div class="form-group">
+            <label for="price">Price (₦)</label>
+            <input type="number" id="price" required>
+        </div>
 
-    <label>Description</label>
-    <textarea id="description" placeholder="Describe your item in detail" required></textarea>
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" required>
+        </div>
 
-    <label>Price (₦)</label>
-    <input type="number" id="price" placeholder="e.g. 250000" required>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" required>
+        </div>
 
-    <!-- NEGOTIABLE -->
-    <div class="option-row">
-      <span>Price Negotiable?</span>
-      <label class="switch">
-        <input type="checkbox" id="negotiable">
-        <span class="slider"></span>
-      </label>
-    </div>
+        <div class="form-group">
+            <label>Options</label>
+            <div>
+                <input type="checkbox" id="urgent"> <label for="urgent">Urgent</label>
+                <input type="checkbox" id="negotiable"> <label for="negotiable">Negotiable</label>
+            </div>
+        </div>
 
-    <!-- URGENT -->
-    <div class="option-row">
-      <span>Mark as Urgent</span>
-      <label class="switch urgent-switch">
-        <input type="checkbox" id="urgent">
-        <span class="slider"></span>
-      </label>
-    </div>
+        <div class="form-group">
+            <label for="images">Upload Images</label>
+            <input type="file" id="images" accept="image/*" multiple required>
+        </div>
 
-    <label>Location</label>
-    <input type="text" id="location" placeholder="e.g. Lagos, Ikeja" required>
-
-    <label>Phone Number</label>
-    <input type="tel" id="phone" placeholder="e.g. 08012345678" required>
-
-    <label>Tags (comma separated)</label>
-    <input type="text" id="tags" placeholder="iphone, apple, phone">
-
-    <label>Images</label>
-    <input type="file" id="images" accept="image/*" multiple required>
-
-    <div id="imagePreview" class="image-preview"></div>
-
-    <button type="submit" class="post-btn">Post Ad</button>
-    <p id="message"></p>
-
-  </form>
+        <button type="submit" class="btn">Post Ad</button>
+    </form>
 </div>
 
-<script type="module" src="sell.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="sell.js"></script>
 </body>
-</html>
+  </html>
