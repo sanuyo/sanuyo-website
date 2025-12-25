@@ -1,80 +1,31 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  updateDoc,
-  increment
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { app } from "./firebase.js";
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-  authDomain: "sanuyo-website.firebaseapp.com",
-  projectId: "sanuyo-website",
-};
-
-const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const productGrid = document.getElementById("productGrid");
 
-// Get product ID from URL
-const params = new URLSearchParams(window.location.search);
-const productId = params.get("id");
+async function loadProducts() {
+    productGrid.innerHTML = "";
+    const q = collection(db, "products");
+    const querySnapshot = await getDocs(q);
 
-async function loadProduct() {
-  if (!productId) {
-    alert("No product selected");
-    return;
-  }
-
-  const productRef = doc(db, "products", productId);
-  const productSnap = await getDoc(productRef);
-
-  if (!productSnap.exists()) {
-    alert("Product not found");
-    return;
-  }
-
-  const data = productSnap.data();
-
-  // Increase views
-  await updateDoc(productRef, {
-    views: increment(1)
-  });
-
-  // Fill UI
-  document.getElementById("productImage").src =
-    data.image || "https://via.placeholder.com/400";
-
-  document.getElementById("productTitle").innerText = data.title;
-  document.getElementById("productPrice").innerText = "₦" + data.price;
-  document.getElementById("productLocation").innerText = "📍 " + data.location;
-  document.getElementById("productDescription").innerText = data.description;
-
-  document.getElementById("sellerName").innerText = "Name: " + data.sellerName;
-  document.getElementById("sellerPhone").innerText = "Phone: " + data.phone;
-
-  document.getElementById("callBtn").href = "tel:" + data.phone;
-
-  document.getElementById("whatsappBtn").href =
-    "https://wa.me/234" + data.phone.substring(1) +
-    "?text=Hello, I'm interested in your product on Sanuyo";
-
-  // Tags
-  const tagsDiv = document.getElementById("productTags");
-  tagsDiv.innerHTML = "";
-  if (data.tags && data.tags.length > 0) {
-    data.tags.forEach(tag => {
-      const span = document.createElement("span");
-      span.textContent = tag;
-      tagsDiv.appendChild(span);
+    querySnapshot.forEach(doc => {
+        const product = doc.data();
+        const card = document.createElement("div");
+        card.classList.add("product-card");
+        card.innerHTML = `
+            <img src="${product.image}" alt="${product.title}">
+            <h3>${product.title}</h3>
+            <p>${product.price} ₦</p>
+            ${product.urgent ? `<span class="badge urgent">URGENT</span>` : ""}
+            ${product.negotiable ? `<span class="badge negotiable">NEGOTIABLE</span>` : ""}
+            <div class="product-actions">
+                <a href="tel:${product.phone}" class="btn-call">Call</a>
+                <a href="https://wa.me/${product.phone}?text=Hi, I'm interested in ${product.title}" class="btn-whatsapp">WhatsApp</a>
+            </div>
+        `;
+        productGrid.appendChild(card);
     });
-  }
-
-  // Go to seller profile
-  document.getElementById("sellerName").addEventListener("click", () => {
-    window.location.href = `profile.html?seller=${data.sellerId}`;
-  });
 }
 
-loadProduct();
+loadProducts();
