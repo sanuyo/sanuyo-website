@@ -1,71 +1,54 @@
-// LOAD CATEGORIES
-db.collection("categories").get().then(snapshot => {
-    let html = "";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    snapshot.forEach(doc => {
-        let c = doc.data();
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+  authDomain: "sanuyo-website.firebaseapp.com",
+  projectId: "sanuyo-website",
+};
 
-        html += `
-        <div class="cat-box" onclick="openSub('${doc.id}', '${c.name}')">
-            <img src="${c.icon}">
-            <p>${c.name}</p>
-        </div>`;
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const productGrid = document.getElementById("productGrid");
+
+// Load products
+async function loadProducts() {
+  productGrid.innerHTML = "";
+
+  const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
+  const snapshot = await getDocs(q);
+
+  snapshot.forEach(docSnap => {
+    const data = docSnap.data();
+    const productId = docSnap.id;
+
+    const card = document.createElement("div");
+    card.className = "product-card";
+
+    card.innerHTML = `
+      <img src="${data.image || 'https://via.placeholder.com/300'}">
+      <div class="product-info">
+        <h4>₦${data.price}</h4>
+        <p>${data.title}</p>
+        <span class="location">📍 ${data.location}</span>
+        <span class="views">👁 ${data.views || 0} views</span>
+      </div>
+    `;
+
+    card.addEventListener("click", () => {
+      window.location.href = `product.html?id=${productId}`;
     });
 
-    document.getElementById("categoryGrid").innerHTML = html;
-});
-
-// OPEN SUBCATEGORY POPUP
-function openSub(catId, catName) {
-    document.getElementById("subTitle").innerText = catName;
-    document.getElementById("subPopup").classList.remove("hidden");
-
-    db.collection("subcategories")
-      .where("categoryId", "==", catId)
-      .get()
-      .then(snapshot => {
-        let html = "";
-
-        snapshot.forEach(doc => {
-            let s = doc.data();
-            html += `
-                <div class="sub-item" onclick="goProducts('${catName}', '${s.name}')">
-                    ${s.name}
-                </div>
-            `;
-        });
-
-        document.getElementById("subList").innerHTML = html;
-      });
+    productGrid.appendChild(card);
+  });
 }
 
-function closeSub() {
-    document.getElementById("subPopup").classList.add("hidden");
-}
-
-// GO TO PRODUCTS PAGE
-function goProducts(cat, sub) {
-    window.location.href = `products.html?cat=${cat}&sub=${sub}`;
-}
-
-// LATEST PRODUCTS
-db.collection("products").limit(10).get().then(snapshot => {
-    let html = "";
-
-    snapshot.forEach(doc => {
-        let p = doc.data();
-
-        html += `
-        <div class="product-card" onclick="openProd('${doc.id}')">
-            <img src="${p.images[0]}">
-            <h4>${p.title}</h4>
-            <p class="price">₦${p.price}</p>
-        </div>`;
-    });
-
-    document.getElementById("latestProducts").innerHTML = html;
-});
-
-function openProd(id) {
-    window.location.href = "product.html?id=" + id;
-}
+loadProducts();
