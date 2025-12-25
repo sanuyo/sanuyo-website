@@ -1,57 +1,54 @@
-const productsRef = db.collection("products");
-const subcategoriesRef = db.collection("subcategories");
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// Get subcategory ID from URL
-const urlParams = new URLSearchParams(window.location.search);
-const subcatId = urlParams.get("subcat");
+const firebaseConfig = {
+  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+  authDomain: "sanuyo-website.firebaseapp.com",
+  projectId: "sanuyo-website",
+};
 
-const productTitle = document.getElementById("productTitle");
-const productsGrid = document.getElementById("productsGrid");
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-// LOAD SUBCATEGORY NAME
-async function loadTitle() {
-    const doc = await subcategoriesRef.doc(subcatId).get();
-    if (doc.exists) {
-        productTitle.innerText = doc.data().name;
-    }
-}
+// Get product ID from URL
+const params = new URLSearchParams(window.location.search);
+const productId = params.get("id");
 
-loadTitle();
+async function loadProduct() {
+    if (!productId) return;
 
-// LOAD PRODUCTS IN THAT SUBCATEGORY
-async function loadProducts() {
-    const snapshot = await productsRef
-        .where("subcatId", "==", subcatId)
-        .get();
+    const productRef = doc(db, "products", productId);
+    const productSnap = await getDoc(productRef);
 
-    productsGrid.innerHTML = "";
-
-    if (snapshot.empty) {
-        productsGrid.innerHTML = "<p>No products found.</p>";
+    if (!productSnap.exists()) {
+        alert("Product not found");
         return;
     }
 
-    snapshot.forEach(doc => {
-        const p = doc.data();
+    const data = productSnap.data();
 
-        productsGrid.innerHTML += `
-            <div class="product-card" onclick="openProductDetails('${doc.id}')">
+    document.getElementById("productImage").src = data.image || "https://via.placeholder.com/400";
+    document.getElementById("productTitle").innerText = data.title;
+    document.getElementById("productPrice").innerText = "₦" + data.price;
+    document.getElementById("productLocation").innerText = "📍 " + data.location;
+    document.getElementById("productDescription").innerText = data.description;
 
-                <img class="product-img" src="${p.images[0]}" alt="product">
+    document.getElementById("sellerName").innerText = "Name: " + data.sellerName;
+    document.getElementById("sellerPhone").innerText = "Phone: " + data.phone;
 
-                <div class="product-info">
-                    <div class="product-title">${p.title}</div>
-                    <div class="product-price">₦${p.price}</div>
-                    <div class="product-location">${p.location}</div>
-                </div>
+    document.getElementById("callBtn").href = "tel:" + data.phone;
+    document.getElementById("whatsappBtn").href =
+        "https://wa.me/234" + data.phone.substring(1) + "?text=I'm interested in your product";
 
-            </div>
-        `;
-    });
+    // Tags
+    const tagsDiv = document.getElementById("productTags");
+    if (data.tags && data.tags.length > 0) {
+        data.tags.forEach(tag => {
+            const span = document.createElement("span");
+            span.innerText = tag;
+            tagsDiv.appendChild(span);
+        });
+    }
 }
 
-loadProducts();
-
-function openProductDetails(productId) {
-    window.location.href = `product-details.html?id=${productId}`;
-}
+loadProduct();
