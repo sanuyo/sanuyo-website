@@ -1,27 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Product</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Product Details | Sanuyo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div id="productDetails"></div>
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">SanuYo</div>
+</div>
 
-<a id="callBtn">Call Seller</a>
-<a id="msgBtn" href="messages.html">Message Seller</a>
+<!-- PRODUCT DETAILS -->
+<div class="product-page">
 
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <div class="product-image">
+        <img id="productImage" src="" alt="Product Image">
+    </div>
 
-<script>
-firebase.initializeApp({
-  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-  projectId: "sanuyo-website"
-});
-var db = firebase.firestore();
-</script>
+    <div class="product-info">
+        <h2 id="productTitle"></h2>
+        <h3 id="productPrice"></h3>
 
-<script src="product.js"></script>
+        <p class="location" id="productLocation"></p>
+
+        <div class="tags" id="productTags"></div>
+
+        <p class="description" id="productDescription"></p>
+
+        <div class="seller-box">
+            <h4>Seller Information</h4>
+            <p id="sellerName"></p>
+            <p id="sellerPhone"></p>
+        </div>
+
+        <div class="action-buttons">
+            <a id="callBtn" class="call-btn">Call Seller</a>
+            <a id="whatsappBtn" class="whatsapp-btn">WhatsApp</a>
+            <button id="messageBtn" class="message-btn">Message</button>
+        </div>
+    </div>
+
+</div>
+
+<script type="module" src="product.js"></script>
 </body>
-</html>
+          </html>
