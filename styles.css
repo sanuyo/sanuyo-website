@@ -1,81 +1,111 @@
+/* RESET */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-  margin: 0;
-  background: #f2f2f2;
+  background: #f4f4f4;
+  color: #222;
 }
 
-.top-header {
-  background: #0abf53;
-  color: #fff;
-  padding: 16px;
-  text-align: center;
-}
-
-.form-container {
+/* HEADER */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   background: #fff;
-  max-width: 500px;
-  margin: 20px auto;
-  padding: 16px;
-  border-radius: 8px;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
 }
 
-label {
-  display: block;
-  margin-top: 12px;
+.logo {
+  font-size: 22px;
   font-weight: bold;
+  color: #00b53f;
 }
 
-input, textarea, select {
-  width: 100%;
-  padding: 12px;
-  margin-top: 6px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+.back-btn {
+  color: #00b53f;
+  text-decoration: none;
   font-size: 14px;
 }
 
-textarea {
-  min-height: 90px;
+/* SELL CONTAINER */
+.sell-container {
+  max-width: 600px;
+  margin: 90px auto 40px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 6px;
 }
 
-button {
+.sell-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* FORM */
+.sell-form label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.sell-form input,
+.sell-form textarea,
+.sell-form select {
   width: 100%;
-  margin-top: 20px;
   padding: 14px;
-  background: #0abf53;
-  border: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 18px;
+  font-size: 15px;
+  background: #fafafa;
+}
+
+.sell-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.sell-form input:focus,
+.sell-form textarea:focus,
+.sell-form select:focus {
+  outline: none;
+  border-color: #00b53f;
+  background: #fff;
+}
+
+/* POST BUTTON */
+.post-btn {
+  width: 100%;
+  background: #00b53f;
   color: #fff;
+  border: none;
+  padding: 15px;
   font-size: 16px;
+  font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
 }
 
-button:hover {
-  background: #099e45;
+.post-btn:hover {
+  background: #009e38;
 }
 
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #fff;
-  border-top: 1px solid #ddd;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-}
-
-.bottom-nav a {
-  text-decoration: none;
-  color: #555;
-  font-size: 14px;
-}
-
-.bottom-nav a.active {
-  color: #0abf53;
-  font-weight: bold;
-    }
+/* MOBILE */
+@media (max-width: 600px) {
+  .sell-container {
+    margin: 80px 10px 30px;
+  }
+  }
