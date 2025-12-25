@@ -1,4 +1,4 @@
-const categorySelect = document.getElementById("categorySelect");
+alert(data.name);constcategorySelect = document.getElementById("categorySelect");
 const subcategorySelect = document.getElementById("subcategorySelect");
 
 db.collection("categories").get().then(snapshot => {
