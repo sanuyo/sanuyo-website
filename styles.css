@@ -2,310 +2,192 @@
    GLOBAL RESET
 ================================ */
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     background: #f2f4f5;
     color: #222;
-    padding-bottom: 70px;
 }
 
 /* ===============================
    HEADER (JIJI STYLE)
 ================================ */
 .header {
-    background: #fff;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #e0e0e0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background: #00b53f;
+    padding: 14px;
+    text-align: center;
 }
 
 .logo {
-    font-size: 22px;
-    font-weight: 700;
-    color: #00b53f; /* Jiji green */
+    color: #fff;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.nav-links {
+    margin-top: 6px;
 }
 
 .nav-links a {
+    color: #eaffef;
     text-decoration: none;
-    margin-left: 16px;
-    color: #555;
-    font-size: 14px;
+    margin: 0 8px;
+    font-weight: 600;
 }
 
 .nav-links a.active {
-    color: #00b53f;
-    font-weight: 600;
+    text-decoration: underline;
 }
 
 /* ===============================
-   SEARCH BAR
-================================ */
-.search-area {
-    background: #fff;
-    padding: 12px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.search-area input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-}
-
-/* ===============================
-   HERO SLIDER
-================================ */
-.hero-slider {
-    margin: 10px;
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
-}
-
-.hero-slider img {
-    width: 100%;
-    display: block;
-}
-
-/* ===============================
-   SECTION TITLE
+   PAGE TITLE
 ================================ */
 .section-title {
-    font-size: 18px;
-    font-weight: 600;
-    margin: 15px 12px 8px;
-}
-
-/* ===============================
-   CATEGORIES (JIJI GRID)
-================================ */
-.category-icons {
     background: #fff;
-    padding: 10px 5px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.cat-box {
-    text-align: center;
-    cursor: pointer;
-}
-
-.cat-box img {
-    width: 42px;
-    height: 42px;
-    object-fit: contain;
-}
-
-.cat-box p {
-    margin-top: 6px;
-    font-size: 12px;
-    color: #333;
-}
-
-/* ===============================
-   PRODUCT GRID (JIJI LOOK)
-================================ */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    padding: 10px;
-}
-
-/* ===============================
-   PRODUCT CARD
-================================ */
-.product-card {
-    background: #fff;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid #e0e0e0;
-    display: flex;
-    flex-direction: column;
-}
-
-.product-card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-}
-
-/* CARD CONTENT */
-.product-card h3 {
-    font-size: 14px;
-    font-weight: 600;
-    padding: 8px;
-    line-height: 1.3;
-}
-
-.product-card .price {
-    padding: 0 8px;
-    color: #00b53f;
+    padding: 14px;
+    font-size: 20px;
     font-weight: 700;
-    font-size: 15px;
-}
-
-.product-card .location {
-    padding: 4px 8px;
-    font-size: 12px;
-    color: #777;
+    border-bottom: 1px solid #ddd;
 }
 
 /* ===============================
-   CARD ACTIONS
-================================ */
-.actions {
-    display: flex;
-    gap: 6px;
-    padding: 8px;
-    margin-top: auto;
-}
-
-.actions a {
-    flex: 1;
-    text-align: center;
-    text-decoration: none;
-    font-size: 12px;
-    padding: 8px 0;
-    border-radius: 4px;
-    font-weight: 600;
-}
-
-.msg-btn {
-    background: #00b53f;
-    color: #fff;
-}
-
-.call-btn {
-    background: #f2f4f5;
-    color: #00b53f;
-    border: 1px solid #00b53f;
-}
-
-/* ===============================
-   BOTTOM NAV (JIJI STYLE)
-================================ */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #fff;
-    display: flex;
-    justify-content: space-around;
-    border-top: 1px solid #ddd;
-    padding: 6px 0;
-    z-index: 200;
-}
-
-.bottom-nav a {
-    text-decoration: none;
-    color: #666;
-    font-size: 11px;
-    text-align: center;
-}
-
-.bottom-nav a img {
-    width: 22px;
-    height: 22px;
-    display: block;
-    margin: 0 auto 3px;
-}
-
-.bottom-nav a.active span {
-    color: #00b53f;
-    font-weight: 600;
-}
-
-/* ===============================
-   SELL BUTTON (CENTER)
-================================ */
-.sell-btn img {
-    background: #00b53f;
-    padding: 8px;
-    border-radius: 50%;
-}
-
-/* ===============================
-   RESPONSIVE (DESKTOP)
-================================ */
-@media (min-width: 768px) {
-    .product-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    .category-icons {
-        grid-template-columns: repeat(8, 1fr);
-    }
- }
-
-/* ===============================
-   SELL PAGE (JIJI FORM)
+   SELL PAGE CARD
 ================================ */
 .sell-card {
     background: #fff;
     margin: 12px;
-    padding: 15px;
-    border-radius: 6px;
-    border: 1px solid #e0e0e0;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+/* ===============================
+   FORM (JIJI LAYOUT)
+================================ */
+.sell-card form {
+    display: flex;
+    flex-direction: column;
 }
 
 .sell-card label {
+    margin-top: 14px;
+    margin-bottom: 6px;
     font-size: 13px;
-    font-weight: 600;
-    margin-top: 10px;
-    display: block;
+    font-weight: 700;
+    color: #444;
 }
 
 .sell-card input,
 .sell-card textarea {
     width: 100%;
-    padding: 12px;
-    margin-top: 6px;
+    padding: 14px;
+    font-size: 15px;
     border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 14px;
+    border: 1px solid #d0d0d0;
+    background: #fff;
 }
 
 .sell-card textarea {
     resize: none;
+    min-height: 120px;
 }
 
+/* ===============================
+   IMAGE UPLOAD PREVIEW
+================================ */
+.image-preview {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.image-preview img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* ===============================
+   BUTTON
+================================ */
 .post-btn {
-    width: 100%;
-    margin-top: 16px;
-    padding: 14px;
+    margin-top: 22px;
+    padding: 15px;
     background: #00b53f;
     color: #fff;
     border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 700;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 800;
     cursor: pointer;
 }
 
-.post-btn:hover {
-    background: #009e37;
+.post-btn:active {
+    transform: scale(0.98);
 }
 
+/* ===============================
+   SUCCESS / ERROR
+================================ */
 .success-msg {
-    margin-top: 12px;
+    margin-top: 14px;
     color: #00b53f;
-    font-weight: 600;
+    font-weight: 700;
     text-align: center;
-   }
+}
+
+.error-msg {
+    margin-top: 14px;
+    color: red;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* ===============================
+   PRODUCT CARDS (HOME)
+================================ */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    padding: 12px;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.product-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+}
+
+.product-card .info {
+    padding: 10px;
+}
+
+.product-card .price {
+    color: #00b53f;
+    font-weight: 800;
+}
+
+.product-card .title {
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* ===============================
+   FOOTER SPACE
+================================ */
+.footer-space {
+    height: 30px;
+}
