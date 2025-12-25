@@ -1,25 +1,73 @@
-alert(data.name);constcategorySelect = document.getElementById("categorySelect");
-const subcategorySelect = document.getElementById("subcategorySelect");
+// 🔥 Firebase imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-db.collection("categories").get().then(snapshot => {
+// 🔧 Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+  authDomain: "sanuyo-website.firebaseapp.com",
+  projectId: "sanuyo-website",
+  storageBucket: "sanuyo-website.firebasestorage.app",
+  messagingSenderId: "765213630366",
+  appId: "1:765213630366:web:03279e61a58289b088808f"
+};
 
-  alert("Documents found: " + snapshot.size);
+// 🚀 Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  categorySelect.innerHTML = `<option value="">Select Category</option>`;
+// 🔖 Convert tags string → array
+function parseTags(tagString) {
+  return tagString
+    .split(",")
+    .map(tag => tag.trim().toLowerCase())
+    .filter(tag => tag.length > 0);
+}
 
-  snapshot.forEach(doc => {
-    const data = doc.data();
+// 📤 Post Ad
+document.getElementById("postBtn").addEventListener("click", async () => {
 
-    console.log("DOC ID:", doc.id);
-    console.log("DOC DATA:", data);
+  const title = document.getElementById("title").value.trim();
+  const price = document.getElementById("price").value;
+  const priceType = document.getElementById("priceType").value;
+  const urgency = document.getElementById("urgency").value;
+  const phone = document.getElementById("phone").value.trim();
+  const location = document.getElementById("location").value.trim();
+  const description = document.getElementById("description").value.trim();
+  const tagsInput = document.getElementById("tags").value;
 
-    const opt = document.createElement("option");
-    opt.value = doc.id;
-    opt.textContent = data.name || "NO NAME FIELD";
-    categorySelect.appendChild(opt);
-  });
+  if (!title || !price || !phone || !location || !description) {
+    alert("Please fill all required fields");
+    return;
+  }
 
-}).catch(err => {
-  alert("Firestore error");
-  console.error(err);
+  const tagsArray = parseTags(tagsInput);
+
+  try {
+    await addDoc(collection(db, "products"), {
+      title,
+      price: Number(price),
+      priceType,
+      urgency,
+      phone,
+      location: location.toLowerCase(),
+      description,
+      tags: tagsArray,
+      createdAt: serverTimestamp()
+    });
+
+    alert("✅ Ad posted successfully!");
+
+    // Reset form
+    document.querySelector(".sell-form").reset();
+
+  } catch (error) {
+    console.error("Error posting ad:", error);
+    alert("❌ Failed to post ad");
+  }
 });
