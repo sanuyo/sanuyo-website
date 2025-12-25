@@ -1,4 +1,4 @@
-// 🔥 Firebase imports
+// 🔥 Firebase imports (MODULAR v9)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import {
   getFirestore,
@@ -17,11 +17,19 @@ const firebaseConfig = {
   appId: "1:765213630366:web:03279e61a58289b088808f"
 };
 
-// 🚀 Initialize Firebase
+// 🚀 Init Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// 🔖 Convert tags string → array
+// 🔖 Popular auto-tag keywords
+const autoTagWords = [
+  "iphone", "android", "samsung", "tecno", "infinix",
+  "used", "brand new", "clean",
+  "urgent", "negotiable",
+  "lagos", "abuja", "ibadan", "ogun"
+];
+
+// 🔁 Convert text → array
 function parseTags(tagString) {
   return tagString
     .split(",")
@@ -29,9 +37,21 @@ function parseTags(tagString) {
     .filter(tag => tag.length > 0);
 }
 
+// 🤖 Auto-generate tags from title
+function generateTagsFromTitle(title) {
+  const lower = title.toLowerCase();
+  return autoTagWords.filter(word => lower.includes(word));
+}
+
+// 🎯 Auto-fill tags while typing title
+document.getElementById("title").addEventListener("input", () => {
+  const titleVal = document.getElementById("title").value;
+  const tags = generateTagsFromTitle(titleVal);
+  document.getElementById("tags").value = tags.join(", ");
+});
+
 // 📤 Post Ad
 document.getElementById("postBtn").addEventListener("click", async () => {
-
   const title = document.getElementById("title").value.trim();
   const price = document.getElementById("price").value;
   const priceType = document.getElementById("priceType").value;
@@ -61,13 +81,12 @@ document.getElementById("postBtn").addEventListener("click", async () => {
       createdAt: serverTimestamp()
     });
 
-    alert("✅ Ad posted successfully!");
+    alert("✅ Ad posted successfully");
 
-    // Reset form
     document.querySelector(".sell-form").reset();
 
-  } catch (error) {
-    console.error("Error posting ad:", error);
+  } catch (err) {
+    console.error(err);
     alert("❌ Failed to post ad");
   }
 });
