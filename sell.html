@@ -4,63 +4,73 @@
   <meta charset="UTF-8">
   <title>Post Ad | SanuYo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="logo">SanuYo</div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="sell.html" class="active">Sell</a>
-      <a href="saved.html">Saved</a>
-      <a href="profile.html">Profile</a>
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">SanuYo</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="sell.html" class="active">Sell</a>
+    <a href="saved.html">Saved</a>
+    <a href="profile.html">Profile</a>
+  </div>
+</div>
+
+<h2 class="section-title">Post Your Ad</h2>
+
+<div class="sell-card">
+  <form id="sellForm">
+
+    <label>Ad Title</label>
+    <input type="text" id="title" placeholder="e.g. iPhone 12 Pro Max" required>
+
+    <label>Description</label>
+    <textarea id="description" placeholder="Describe your item in detail" required></textarea>
+
+    <label>Price (₦)</label>
+    <input type="number" id="price" placeholder="e.g. 250000" required>
+
+    <!-- NEGOTIABLE -->
+    <div class="option-row">
+      <span>Price Negotiable?</span>
+      <label class="switch">
+        <input type="checkbox" id="negotiable">
+        <span class="slider"></span>
+      </label>
     </div>
-  </div>
 
-  <!-- TITLE -->
-  <div class="section-title">Post Your Ad</div>
+    <!-- URGENT -->
+    <div class="option-row">
+      <span>Mark as Urgent</span>
+      <label class="switch urgent-switch">
+        <input type="checkbox" id="urgent">
+        <span class="slider"></span>
+      </label>
+    </div>
 
-  <!-- SELL FORM -->
-  <div class="sell-card">
-    <form id="sellForm">
+    <label>Location</label>
+    <input type="text" id="location" placeholder="e.g. Lagos, Ikeja" required>
 
-      <label>Ad Title</label>
-      <input type="text" id="title" placeholder="e.g. iPhone 12 Pro Max" required>
+    <label>Phone Number</label>
+    <input type="tel" id="phone" placeholder="e.g. 08012345678" required>
 
-      <label>Description</label>
-      <textarea id="description" placeholder="Describe your item in detail" required></textarea>
+    <label>Tags (comma separated)</label>
+    <input type="text" id="tags" placeholder="iphone, apple, phone">
 
-      <label>Price (₦)</label>
-      <input type="number" id="price" placeholder="e.g. 250000" required>
+    <label>Images</label>
+    <input type="file" id="images" accept="image/*" multiple required>
 
-      <label>Location</label>
-      <input type="text" id="location" placeholder="e.g. Lagos, Ikeja" required>
+    <div id="imagePreview" class="image-preview"></div>
 
-      <label>Phone Number</label>
-      <input type="tel" id="phone" placeholder="e.g. 08012345678" required>
+    <button type="submit" class="post-btn">Post Ad</button>
+    <p id="message"></p>
 
-      <label>Tags (comma separated)</label>
-      <input type="text" id="tags" placeholder="iphone, apple, phone">
+  </form>
+</div>
 
-      <label>Images</label>
-      <input type="file" id="images" accept="image/*" multiple required>
-
-      <div class="image-preview" id="imagePreview"></div>
-
-      <button type="submit" class="post-btn">Post Ad</button>
-
-      <div id="message"></div>
-
-    </form>
-  </div>
-
-  <div class="footer-space"></div>
-
-  <!-- JS -->
-  <script type="module" src="sell.js"></script>
+<script type="module" src="sell.js"></script>
 </body>
-    </html>
+</html>
