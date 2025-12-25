@@ -1,72 +1,43 @@
-// sell.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import {
-  getAuth,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-  authDomain: "sanuyo-website.firebaseapp.com",
-  projectId: "sanuyo-website"
-};
+const db = getFirestore();
+const auth = getAuth();
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+const sellForm = document.getElementById("sellForm");
+const sellSuccess = document.getElementById("sellSuccess");
 
-// 🔒 Protect page
-let currentUser = null;
-onAuthStateChanged(auth, user => {
-  if (!user) {
-    alert("Please login to post an ad");
-    window.location.href = "login.html";
-  } else {
-    currentUser = user;
-  }
+sellForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const user = auth.currentUser;
+    if(!user) return alert("You must be logged in to post an ad.");
+
+    const title = document.getElementById("title").value;
+    const description = document.getElementById("description").value;
+    const price = Number(document.getElementById("price").value);
+    const location = document.getElementById("location").value;
+    const phone = document.getElementById("phone").value;
+    const tags = document.getElementById("tags").value.split(",").map(t => t.trim());
+    const images = document.getElementById("images").value.split(",").map(i => i.trim());
+
+    try {
+        await addDoc(collection(db, "products"), {
+            userId: user.uid,
+            title,
+            description,
+            price,
+            location,
+            phone,
+            tags,
+            images,
+            createdAt: serverTimestamp()
+        });
+        sellSuccess.style.display = "block";
+        sellForm.reset();
+        setTimeout(() => sellSuccess.style.display = "none", 4000);
+    } catch (err) {
+        console.error("Error posting ad:", err);
+        alert("Error posting ad. Try again.");
+    }
 });
-
-// 🟢 POST PRODUCT
-document.getElementById("postAdBtn").onclick = async () => {
-  const title = document.getElementById("title").value.trim();
-  const price = document.getElementById("price").value;
-  const phone = document.getElementById("phone").value.trim();
-  const location = document.getElementById("location").value.trim();
-  const description = document.getElementById("description").value.trim();
-  const tags = document.getElementById("tags").value
-    .split(",")
-    .map(t => t.trim().toLowerCase());
-
-  if (!title || !price || !phone || !location) {
-    alert("Please fill all required fields");
-    return;
-  }
-
-  try {
-    await addDoc(collection(db, "products"), {
-      title,
-      price: Number(price),
-      phone,
-      location,
-      description,
-      tags,
-      sellerId: currentUser.uid,
-      createdAt: serverTimestamp(),
-      views: 0,
-      saved: 0
-    });
-
-    alert("Ad posted successfully!");
-    window.location.href = "home.html";
-
-  } catch (err) {
-    alert("Error posting ad");
-    console.error(err);
-  }
-};
