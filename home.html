@@ -8,7 +8,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
     <div class="logo">SanuYo</div>
     <div class="nav-links">
@@ -19,39 +18,13 @@
     </div>
 </div>
 
-<!-- SEARCH BAR -->
-<div class="search-area">
-    <input id="searchInput" type="text" placeholder="Search products…">
-</div>
-
-<!-- HERO SLIDER -->
-<div class="hero-slider">
-    <div class="slides">
-        <div class="slide active"><img src="https://i.imgur.com/zA5WqXW.jpeg" alt="Promo 1"></div>
-        <div class="slide"><img src="https://i.imgur.com/R3qCqkI.jpeg" alt="Promo 2"></div>
-        <div class="slide"><img src="https://i.imgur.com/z8gkSBq.jpeg" alt="Promo 3"></div>
+<div class="container">
+    <h2 class="section-title">Latest Listings</h2>
+    <div class="product-grid" id="productGrid">
+        <!-- Products will be loaded dynamically -->
     </div>
-    <div class="slider-arrow left" onclick="prevSlide()">&#10094;</div>
-    <div class="slider-arrow right" onclick="nextSlide()">&#10095;</div>
-    <div class="slider-dots" id="sliderDots"></div>
 </div>
 
-<!-- LATEST PRODUCTS -->
-<h2 class="section-title">Latest Listings</h2>
-<div class="product-grid" id="productGrid">
-    <!-- Loaded dynamically from Firestore -->
-</div>
-
-<!-- BOTTOM NAVIGATION -->
-<div class="bottom-nav">
-    <a href="home.html" class="active"><img src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png"><span>Home</span></a>
-    <a href="messages.html"><img src="https://cdn-icons-png.flaticon.com/128/2462/2462719.png"><span>Messages</span></a>
-    <a href="sell.html" class="sell-btn"><img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png"><span>Sell</span></a>
-    <a href="saved.html"><img src="https://cdn-icons-png.flaticon.com/128/833/833472.png"><span>Saved</span></a>
-    <a href="profile.html"><img src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png"><span>Profile</span></a>
-</div>
-
-<script src="home.js"></script>
-<script src="slider.js"></script>
+<script src="home.js" type="module"></script>
 </body>
 </html>
