@@ -1,82 +1,106 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background-color: #f9f9f9;
+    padding: 0;
+    background: #f2f2f2;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f5f5f5;
-    padding: 10px 20px;
-    border-bottom: 1px solid #ddd;
+    background: #ff6600;
+    color: #fff;
+    padding: 15px 20px;
 }
 
 .header .logo {
+    font-size: 24px;
     font-weight: bold;
-    font-size: 20px;
 }
 
 .header .nav-links a {
-    margin-left: 20px;
+    color: #fff;
+    margin-left: 15px;
     text-decoration: none;
-    color: #333;
+    font-weight: bold;
 }
 
 .header .nav-links a.active {
-    font-weight: bold;
-    color: #ff6600;
+    text-decoration: underline;
 }
 
-.sell-container {
+.container {
     max-width: 700px;
-    margin: 30px auto;
+    margin: 20px auto;
     background: #fff;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 6px;
 }
 
-.sell-container h2 {
+h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.sell-container form label {
+.sell-form label {
     display: block;
     margin-top: 15px;
     font-weight: bold;
 }
 
-.sell-container form input,
-.sell-container form textarea,
-.sell-container form select {
+.sell-form input[type="text"],
+.sell-form input[type="number"],
+.sell-form textarea,
+.sell-form input[type="file"] {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
     box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 3px;
 }
 
-.sell-container form button {
-    background-color: #ff6600;
-    color: white;
-    border: none;
-    padding: 12px;
-    margin-top: 20px;
+.sell-form textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.post-btn {
+    display: block;
     width: 100%;
+    background: #ff6600;
+    color: #fff;
+    font-size: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    margin-top: 20px;
     cursor: pointer;
-    font-size: 16px;
-    border-radius: 3px;
+    font-weight: bold;
 }
 
-.sell-container form button:hover {
-    background-color: #e65c00;
+.post-btn:hover {
+    background: #e55a00;
 }
 
-#successMessage {
-    text-align: center;
-    margin-top: 15px;
-    color: green;
-   }
+.image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.preview-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    }
