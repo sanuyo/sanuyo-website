@@ -1,54 +1,44 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import { db, storage } from "./firebase.js";
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_BUCKET",
-  messagingSenderId: "XXXX",
-  appId: "XXXX"
-};
+const form = document.getElementById("sellForm");
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-document.getElementById("postAdBtn").onclick = async () => {
-  const status = document.getElementById("status");
-  status.textContent = "Posting...";
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("description").value;
+  const price = Number(document.getElementById("price").value);
+  const location = document.getElementById("location").value;
+  const phone = document.getElementById("phone").value;
+  const tags = document.getElementById("tags").value.split(",").map(t => t.trim());
+  const images = document.getElementById("images").files;
 
-  try {
-    const files = document.getElementById("images").files;
-    const imageUrls = [];
-
-    for (let file of files) {
-      const imgRef = ref(storage, `products/${Date.now()}-${file.name}`);
-      await uploadBytes(imgRef, file);
-      imageUrls.push(await getDownloadURL(imgRef));
-    }
-
-    await addDoc(collection(db, "products"), {
-      title: title.value,
-      description: description.value,
-      price: Number(price.value),
-      priceType: priceType.value,
-      urgency: urgency.value,
-      location: location.value,
-      phone: phone.value,
-      tags: tags.value.split(",").map(t => t.trim()),
-      images: imageUrls,
-      userId: "guest",
-      status: "active",
-      createdAt: serverTimestamp()
-    });
-
-    status.textContent = "Ad posted successfully!";
-    document.querySelector("form")?.reset();
-
-  } catch (e) {
-    status.textContent = "Error posting ad";
-    console.error(e);
+  if (images.length === 0) {
+    alert("Please select at least one image");
+    return;
   }
-};
+
+  const imageUrls = [];
+  for (let i = 0; i < images.length; i++) {
+    const storageRef = ref(storage, `products/${Date.now()}_${images[i].name}`);
+    await uploadBytes(storageRef, images[i]);
+    const url = await getDownloadURL(storageRef);
+    imageUrls.push(url);
+  }
+
+  await addDoc(collection(db, "products"), {
+    title,
+    description,
+    price,
+    location,
+    phone,
+    tags,
+    images: imageUrls,
+    timestamp: serverTimestamp()
+  });
+
+  alert("Ad posted successfully!");
+  form.reset();
+});
