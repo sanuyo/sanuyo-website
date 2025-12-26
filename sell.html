@@ -1,59 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Post Ad - Sanuyo</title>
-<link rel="stylesheet" href="styles.css">
-<script type="module" src="sell.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Your Ad - Sanuyo</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="header">
-  <div class="logo">Sanuyo</div>
-  <div class="nav-links">
-    <a href="home.html">Home</a>
-    <a href="sell.html" class="active">Sell</a>
-    <a href="saved.html">Saved</a>
-    <a href="profile.html">Profile</a>
-  </div>
-</div>
+    <div class="header">
+        <div class="logo">SanuYo</div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="sell.html" class="active">Sell</a>
+            <a href="saved.html">Saved</a>
+            <a href="profile.html">Profile</a>
+        </div>
+    </div>
 
-<h2 class="section-title">Post Your Ad</h2>
+    <div class="sell-container">
+        <h2>Post Your Ad</h2>
 
-<div class="sell-form" id="sellForm">
-  <label>Title</label>
-  <input type="text" id="title" placeholder="Ad title" required>
+        <form id="postAdForm">
+            <label>Title</label>
+            <input type="text" id="title" placeholder="Enter title" required>
 
-  <label>Description</label>
-  <textarea id="description" placeholder="Describe your item" required></textarea>
+            <label>Description</label>
+            <textarea id="description" placeholder="Enter description" required></textarea>
 
-  <label>Price (₦)</label>
-  <input type="number" id="price" placeholder="Enter price" required>
+            <label>Price (₦)</label>
+            <input type="number" id="price" placeholder="Enter price" required>
 
-  <label>Phone Number</label>
-  <input type="text" id="phone" placeholder="Your contact number" required>
+            <label>Phone Number</label>
+            <input type="text" id="phone" placeholder="Enter phone number" required>
 
-  <label>Upload Images</label>
-  <input type="file" id="images" multiple accept="image/*">
+            <label>Tags (comma separated)</label>
+            <input type="text" id="tags" placeholder="e.g. electronics, phone, gadget">
 
-  <label>Urgent</label>
-  <select id="urgent">
-    <option value="No">No</option>
-    <option value="Yes">Yes</option>
-  </select>
+            <label>Urgent</label>
+            <select id="urgent">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
 
-  <label>Negotiable</label>
-  <select id="negotiable">
-    <option value="No">No</option>
-    <option value="Yes">Yes</option>
-  </select>
+            <label>Negotiable</label>
+            <select id="negotiable">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
 
-  <label>Tags</label>
-  <input type="text" id="tags" placeholder="Separate tags with commas">
+            <label>Upload Images</label>
+            <input type="file" id="images" multiple accept="image/*" required>
 
-  <button id="postAdBtn">Post Ad</button>
-</div>
+            <button type="submit" id="postAdBtn">Post Ad</button>
+        </form>
 
+        <div id="successMessage"></div>
+    </div>
+
+    <!-- Firebase -->
+    <script type="module" src="sell.js"></script>
 </body>
 </html>
