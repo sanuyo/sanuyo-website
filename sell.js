@@ -1,71 +1,55 @@
-// Firebase imports
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-storage.js";
+// sell.js
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-  authDomain: "sanuyo-website.firebaseapp.com",
-  projectId: "sanuyo-website",
-  storageBucket: "sanuyo-website.appspot.com",
-  messagingSenderId: "765213630366",
-  appId: "1:765213630366:web:03279e61a58289b088808f"
-};
+import { getFirestore, collection, addDoc, Timestamp } from "firebase/firestore"; 
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
+const db = getFirestore();
+const storage = getStorage();
 
-// DOM Elements
 const postAdForm = document.getElementById("postAdForm");
-const successMessage = document.getElementById("successMessage");
+const imageInput = document.getElementById("imagesInput");
 
-// Submit form
 postAdForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-    const price = document.getElementById("price").value;
-    const phone = document.getElementById("phone").value;
-    const tags = document.getElementById("tags").value.split(",").map(tag => tag.trim());
-    const urgent = document.getElementById("urgent").value;
-    const negotiable = document.getElementById("negotiable").value;
-    const images = document.getElementById("images").files;
 
-    if (images.length === 0) {
-        alert("Please select at least one image.");
-        return;
-    }
+    const title = postAdForm.title.value;
+    const description = postAdForm.description.value;
+    const price = postAdForm.price.value;
+    const phone = postAdForm.phone.value;
+    const urgent = postAdForm.urgent.checked;
+    const negotiable = postAdForm.negotiable.checked;
 
     // Upload images to Firebase Storage
+    const files = imageInput.files;
     const imageUrls = [];
-    for (let i = 0; i < images.length; i++) {
-        const imageFile = images[i];
-        const imageRef = ref(storage, `products/${Date.now()}_${imageFile.name}`);
-        await uploadBytes(imageRef, imageFile);
-        const url = await getDownloadURL(imageRef);
+
+    for (let i = 0; i < files.length; i++) {
+        const storageRef = ref(storage, `ads_images/${Date.now()}_${files[i].name}`);
+        await uploadBytes(storageRef, files[i]);
+        const url = await getDownloadURL(storageRef);
         imageUrls.push(url);
     }
 
-    // Save ad to Firestore
     try {
         await addDoc(collection(db, "products"), {
             title,
             description,
             price,
             phone,
-            tags,
             urgent,
             negotiable,
             images: imageUrls,
-            timestamp: Date.now()
+            createdAt: Timestamp.now()
         });
-        successMessage.innerHTML = "Ad posted successfully!";
-        postAdForm.reset();
+
+        // Show confirmation instead of clearing form
+        alert("Your ad has been posted successfully! ✅");
+
+        // Optional: keep data in the form for review
+        // postAdForm.reset(); // <- REMOVE this line to keep data
+
     } catch (error) {
         console.error("Error posting ad:", error);
-        successMessage.innerHTML = "Error posting ad, try again.";
+        alert("There was an error posting your ad. Try again.");
     }
 });
