@@ -1,9 +1,8 @@
-// Firebase Imports
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
-// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
     authDomain: "sanuyo-website.firebaseapp.com",
@@ -16,52 +15,69 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
+const auth = getAuth(app);
 
-// Post Ad Button
-document.getElementById('postAdBtn').addEventListener('click', async () => {
-    const title = document.getElementById('title').value.trim();
-    const price = document.getElementById('price').value.trim();
-    const description = document.getElementById('description').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const urgent = document.getElementById('urgent').value;
-    const negotiable = document.getElementById('negotiable').value;
-    const tags = document.getElementById('tags').value.split(',').map(t => t.trim());
-    const images = document.getElementById('images').files;
+// Form elements
+const postAdBtn = document.getElementById("postAdBtn");
+const imageInput = document.getElementById("images");
+const imagePreview = document.getElementById("imagePreview");
 
-    if (!title || !price || !description || !phone || images.length === 0) {
-        alert('Please fill all fields and upload at least one image.');
+// Preview images
+imageInput.addEventListener("change", () => {
+    imagePreview.innerHTML = "";
+    const files = imageInput.files;
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        imagePreview.appendChild(img);
+    }
+});
+
+// Post ad
+postAdBtn.addEventListener("click", async () => {
+    const title = document.getElementById("title").value.trim();
+    const description = document.getElementById("description").value.trim();
+    const price = document.getElementById("price").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const urgent = document.getElementById("urgent").value;
+    const negotiable = document.getElementById("negotiable").value;
+    const tags = document.getElementById("tags").value.split(",").map(t => t.trim());
+    const images = imageInput.files;
+
+    if (!title || !description || !price || !phone || images.length === 0) {
+        alert("Please fill all fields and upload at least one image.");
         return;
     }
 
     try {
-        // Upload images
         const imageUrls = [];
         for (let i = 0; i < images.length; i++) {
             const file = images[i];
-            const fileRef = ref(storage, `products/${Date.now()}_${file.name}`);
-            await uploadBytes(fileRef, file);
-            const url = await getDownloadURL(fileRef);
+            const imageRef = ref(storage, `product_images/${Date.now()}_${file.name}`);
+            await uploadBytes(imageRef, file);
+            const url = await getDownloadURL(imageRef);
             imageUrls.push(url);
         }
 
-        // Save product
-        await addDoc(collection(db, 'products'), {
+        await addDoc(collection(db, "products"), {
             title,
-            price: Number(price),
             description,
+            price: Number(price),
             phone,
             urgent,
             negotiable,
             tags,
             images: imageUrls,
-            createdAt: serverTimestamp()
+            createdAt: serverTimestamp(),
+            userId: auth.currentUser ? auth.currentUser.uid : "anonymous"
         });
 
-        alert('Your ad has been posted successfully!');
-        document.getElementById('sellForm').reset();
-
+        alert("Ad posted successfully!");
+        document.querySelector(".sell-form").reset();
+        imagePreview.innerHTML = "";
     } catch (error) {
         console.error("Error posting ad:", error);
-        alert('Failed to post ad. Check console for details.');
+        alert("Failed to post ad. Check console for details.");
     }
 });
