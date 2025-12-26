@@ -1,55 +1,47 @@
-// sell.js
-
-import { getFirestore, collection, addDoc, Timestamp } from "firebase/firestore"; 
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { app } from "./firebase-config.js";
 
-const db = getFirestore();
-const storage = getStorage();
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-const postAdForm = document.getElementById("postAdForm");
-const imageInput = document.getElementById("imagesInput");
+const sellForm = document.getElementById("sellForm");
 
-postAdForm.addEventListener("submit", async (e) => {
+sellForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const title = postAdForm.title.value;
-    const description = postAdForm.description.value;
-    const price = postAdForm.price.value;
-    const phone = postAdForm.phone.value;
-    const urgent = postAdForm.urgent.checked;
-    const negotiable = postAdForm.negotiable.checked;
+    const title = document.getElementById("title").value;
+    const description = document.getElementById("description").value;
+    const price = document.getElementById("price").value;
+    const phone = document.getElementById("phone").value;
+    const tags = document.getElementById("tags").value.split(",");
+    const urgent = document.getElementById("urgent").checked;
+    const negotiable = document.getElementById("negotiable").checked;
 
-    // Upload images to Firebase Storage
-    const files = imageInput.files;
-    const imageUrls = [];
+    const imagesInput = document.getElementById("images");
+    const imageFiles = imagesInput.files;
+    let imageUrls = [];
 
-    for (let i = 0; i < files.length; i++) {
-        const storageRef = ref(storage, `ads_images/${Date.now()}_${files[i].name}`);
-        await uploadBytes(storageRef, files[i]);
+    for (let i = 0; i < imageFiles.length; i++) {
+        const file = imageFiles[i];
+        const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
+        await uploadBytes(storageRef, file);
         const url = await getDownloadURL(storageRef);
         imageUrls.push(url);
     }
 
-    try {
-        await addDoc(collection(db, "products"), {
-            title,
-            description,
-            price,
-            phone,
-            urgent,
-            negotiable,
-            images: imageUrls,
-            createdAt: Timestamp.now()
-        });
+    await addDoc(collection(db, "products"), {
+        title,
+        description,
+        price,
+        phone,
+        tags,
+        urgent,
+        negotiable,
+        images: imageUrls,
+        createdAt: Date.now()
+    });
 
-        // Show confirmation instead of clearing form
-        alert("Your ad has been posted successfully! ✅");
-
-        // Optional: keep data in the form for review
-        // postAdForm.reset(); // <- REMOVE this line to keep data
-
-    } catch (error) {
-        console.error("Error posting ad:", error);
-        alert("There was an error posting your ad. Try again.");
-    }
+    alert("Ad posted successfully!");
+    sellForm.reset();
 });
