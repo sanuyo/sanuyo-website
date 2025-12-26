@@ -6,6 +6,24 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 const sellForm = document.getElementById("sellForm");
+const imagesInput = document.getElementById("images");
+const imagePreview = document.getElementById("imagePreview");
+
+// Image preview
+imagesInput.addEventListener("change", () => {
+    imagePreview.innerHTML = "";
+    const files = imagesInput.files;
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            imagePreview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    }
+});
 
 sellForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -14,13 +32,12 @@ sellForm.addEventListener("submit", async (e) => {
     const description = document.getElementById("description").value;
     const price = document.getElementById("price").value;
     const phone = document.getElementById("phone").value;
-    const tags = document.getElementById("tags").value.split(",");
+    const tags = document.getElementById("tags").value.split(",").map(t => t.trim());
     const urgent = document.getElementById("urgent").checked;
     const negotiable = document.getElementById("negotiable").checked;
 
-    const imagesInput = document.getElementById("images");
     const imageFiles = imagesInput.files;
-    let imageUrls = [];
+    const imageUrls = [];
 
     for (let i = 0; i < imageFiles.length; i++) {
         const file = imageFiles[i];
@@ -44,4 +61,5 @@ sellForm.addEventListener("submit", async (e) => {
 
     alert("Ad posted successfully!");
     sellForm.reset();
+    imagePreview.innerHTML = "";
 });
