@@ -3,35 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sell | Sanuyo Marketplace</title>
+<title>Sell Product - Sanuyo</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="header">
-  <div class="logo">SanuYo</div>
-  <div class="nav-links">
-    <a href="home.html">Home</a>
-    <a href="sell.html" class="active">Sell</a>
-    <a href="saved.html">Saved</a>
-    <a href="profile.html">Profile</a>
-  </div>
+    <div class="logo">SanuYo</div>
+    <div class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="sell.html" class="active">Sell</a>
+        <a href="saved.html">Saved</a>
+        <a href="profile.html">Profile</a>
+    </div>
 </div>
 
-<div class="container">
-  <h2>Post an Ad</h2>
-  <form id="sellForm">
-    <input type="text" id="title" placeholder="Title" required>
-    <textarea id="description" placeholder="Description" required></textarea>
-    <input type="number" id="price" placeholder="Price" required>
-    <input type="text" id="location" placeholder="Location" required>
-    <input type="tel" id="phone" placeholder="Phone number" required>
-    <input type="text" id="tags" placeholder="Tags (comma separated)">
-    <input type="file" id="images" accept="image/*" multiple required>
-    <button type="submit">Post Ad</button>
-  </form>
+<div class="container sell-container">
+    <h2 class="section-title">Post an Ad</h2>
+    <form id="sellForm" class="sell-form">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" placeholder="What are you selling?" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" rows="5" placeholder="Describe your product" required></textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="price">Price (₦)</label>
+                <input type="number" id="price" placeholder="Enter amount" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" placeholder="Enter your number" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="tags">Tags (comma separated)</label>
+            <input type="text" id="tags" placeholder="e.g. Phone, Electronics">
+        </div>
+
+        <div class="form-group">
+            <label>Product Images</label>
+            <input type="file" id="images" multiple accept="image/*">
+            <div id="imagePreview" class="image-preview"></div>
+        </div>
+
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="urgent"> Urgent</label>
+            <label><input type="checkbox" id="negotiable"> Negotiable</label>
+        </div>
+
+        <button type="submit" class="btn-post">Post Ad</button>
+    </form>
 </div>
 
-<script type="module" src="sell.js"></script>
+<script src="sell.js"></script>
 </body>
-  </html>
+</html>
