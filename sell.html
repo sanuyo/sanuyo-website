@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sell Your Product - Sanuyo Marketplace</title>
+    <title>Post Ad - Sanuyo Marketplace</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- HEADER -->
     <div class="header">
         <div class="logo">SanuYo</div>
         <div class="nav-links">
@@ -21,61 +20,42 @@
 
     <div class="sell-container">
         <h2>Post Your Ad</h2>
-
         <form id="sellForm">
-            <!-- Title -->
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" id="title" placeholder="Enter product title" required>
-            </div>
 
-            <!-- Description -->
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" placeholder="Describe your product" required></textarea>
-            </div>
+            <label>Title</label>
+            <input type="text" id="title" placeholder="Enter title" required>
 
-            <!-- Price -->
-            <div class="form-group">
-                <label for="price">Price (₦)</label>
-                <input type="number" id="price" placeholder="Enter price" required>
-            </div>
+            <label>Price (₦)</label>
+            <input type="number" id="price" placeholder="Enter price" required>
 
-            <!-- Phone Number -->
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" placeholder="e.g. 08012345678" required>
-            </div>
+            <label>Description</label>
+            <textarea id="description" placeholder="Describe your product" required></textarea>
 
-            <!-- Urgent / Negotiable -->
-            <div class="form-checks">
-                <label><input type="checkbox" id="urgent"> Urgent</label>
-                <label><input type="checkbox" id="negotiable"> Negotiable</label>
-            </div>
+            <label>Phone Number</label>
+            <input type="text" id="phone" placeholder="Enter your contact number" required>
 
-            <!-- Tags -->
-            <div class="form-group">
-                <label for="tags">Tags (separate with commas)</label>
-                <input type="text" id="tags" placeholder="e.g. iPhone, Apple, smartphone">
-            </div>
+            <label>Urgent</label>
+            <select id="urgent">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
 
-            <!-- Image Upload -->
-            <div class="form-group">
-                <label for="images">Upload Images (multiple)</label>
-                <input type="file" id="images" multiple accept="image/*" required>
-            </div>
+            <label>Negotiable</label>
+            <select id="negotiable">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
 
-            <button type="submit" class="btn">Post Ad</button>
+            <label>Tags (comma separated)</label>
+            <input type="text" id="tags" placeholder="e.g phones, electronics">
+
+            <label>Upload Images</label>
+            <input type="file" id="images" multiple required>
+
+            <button type="button" id="postAdBtn">Post Ad</button>
         </form>
-
-        <div id="successMessage" class="success-message">
-            Your ad has been posted successfully!
-        </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
-    <script src="sell.js"></script>
+    <script type="module" src="sell.js"></script>
 </body>
-    </html>
+</html>
