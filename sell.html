@@ -3,65 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sell Product - Sanuyo</title>
+<title>Post Ad - SanuYo</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="header">
-    <div class="logo">SanuYo</div>
-    <div class="nav-links">
-        <a href="home.html">Home</a>
-        <a href="sell.html" class="active">Sell</a>
-        <a href="saved.html">Saved</a>
-        <a href="profile.html">Profile</a>
-    </div>
+<header class="header">
+  <div class="logo">SanuYo</div>
+</header>
+
+<div class="form-container">
+  <h2>Post Your Ad</h2>
+
+  <input id="title" placeholder="Ad title">
+  <textarea id="description" placeholder="Describe your item"></textarea>
+
+  <input id="price" type="number" placeholder="Price (₦)">
+
+  <select id="priceType">
+    <option value="fixed">Fixed price</option>
+    <option value="negotiable">Negotiable</option>
+  </select>
+
+  <select id="urgency">
+    <option value="normal">Not urgent</option>
+    <option value="urgent">Urgent</option>
+  </select>
+
+  <input id="location" placeholder="Location">
+  <input id="phone" placeholder="Phone number">
+
+  <input id="tags" placeholder="Tags (iphone, apple, phone)">
+
+  <input id="images" type="file" multiple accept="image/*">
+
+  <button id="postAdBtn">Post Ad</button>
+  <p id="status"></p>
 </div>
 
-<div class="container sell-container">
-    <h2 class="section-title">Post an Ad</h2>
-    <form id="sellForm" class="sell-form">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" id="title" placeholder="What are you selling?" required>
-        </div>
-
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" rows="5" placeholder="Describe your product" required></textarea>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label for="price">Price (₦)</label>
-                <input type="number" id="price" placeholder="Enter amount" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="text" id="phone" placeholder="Enter your number" required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="tags">Tags (comma separated)</label>
-            <input type="text" id="tags" placeholder="e.g. Phone, Electronics">
-        </div>
-
-        <div class="form-group">
-            <label>Product Images</label>
-            <input type="file" id="images" multiple accept="image/*">
-            <div id="imagePreview" class="image-preview"></div>
-        </div>
-
-        <div class="checkbox-group">
-            <label><input type="checkbox" id="urgent"> Urgent</label>
-            <label><input type="checkbox" id="negotiable"> Negotiable</label>
-        </div>
-
-        <button type="submit" class="btn-post">Post Ad</button>
-    </form>
-</div>
-
-<script src="sell.js"></script>
+<script type="module" src="sell.js"></script>
 </body>
-                    </html>
+</html>
