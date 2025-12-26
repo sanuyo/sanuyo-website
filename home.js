@@ -1,28 +1,28 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { db } from "./firebase.js";
+import { collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT_ID"
-};
+const productGrid = document.getElementById("productGrid");
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+async function loadProducts() {
+  productGrid.innerHTML = "";
+  const q = query(collection(db, "products"), orderBy("timestamp", "desc"), limit(20));
+  const snapshot = await getDocs(q);
 
-const grid = document.getElementById("productGrid");
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    const div = document.createElement("div");
+    div.className = "product-card";
+    div.innerHTML = `
+      <img src="${data.images[0]}" alt="${data.title}">
+      <h3>${data.title}</h3>
+      <p>${data.description}</p>
+      <p>₦${data.price}</p>
+      <p>${data.location}</p>
+      <p>Tags: ${data.tags.join(", ")}</p>
+      <a href="product.html?id=${doc.id}">View Details</a>
+    `;
+    productGrid.appendChild(div);
+  });
+}
 
-const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
-const snap = await getDocs(q);
-
-snap.forEach(doc => {
-  const p = doc.data();
-  grid.innerHTML += `
-    <div class="card">
-      <img src="${p.images[0]}">
-      <h3>${p.title}</h3>
-      <p class="price">₦${p.price}</p>
-      <p class="tags">${p.tags.join(", ")}</p>
-    </div>
-  `;
-});
+loadProducts();
