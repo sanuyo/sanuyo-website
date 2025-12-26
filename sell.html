@@ -3,42 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Post Ad - SanuYo</title>
+<title>Sell | Sanuyo Marketplace</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header class="header">
+<div class="header">
   <div class="logo">SanuYo</div>
-</header>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="sell.html" class="active">Sell</a>
+    <a href="saved.html">Saved</a>
+    <a href="profile.html">Profile</a>
+  </div>
+</div>
 
-<div class="form-container">
-  <h2>Post Your Ad</h2>
-
-  <input id="title" placeholder="Ad title">
-  <textarea id="description" placeholder="Describe your item"></textarea>
-
-  <input id="price" type="number" placeholder="Price (₦)">
-
-  <select id="priceType">
-    <option value="fixed">Fixed price</option>
-    <option value="negotiable">Negotiable</option>
-  </select>
-
-  <select id="urgency">
-    <option value="normal">Not urgent</option>
-    <option value="urgent">Urgent</option>
-  </select>
-
-  <input id="location" placeholder="Location">
-  <input id="phone" placeholder="Phone number">
-
-  <input id="tags" placeholder="Tags (iphone, apple, phone)">
-
-  <input id="images" type="file" multiple accept="image/*">
-
-  <button id="postAdBtn">Post Ad</button>
-  <p id="status"></p>
+<div class="container">
+  <h2>Post an Ad</h2>
+  <form id="sellForm">
+    <input type="text" id="title" placeholder="Title" required>
+    <textarea id="description" placeholder="Description" required></textarea>
+    <input type="number" id="price" placeholder="Price" required>
+    <input type="text" id="location" placeholder="Location" required>
+    <input type="tel" id="phone" placeholder="Phone number" required>
+    <input type="text" id="tags" placeholder="Tags (comma separated)">
+    <input type="file" id="images" accept="image/*" multiple required>
+    <button type="submit">Post Ad</button>
+  </form>
 </div>
 
 <script type="module" src="sell.js"></script>
