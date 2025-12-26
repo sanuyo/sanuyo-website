@@ -1,4 +1,9 @@
-// Firebase config
+// Firebase Imports
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
     authDomain: "sanuyo-website.firebaseapp.com",
@@ -8,61 +13,55 @@ const firebaseConfig = {
     appId: "1:765213630366:web:03279e61a58289b088808f"
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const storage = firebase.storage();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-// Form & elements
-const sellForm = document.getElementById('sellForm');
-const titleInput = document.getElementById('title');
-const descriptionInput = document.getElementById('description');
-const priceInput = document.getElementById('price');
-const phoneInput = document.getElementById('phone');
-const urgentCheckbox = document.getElementById('urgent');
-const negotiableCheckbox = document.getElementById('negotiable');
-const tagsInput = document.getElementById('tags');
-const imagesInput = document.getElementById('images');
-const successMessage = document.getElementById('successMessage');
+// Post Ad Button
+document.getElementById('postAdBtn').addEventListener('click', async () => {
+    const title = document.getElementById('title').value.trim();
+    const price = document.getElementById('price').value.trim();
+    const description = document.getElementById('description').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const urgent = document.getElementById('urgent').value;
+    const negotiable = document.getElementById('negotiable').value;
+    const tags = document.getElementById('tags').value.split(',').map(t => t.trim());
+    const images = document.getElementById('images').files;
 
-sellForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    // Upload images to Firebase Storage
-    const imageFiles = imagesInput.files;
-    const imageUrls = [];
-
-    for (let i = 0; i < imageFiles.length; i++) {
-        const file = imageFiles[i];
-        const storageRef = storage.ref(`products/${Date.now()}_${file.name}`);
-        await storageRef.put(file);
-        const url = await storageRef.getDownloadURL();
-        imageUrls.push(url);
+    if (!title || !price || !description || !phone || images.length === 0) {
+        alert('Please fill all fields and upload at least one image.');
+        return;
     }
 
-    // Tags array
-    const tagsArray = tagsInput.value.split(',')
-        .map(tag => tag.trim())
-        .filter(tag => tag !== '');
+    try {
+        // Upload images
+        const imageUrls = [];
+        for (let i = 0; i < images.length; i++) {
+            const file = images[i];
+            const fileRef = ref(storage, `products/${Date.now()}_${file.name}`);
+            await uploadBytes(fileRef, file);
+            const url = await getDownloadURL(fileRef);
+            imageUrls.push(url);
+        }
 
-    // Add product to Firestore
-    db.collection("products").add({
-        title: titleInput.value,
-        description: descriptionInput.value,
-        price: priceInput.value,
-        phone: phoneInput.value,
-        urgent: urgentCheckbox.checked,
-        negotiable: negotiableCheckbox.checked,
-        tags: tagsArray,
-        images: imageUrls,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    })
-    .then(() => {
-        successMessage.style.display = "block";
-        sellForm.reset();
-        setTimeout(() => successMessage.style.display = "none", 5000);
-    })
-    .catch(error => {
-        alert("Error posting ad: " + error.message);
-    });
+        // Save product
+        await addDoc(collection(db, 'products'), {
+            title,
+            price: Number(price),
+            description,
+            phone,
+            urgent,
+            negotiable,
+            tags,
+            images: imageUrls,
+            createdAt: serverTimestamp()
+        });
+
+        alert('Your ad has been posted successfully!');
+        document.getElementById('sellForm').reset();
+
+    } catch (error) {
+        console.error("Error posting ad:", error);
+        alert('Failed to post ad. Check console for details.');
+    }
 });
