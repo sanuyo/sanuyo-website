@@ -3,59 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post Ad - Sanuyo Marketplace</title>
+    <title>Post Ad - SanuYo</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div class="header">
-        <div class="logo">SanuYo</div>
-        <div class="nav-links">
-            <a href="home.html">Home</a>
-            <a href="sell.html" class="active">Sell</a>
-            <a href="saved.html">Saved</a>
-            <a href="profile.html">Profile</a>
-        </div>
+<div class="header">
+    <div class="logo">SanuYo</div>
+    <div class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="sell.html" class="active">Sell</a>
+        <a href="saved.html">Saved</a>
+        <a href="profile.html">Profile</a>
     </div>
+</div>
 
-    <div class="sell-container">
-        <h2>Post Your Ad</h2>
-        <form id="sellForm">
+<h2 class="section-title">Post Your Ad</h2>
 
-            <label>Title</label>
-            <input type="text" id="title" placeholder="Enter title" required>
+<div class="sell-form">
+    <label>Title</label>
+    <input type="text" id="title" placeholder="Enter product title">
 
-            <label>Price (₦)</label>
-            <input type="number" id="price" placeholder="Enter price" required>
+    <label>Description</label>
+    <textarea id="description" placeholder="Describe your product"></textarea>
 
-            <label>Description</label>
-            <textarea id="description" placeholder="Describe your product" required></textarea>
+    <label>Price (₦)</label>
+    <input type="number" id="price" placeholder="Amount">
 
-            <label>Phone Number</label>
-            <input type="text" id="phone" placeholder="Enter your contact number" required>
+    <label>Phone Number</label>
+    <input type="tel" id="phone" placeholder="Your phone number">
 
-            <label>Urgent</label>
-            <select id="urgent">
-                <option value="No">No</option>
-                <option value="Yes">Yes</option>
-            </select>
+    <label>Urgent?</label>
+    <select id="urgent">
+        <option value="Yes">Yes</option>
+        <option value="No" selected>No</option>
+    </select>
 
-            <label>Negotiable</label>
-            <select id="negotiable">
-                <option value="No">No</option>
-                <option value="Yes">Yes</option>
-            </select>
+    <label>Negotiable?</label>
+    <select id="negotiable">
+        <option value="Yes">Yes</option>
+        <option value="No" selected>No</option>
+    </select>
 
-            <label>Tags (comma separated)</label>
-            <input type="text" id="tags" placeholder="e.g phones, electronics">
+    <label>Tags (comma separated)</label>
+    <input type="text" id="tags" placeholder="e.g. Phone, Electronics">
 
-            <label>Upload Images</label>
-            <input type="file" id="images" multiple required>
+    <label>Upload Images</label>
+    <input type="file" id="images" multiple accept="image/*">
 
-            <button type="button" id="postAdBtn">Post Ad</button>
-        </form>
-    </div>
+    <button id="postAdBtn">Post Ad</button>
+</div>
 
-    <script type="module" src="sell.js"></script>
+<script type="module" src="sell.js"></script>
 </body>
 </html>
