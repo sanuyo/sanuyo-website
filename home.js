@@ -1,49 +1,36 @@
-// Firebase Initialization
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getFirestore, collection, query, orderBy, getDocs } from "firebase/firestore";
+import { app } from "./firebase-config.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
-  authDomain: "sanuyo-website.firebaseapp.com",
-  projectId: "sanuyo-website",
-  storageBucket: "sanuyo-website.firebasestorage.app",
-  messagingSenderId: "765213630366",
-  appId: "1:765213630366:web:03279e61a58289b088808f"
-};
-const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-// Load Products
-const productGrid = document.getElementById('productGrid');
+const productGrid = document.getElementById("productGrid");
 
 async function loadProducts() {
-  const querySnapshot = await getDocs(collection(db, "products"));
-  productGrid.innerHTML = "";
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
-    const card = document.createElement('div');
-    card.classList.add('product-card');
-    card.innerHTML = `
-      <img src="${data.images[0]}" alt="${data.title}">
-      <div class="product-info">
-        <h4>${data.title}</h4>
-        <p>₦${data.price}</p>
-        <p>${data.tags ? data.tags.join(", ") : ""}</p>
-      </div>
-      <div class="product-actions">
-        <button onclick="messageSeller('${data.ownerPhone}')">Message</button>
-        <button onclick="callSeller('${data.ownerPhone}')">Call</button>
-      </div>
-    `;
-    productGrid.appendChild(card);
-  });
-}
+    const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
+    const querySnapshot = await getDocs(q);
 
-function messageSeller(phone) {
-  window.location.href = `sms:${phone}`;
-}
-function callSeller(phone) {
-  window.location.href = `tel:${phone}`;
+    productGrid.innerHTML = ""; // Clear grid
+
+    querySnapshot.forEach(doc => {
+        const data = doc.data();
+
+        const productCard = document.createElement("div");
+        productCard.classList.add("product-card");
+
+        const mainImage = data.images && data.images.length > 0 ? data.images[0] : "https://via.placeholder.com/150";
+
+        productCard.innerHTML = `
+            <img src="${mainImage}" alt="${data.title}">
+            <h3 class="product-title">${data.title}</h3>
+            <p class="product-price">₦${data.price}</p>
+            <p class="product-tags">${data.tags ? data.tags.join(", ") : ""}</p>
+            <div class="product-actions">
+                <a href="tel:${data.phone}" class="btn-action">Call</a>
+                <a href="messages.html?phone=${data.phone}" class="btn-action">Message</a>
+            </div>
+        `;
+
+        productGrid.appendChild(productCard);
+    });
 }
 
 loadProducts();
