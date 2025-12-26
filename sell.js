@@ -1,58 +1,68 @@
-// Firebase imports
-import { getFirestore, collection, addDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
-import { app } from "./firebase.js";
+// Firebase config
+const firebaseConfig = {
+    apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+    authDomain: "sanuyo-website.firebaseapp.com",
+    projectId: "sanuyo-website",
+    storageBucket: "sanuyo-website.appspot.com",
+    messagingSenderId: "765213630366",
+    appId: "1:765213630366:web:03279e61a58289b088808f"
+};
 
-const db = getFirestore(app);
-const storage = getStorage(app);
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const storage = firebase.storage();
 
-const sellForm = document.getElementById("sellForm");
-const successMessage = document.getElementById("successMessage");
+// Form & elements
+const sellForm = document.getElementById('sellForm');
+const titleInput = document.getElementById('title');
+const descriptionInput = document.getElementById('description');
+const priceInput = document.getElementById('price');
+const phoneInput = document.getElementById('phone');
+const urgentCheckbox = document.getElementById('urgent');
+const negotiableCheckbox = document.getElementById('negotiable');
+const tagsInput = document.getElementById('tags');
+const imagesInput = document.getElementById('images');
+const successMessage = document.getElementById('successMessage');
 
-sellForm.addEventListener("submit", async (e) => {
+sellForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-    const price = parseFloat(document.getElementById("price").value);
-    const phone = document.getElementById("phone").value;
-    const location = document.getElementById("location").value;
-    const urgent = document.getElementById("urgent").checked;
-    const negotiable = document.getElementById("negotiable").checked;
-    const images = document.getElementById("images").files;
+    // Upload images to Firebase Storage
+    const imageFiles = imagesInput.files;
+    const imageUrls = [];
 
-    let imageUrls = [];
-
-    if (images.length > 0) {
-        for (let i = 0; i < images.length; i++) {
-            const fileRef = ref(storage, `productImages/${images[i].name}_${Date.now()}`);
-            await uploadBytes(fileRef, images[i]);
-            const url = await getDownloadURL(fileRef);
-            imageUrls.push(url);
-        }
+    for (let i = 0; i < imageFiles.length; i++) {
+        const file = imageFiles[i];
+        const storageRef = storage.ref(`products/${Date.now()}_${file.name}`);
+        await storageRef.put(file);
+        const url = await storageRef.getDownloadURL();
+        imageUrls.push(url);
     }
 
-    try {
-        await addDoc(collection(db, "products"), {
-            title,
-            description,
-            price,
-            phone,
-            location,
-            urgent,
-            negotiable,
-            images: imageUrls,
-            createdAt: Timestamp.now()
-        });
+    // Tags array
+    const tagsArray = tagsInput.value.split(',')
+        .map(tag => tag.trim())
+        .filter(tag => tag !== '');
 
+    // Add product to Firestore
+    db.collection("products").add({
+        title: titleInput.value,
+        description: descriptionInput.value,
+        price: priceInput.value,
+        phone: phoneInput.value,
+        urgent: urgentCheckbox.checked,
+        negotiable: negotiableCheckbox.checked,
+        tags: tagsArray,
+        images: imageUrls,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
         successMessage.style.display = "block";
         sellForm.reset();
-        setTimeout(() => {
-            successMessage.style.display = "none";
-        }, 3000);
-
-    } catch (err) {
-        console.error("Error posting ad: ", err);
-        alert("Failed to post ad, try again.");
-    }
+        setTimeout(() => successMessage.style.display = "none", 5000);
+    })
+    .catch(error => {
+        alert("Error posting ad: " + error.message);
+    });
 });
