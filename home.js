@@ -1,55 +1,49 @@
-import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-import { app } from "./firebase.js";
+// Firebase Initialization
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyDcSCU5TIout3oQm1ADYISmuf3M1--1JLY",
+  authDomain: "sanuyo-website.firebaseapp.com",
+  projectId: "sanuyo-website",
+  storageBucket: "sanuyo-website.firebasestorage.app",
+  messagingSenderId: "765213630366",
+  appId: "1:765213630366:web:03279e61a58289b088808f"
+};
+const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const productGrid = document.getElementById("productGrid");
-const searchInput = document.getElementById("searchInput");
-const urgentFilter = document.getElementById("urgentFilter");
-const negotiableFilter = document.getElementById("negotiableFilter");
+
+// Load Products
+const productGrid = document.getElementById('productGrid');
 
 async function loadProducts() {
-    productGrid.innerHTML = "";
-    const searchValue = searchInput.value.toLowerCase();
-    const urgentVal = urgentFilter.value;
-    const negotiableVal = negotiableFilter.value;
-
-    let q = collection(db, "products");
-    const querySnapshot = await getDocs(q);
-
-    querySnapshot.forEach(doc => {
-        const product = doc.data();
-        let show = true;
-
-        // Filter search
-        if (searchValue && !product.title.toLowerCase().includes(searchValue)) {
-            show = false;
-        }
-
-        // Filter urgent
-        if (urgentVal !== "all" && String(product.urgent) !== urgentVal) show = false;
-        if (negotiableVal !== "all" && String(product.negotiable) !== negotiableVal) show = false;
-
-        if (show) {
-            const card = document.createElement("div");
-            card.classList.add("product-card");
-            card.innerHTML = `
-                <img src="${product.image}" alt="${product.title}">
-                <h3>${product.title}</h3>
-                <p>${product.price} ₦</p>
-                ${product.urgent ? `<span class="badge urgent">URGENT</span>` : ""}
-                ${product.negotiable ? `<span class="badge negotiable">NEGOTIABLE</span>` : ""}
-                <div class="product-actions">
-                    <a href="tel:${product.phone}" class="btn-call">Call</a>
-                    <a href="https://wa.me/${product.phone}?text=Hi, I'm interested in ${product.title}" class="btn-whatsapp">WhatsApp</a>
-                </div>
-            `;
-            productGrid.appendChild(card);
-        }
-    });
+  const querySnapshot = await getDocs(collection(db, "products"));
+  productGrid.innerHTML = "";
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    const card = document.createElement('div');
+    card.classList.add('product-card');
+    card.innerHTML = `
+      <img src="${data.images[0]}" alt="${data.title}">
+      <div class="product-info">
+        <h4>${data.title}</h4>
+        <p>₦${data.price}</p>
+        <p>${data.tags ? data.tags.join(", ") : ""}</p>
+      </div>
+      <div class="product-actions">
+        <button onclick="messageSeller('${data.ownerPhone}')">Message</button>
+        <button onclick="callSeller('${data.ownerPhone}')">Call</button>
+      </div>
+    `;
+    productGrid.appendChild(card);
+  });
 }
 
-searchInput.addEventListener("input", loadProducts);
-urgentFilter.addEventListener("change", loadProducts);
-negotiableFilter.addEventListener("change", loadProducts);
+function messageSeller(phone) {
+  window.location.href = `sms:${phone}`;
+}
+function callSeller(phone) {
+  window.location.href = `tel:${phone}`;
+}
 
 loadProducts();
